@@ -3,7 +3,29 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Test
+  - Status
+  - PopupPivot
+  - Point
+  - GameManager
+  - ItemManager
+  - EnemySkill
+  - Inventory
+  - InventoryManager
+  - Target
+  - Skill
+  - Arrow
+  - PickUp
+  - Enemy
+  - LifeBar
+  - Boss
+  - BossLegColl
+  - BossHeadColl
+  - BossTailColl
+  - BossNeckColl
+  - BossChestColl
+  - BossWingColl
   layers:
   - Default
   - TransparentFX
@@ -12,10 +34,10 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
-  - 
+  - PickUp
+  - Enemy
+  - Player
+  - Wall
   - 
   - 
   - 
