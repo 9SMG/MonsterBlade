@@ -9,8 +9,8 @@ public class PlayerStateOnOff : MonoBehaviour
 
     void Awake()
     {
-        Player = GameObject.Find ("Player").GetComponent<GameObject>();
-        VRPlayer = GameObject.Find("VRPlayer").GetComponent<GameObject>();
+        //Player = GameObject.Find ("Player").GetComponent<GameObject>();
+        //VRPlayer = GameObject.Find("VRPlayer").GetComponent<GameObject>();
 
     }
     // Start is called before the first frame update

@@ -26,14 +26,15 @@ TagManager:
   - BossNeckColl
   - BossChestColl
   - BossWingColl
+  - VRSword
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - VRPlayer
   - Water
   - UI
-  - 
+  - Direct Interactble
   - PickUp
   - Enemy
   - Player
