@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using MonsterBlade.Manager;
+
 public class MoveScene : MonoBehaviour
 {
     void Start()
     {
-       LoadUIScene();
+        //LoadUIScene();
+        if(!LoadManager.IsLoadscMng)
+            LoadManager.Instance.LoadStage();
     }
 
     public void SceneChange()

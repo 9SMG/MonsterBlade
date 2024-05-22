@@ -14,9 +14,9 @@ public class ChangeScene : MonoBehaviour
     //}
     public void SceneChange()
     {
-        LoadingSceneManager.LoadScene("GameLobby");
-        //LoadingSceneManager.LoadScene("Map");
-        //SceneManager.LoadScene("GameLobby");
+        //LoadingSceneManager.LoadScene("GameLobby");
+        MonsterBlade.Manager.LoadManager.Instance.LoadLobby();
+
 
     }
 }

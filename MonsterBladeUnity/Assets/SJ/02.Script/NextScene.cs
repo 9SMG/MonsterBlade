@@ -8,7 +8,7 @@ public class NextScene : MonoBehaviour
 
     public void SceneChange()
     {
-        PassSceneManager.LoadScene("Map");
-
+        //PassSceneManager.LoadScene("Map");
+        MonsterBlade.Manager.LoadManager.Instance.LoadStage();
     }
 }
