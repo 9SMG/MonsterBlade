@@ -7,17 +7,18 @@ public class Arrow : MonoBehaviour
     public float damage;
     public float deadtime;
     Boss bossHP;
-  
+
     void Start()
     {
         bossHP = GameObject.FindWithTag("Boss").GetComponent<Boss>();
         Destroy(this.gameObject, deadtime);
     }
+
     private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            if(col.gameObject.tag == "BossHeadColl")
+            if (col.gameObject.tag == "BossHeadColl")
             {
                 Debug.Log("Head !!!");
                 bossHP._headHp -= damage;

@@ -6,7 +6,7 @@ public class CreateGizmo : MonoBehaviour
 {
     public Color Mycolor = Color.red;
     public float Myradius = 0.05f;
-   
+
     void OnDrawGizmos()
     {
 

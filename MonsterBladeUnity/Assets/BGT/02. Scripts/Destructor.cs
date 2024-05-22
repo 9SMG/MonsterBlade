@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destructor : MonoBehaviour 
+public class Destructor : MonoBehaviour
 {
-    public float deadTime;
+	public float deadTime;
 	// Use this for initialization
-	void Start () 
+	void Start()
 	{
-        Destroy(gameObject, deadTime);
+		Destroy(gameObject, deadTime);
 	}
-	
-
 }

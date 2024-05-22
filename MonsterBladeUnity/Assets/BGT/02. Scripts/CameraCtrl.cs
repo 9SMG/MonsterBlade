@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour
 {
-    public Transform objectToFollow; 
-    public float followSpeed = 10f; 
-    public float sensitivity = 100f; 
-    public float clampAngle = 70f;  
+    public Transform objectToFollow;
+    public float followSpeed = 10f;
+    public float sensitivity = 100f;
+    public float clampAngle = 70f;
     public float zoomSpeed = 5f;
 
-    float rotX; 
+    float rotX;
     float rotY;
     float baseDistance = 4f;
 
-    public Transform mainCamera;  
+    public Transform mainCamera;
     public Vector3 dirNormalized;
-    public Vector3 finalDir;  
-    public float minDistance; 
-    public float maxDistance; 
-    public float finalDistance; 
+    public Vector3 finalDir;
+    public float minDistance;
+    public float maxDistance;
+    public float finalDistance;
     public float smoothness = 10.0f;
 
     PlayerCtrl player;
@@ -36,12 +36,12 @@ public class CameraCtrl : MonoBehaviour
         rotX = transform.localRotation.eulerAngles.x;
         rotY = transform.localRotation.eulerAngles.y;
 
-        dirNormalized = mainCamera.localPosition.normalized; 
-        finalDistance = mainCamera.localPosition.magnitude; 
+        dirNormalized = mainCamera.localPosition.normalized;
+        finalDistance = mainCamera.localPosition.magnitude;
 
-        Cursor.lockState = CursorLockMode.Confined;
-       // Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;  
+        //Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -110,7 +110,7 @@ public class CameraCtrl : MonoBehaviour
     }
     void ShotCheck()
     {
-        if (player.open == false && !player.diveRoll)
+        if (player.open == false && !player.diveRoll && !player.isMove)
         {
             if (Input.GetMouseButtonDown(1))
             {

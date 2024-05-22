@@ -14,10 +14,6 @@ public class GameMenuManager : MonoBehaviour
     {
         SoundManager.Instance.SetVolume(SoundType.BGM, mBGMSoundSlider.value);
     }
-
-    /// <summary>
-    /// 슬라이더에서 Effect volume을 설정한다.
-    /// </summary>
     public void EffectVolume()
     {
         SoundManager.Instance.SetVolume(SoundType.EFFECT, mEffectSoundSlider.value);

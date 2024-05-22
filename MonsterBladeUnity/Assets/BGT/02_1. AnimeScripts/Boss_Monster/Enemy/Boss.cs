@@ -14,6 +14,7 @@ public class Boss : MonoBehaviour
     public ParticleSystem particleGround;
     public ParticleSystem particleFly;
     public Transform firePosition;
+    public CreateFireBall createFireBall;
     Animator anime;
     public TextMeshPro totalHp;
     public TextMeshPro headHp;
@@ -25,7 +26,7 @@ public class Boss : MonoBehaviour
     public GameObject _legDestroy;
     public GameObject randomFallPrefab;
 
-    [field:SerializeField]
+    [field: SerializeField]
     public float _searchRange { get; private set; }
     public float _maxMoveRange;
     public float _attackRange;
@@ -38,7 +39,9 @@ public class Boss : MonoBehaviour
     public float _wingHp;
     public float destroyDelay;
     public float spawnRadius = 10f;
+    public float _rotationSpeed;
     public int numberOfRandomFalls = 10;
+    public int checkNum = 0;
     public bool headDestroy;
     public bool legDestroy;
     public bool wingDestroy;
@@ -58,6 +61,16 @@ public class Boss : MonoBehaviour
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
     }
 
+    void Start()
+    {
+        originPos = transform.position;
+        _curHp = _maxHp;
+        _headHp = _maxHp / 3;
+        _legHp = _maxHp / 3;
+        _wingHp = _maxHp / 3;
+        anime.SetBool("isAlive", true);
+    }
+
     void Update()
     {
         if (_player == null)
@@ -65,33 +78,25 @@ public class Boss : MonoBehaviour
             Debug.Log("Null");
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
         }
-        if(Input.GetKey(KeyCode.Keypad1))
+        if (Input.GetKey(KeyCode.Keypad1))
         {
             _curHp = 170;
         }
     }
 
-    void Start()
-    {
-        originPos = transform.position;
-        _curHp = _maxHp;
-        //_headHp = _maxHp / 4;
-        //_legHp = _maxHp / 4;
-        //_wingHp = _maxHp / 4;
-        _headHp = 50;
-        _legHp = 50;
-        _wingHp = 50;
-        anime.SetBool("isAlive", true);
-    }
-
     void FixedUpdate()
     {
-        if(_curHp / _maxHp <= 0.3)
+        totalHp.text = $"Total Hp : {Mathf.RoundToInt(_curHp)} / {_maxHp}";
+        headHp.text = $"Head Hp : {Mathf.RoundToInt(_headHp)}";
+        legHp.text = $"Leg Hp : {Mathf.RoundToInt(_legHp)}";
+        wingHp.text = $"Wing Hp : {Mathf.RoundToInt(_wingHp)}";
+        lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
+        if (_curHp / _maxHp <= 0.3)
         {
             ground = false;
             anime.runtimeAnimatorController = anim2;
         }
-        if(_curHp / _maxHp > 0.3)
+        if (_curHp / _maxHp > 0.3)
         {
             ground = true;
             anime.runtimeAnimatorController = anim1;
@@ -124,17 +129,12 @@ public class Boss : MonoBehaviour
         return randomPosition;
     }
 
-void OnTriggerEnter(Collider col)
+    void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Arrow" && _curHp > 0)
+        if (col.gameObject.tag == "Arrow" && _curHp > 0)
         {
             Arrow arrow = col.GetComponent<Arrow>();
             _curHp -= arrow.damage;
-            lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
-            totalHp.text = $"Total Hp : {Mathf.RoundToInt(_curHp)} / {_maxHp}";
-            headHp.text = $"Head Hp : {Mathf.RoundToInt(_headHp)}";
-            legHp.text = $"Leg Hp : {Mathf.RoundToInt(_legHp)}";
-            wingHp.text = $"Wing Hp : {Mathf.RoundToInt(_wingHp)}";
             StartCoroutine(Damage());
         }
 
@@ -142,7 +142,6 @@ void OnTriggerEnter(Collider col)
         {
             Skill skill = col.GetComponent<Skill>();
             _curHp -= skill.damage;
-            lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
             StartCoroutine(Damage());
         }
     }
@@ -154,7 +153,7 @@ void OnTriggerEnter(Collider col)
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.collider.tag == "Player" && rushStart)
+        if (col.collider.tag == "Player" && rushStart)
         {
             _player.Damage(20f);
             Debug.Log("rushHit!!!");

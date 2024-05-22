@@ -28,6 +28,11 @@ public class SoundManager : MonoBehaviour
                 {
                     GameObject soundManagerObject = new GameObject("SoundManager");
                     instance = soundManagerObject.AddComponent<SoundManager>();
+                    DontDestroyOnLoad(soundManagerObject);
+                }
+                else
+                {
+                    DontDestroyOnLoad(instance.gameObject);
                 }
             }
             return instance;
@@ -37,8 +42,10 @@ public class SoundManager : MonoBehaviour
     float soundLength;
     bool bgmEnd = false;
 
-    [SerializeField] private AudioMixer mAudioMixer;
-    [SerializeField] private AudioClip[] mPreloadClips;
+    [SerializeField] private AudioMixer sAudioMixer;
+    [SerializeField] private AudioClip[] sBgmClips;
+    [SerializeField] private AudioClip[] sEffectClips;
+    [SerializeField] private AudioClip[] sVoiceClips;
     private float mCurrentBGMVolume, mCurrentEffectVolume;
     private Dictionary<string, AudioClip> mClipsDictionary;
     private List<TemporarySoundPlayer> mInstantiatedSounds;
@@ -46,32 +53,38 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         mClipsDictionary = new Dictionary<string, AudioClip>();
-        foreach (AudioClip clip in mPreloadClips)
-        {
-            mClipsDictionary.Add(clip.name, clip);
-        }
+
+        AddClipsToDictionary(sBgmClips, "BGM");
+        AddClipsToDictionary(sEffectClips, "Effect");
+        AddClipsToDictionary(sVoiceClips, "Voice");
 
         mInstantiatedSounds = new List<TemporarySoundPlayer>();
-
-        soundLength = SoundManager.Instance.GetClip("BGM_In a good place 01").length;
-        StartCoroutine(BgmStart());
     }
 
-    IEnumerator BgmStart()
+    private void AddClipsToDictionary(AudioClip[] clips, string clipType)
     {
-        yield return new WaitUntil(() => soundLength > 0f);
-
-        while (true)
+        if (clips == null)
         {
-            if (!bgmEnd)
+            Debug.LogError(clipType + " clips array is null.");
+            return;
+        }
+
+        foreach (AudioClip clip in clips)
+        {
+            if (clip == null)
             {
-                bgmEnd = true;
-                SoundManager.Instance.PlaySound2D("BGM_In a good place " + SoundManager.Range(1, 1, true));
+                Debug.LogWarning(clipType + " clips array contains a null clip.");
+                continue;
             }
 
-            yield return new WaitForSeconds(soundLength);
-
-            bgmEnd = false;
+            if (!mClipsDictionary.ContainsKey(clip.name))
+            {
+                mClipsDictionary.Add(clip.name, clip);
+            }
+            else
+            {
+                Debug.LogWarning("Duplicate clip name: " + clip.name + " in " + clipType + " clips array.");
+            }
         }
     }
 
@@ -79,9 +92,9 @@ public class SoundManager : MonoBehaviour
     {
         AudioClip clip = mClipsDictionary[clipName];
 
-        if (clip == null) 
-        { 
-            Debug.LogError(clipName + "이 존재하지 않습니다."); 
+        if (clip == null)
+        {
+            Debug.LogError(clipName + "이 존재하지 않습니다.");
         }
 
         return clip;
@@ -115,7 +128,7 @@ public class SoundManager : MonoBehaviour
         if (isLoop) { AddToList(soundPlayer); }
 
         soundPlayer.InitSound2D(GetClip(clipName));
-        soundPlayer.Play(mAudioMixer.FindMatchingGroups(type.ToString())[0], delay, isLoop);
+        soundPlayer.Play(sAudioMixer.FindMatchingGroups(type.ToString())[0], delay, isLoop);
     }
 
     public void PlaySound3D(string clipName, Transform audioTarget, float delay = 0f, bool isLoop = false, SoundType type = SoundType.EFFECT, bool attachToTarget = true, float minDistance = 0.0f, float maxDistance = 50.0f)
@@ -129,7 +142,7 @@ public class SoundManager : MonoBehaviour
         if (isLoop) { AddToList(soundPlayer); }
 
         soundPlayer.InitSound3D(GetClip(clipName), minDistance, maxDistance);
-        soundPlayer.Play(mAudioMixer.FindMatchingGroups(type.ToString())[0], delay, isLoop);
+        soundPlayer.Play(sAudioMixer.FindMatchingGroups(type.ToString())[0], delay, isLoop);
     }
 
     public void InitVolumes(float bgm, float effect)
@@ -140,7 +153,7 @@ public class SoundManager : MonoBehaviour
 
     public void SetVolume(SoundType type, float value)
     {
-        mAudioMixer.SetFloat(type.ToString(), value);
+        sAudioMixer.SetFloat(type.ToString(), value);
     }
 
     public static string Range(int from, int includedTo, bool isStartZero = false)

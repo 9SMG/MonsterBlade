@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(CharacterController))]
+
 public class PlayerCtrl : MonoBehaviour
 {
     [SerializeField] public Transform charaterBody;
     Vector3 moveDirection;
     Vector3 MoveDir;
     Vector3 diveDirection;
-    Animator animator;  
+    Animator animator;
     Camera camera;
     CharacterController controller;
     Ray ray;
@@ -22,8 +22,8 @@ public class PlayerCtrl : MonoBehaviour
 
     public GameObject[] pickUpItem;
     public bool[] checkPickUp = new bool[3];
-    public float speed = 5f; 
-    public float runSpeed = 8f;  
+    public float speed = 5f;
+    public float runSpeed = 8f;
     public float finalSpeed;
     public float rotationSpeed;
     public float smoothness = 10f;
@@ -48,7 +48,7 @@ public class PlayerCtrl : MonoBehaviour
     float fireDelay;
     bool fireStart;
     bool groundCheck;
-    bool isMove;
+    public bool isMove;
     int weaponsIndex = 0;
 
     void Awake()
@@ -76,16 +76,16 @@ public class PlayerCtrl : MonoBehaviour
         attackHit = false;
     }
 
-    protected virtual void Update()
+    void Update()
     {
         CameraRotation();
         GetInput();
         ShotCheck();
         StartCoroutine(OpenInven());
 
-        if(Input.GetKey(KeyCode.Keypad2))
+        if (Input.GetKey(KeyCode.Keypad2))
         {
-            
+
         }
 
         //Vector3 enemyPosition = target.myEnemyTarget.transform.position;
@@ -105,7 +105,7 @@ public class PlayerCtrl : MonoBehaviour
         //}
     }
 
-    protected virtual void FixedUpdate()
+    void FixedUpdate()
     {
         GroundCheck();
         InputMoveMent();
@@ -161,18 +161,21 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Damage(float damage)
     {
-        StartCoroutine(HitDamage(damage));
+        if (!attackHit)
+        {
+            StartCoroutine(HitDamage(damage));
+        }
     }
 
     IEnumerator HitDamage(float damage)
     {
+        attackHit = true;
         animator.SetTrigger("isHit");
         _curHp -= damage;
         if (_curHp <= 0 && !dieCheck)
         {
             StartCoroutine(Die());
         }
-        Debug.Log("Hp - !!");
         yield return new WaitForSeconds(1f);
         attackHit = false;
     }
@@ -198,13 +201,16 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (open == false)
             {
+                Cursor.lockState = CursorLockMode.Confined;
                 Inven.SetActive(true);
                 Cursor.visible = true;
+                animator.SetFloat("Blend", 0);
                 yield return new WaitForSeconds(0.2f);
                 open = true;
             }
-            else if(open == true)
+            else if (open == true)
             {
+                Cursor.lockState = CursorLockMode.Locked;
                 Inven.SetActive(false);
                 Cursor.visible = false;
                 yield return new WaitForSeconds(0.2f);
@@ -225,7 +231,7 @@ public class PlayerCtrl : MonoBehaviour
     void ShotCheck()
     {
         crossHair = transform.Find("CrossHair").transform.gameObject;
-        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll)
+        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll && !isMove)
         {
             //if (target.myEnemyTarget != null)
             //{
@@ -237,7 +243,7 @@ public class PlayerCtrl : MonoBehaviour
             animator.SetBool("isShotReady", true);
             shotReady = true;
         }
-        else if(Input.GetMouseButtonUp(1) && open == false)
+        else if (Input.GetMouseButtonUp(1))
         {
             crossHair.SetActive(false);
             animator.SetBool("isShotReady", false);
@@ -249,7 +255,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         equipWeapon = weapons[weaponsIndex].GetComponent<Weapon>();
 
-        if(equipWeapon == null)
+        if (equipWeapon == null)
         {
             return;
         }
@@ -257,10 +263,10 @@ public class PlayerCtrl : MonoBehaviour
         fireDelay += Time.deltaTime;
         fireStart = equipWeapon.attackRate < fireDelay;
 
-        if(Input.GetMouseButton(0) && shotReady && fireStart && !shotD && !isMove)
+        if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD && !isMove)
         {
             equipWeapon.Use();
-            animator.SetBool("isShot",true);
+            animator.SetBool("isShot", true);
             fireDelay = 0;
             shotD = true;
             //SoundManager.Instance.PlaySound2D("Voice " + SoundManager.Range(1, 5, true));
@@ -319,7 +325,7 @@ public class PlayerCtrl : MonoBehaviour
 
     void DiveRoll()
     {
-        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck)
+        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false)
         {
             diveDirection = moveDirection;
             animator.SetBool("isDiveRoll", true);
@@ -341,48 +347,50 @@ public class PlayerCtrl : MonoBehaviour
         if (player != null)
         {
             player.tag = "Untagged";
-            yield return new WaitForSeconds(0.5f);                                          
+            yield return new WaitForSeconds(0.5f);
             player.tag = "Player";
         }
     }
 
     void InputMoveMent()
     {
-        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"),0 , Input.GetAxisRaw("Vertical"));
+        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         isMove = moveInput.magnitude != 0;
 
-        if (isMove)
+        if (open == false && shotReady == false)
         {
-            finalSpeed = (run) ? runSpeed : speed;
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
-
-            moveDirection = (forward * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal")).normalized;
-
-            if (diveRoll)
+            if (isMove)
             {
-                controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
-                moveDirection = diveDirection;
+                finalSpeed = (run) ? runSpeed : speed;
+                Vector3 forward = transform.TransformDirection(Vector3.forward);
+                Vector3 right = transform.TransformDirection(Vector3.right);
+
+                moveDirection = (forward * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal")).normalized;
+
+                if (diveRoll)
+                {
+                    controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
+                    moveDirection = diveDirection;
+                }
+                else
+                {
+                    controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
+                }
+                charaterBody.forward = moveDirection * Time.deltaTime;
+
+
+                float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
+                animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
             }
-            else
+
+            else if (!isMove)
             {
-                controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
-            }
-            charaterBody.forward = moveDirection * Time.deltaTime;
-
-
-            float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
-            animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
-
-        }
-
-        else if(!isMove)
-        {
-            animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
-            if (diveRoll)
-            {
-                controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
-                moveDirection = diveDirection;
+                animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
+                if (diveRoll)
+                {
+                    controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
+                    moveDirection = diveDirection;
+                }
             }
         }
     }

@@ -10,12 +10,12 @@ public class VRPlayerCtrl : PlayerCtrl
         
     }
 
-    protected override void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
         
     }

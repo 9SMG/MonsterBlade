@@ -5,29 +5,29 @@ public class RandomFall : MonoBehaviour
 {
     private Projector mProjector;
 
-    [SerializeField] private float mInitFovSize;       
-    [SerializeField] private float mDeltaTimeMultiply; 
-    [SerializeField] private float mMaxFovSize;        
-    [SerializeField] private ParticleSystem particlePrefab; 
-    [SerializeField] private float mParticleSpawnYPos;    
-    [SerializeField] private float destroyDelay = 2.0f; 
+    [SerializeField] private float mInitFovSize;
+    [SerializeField] private float mDeltaTimeMultiply;
+    [SerializeField] private float mMaxFovSize;
+    [SerializeField] private ParticleSystem particlePrefab;
+    [SerializeField] private float mParticleSpawnYPos;
+    [SerializeField] private float destroyDelay = 2.0f;
 
     private void Awake()
     {
         mProjector = GetComponent<Projector>();
         Vector3 newPosition = mProjector.transform.position;
         newPosition.y = -21;
-        mProjector.transform.position = newPosition; 
+        mProjector.transform.position = newPosition;
 
-        Quaternion newRotation = mProjector.transform.rotation; 
+        Quaternion newRotation = mProjector.transform.rotation;
         newRotation.eulerAngles = new Vector3(-270, newRotation.eulerAngles.y, newRotation.eulerAngles.z);
-        mProjector.transform.rotation = newRotation; 
+        mProjector.transform.rotation = newRotation;
     }
 
     private void OnEnable()
     {
-        mProjector.fieldOfView = mInitFovSize; 
-        StartCoroutine(SpawnParticle()); 
+        mProjector.fieldOfView = mInitFovSize;
+        StartCoroutine(SpawnParticle());
     }
 
     void Update()

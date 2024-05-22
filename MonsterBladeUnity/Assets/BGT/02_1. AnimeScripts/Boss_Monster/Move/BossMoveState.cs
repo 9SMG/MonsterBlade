@@ -30,7 +30,9 @@ public class BossMoveState : BossState
         }
 
         Vector3 delta = _boss._player.transform.position - _boss.transform.position;
-        _boss.transform.position += delta.normalized * _boss._speed * Time.deltaTime;
+        Vector3 moveDirection = delta.normalized * _boss._speed * Time.deltaTime;
+
+        _boss.transform.Translate(moveDirection, Space.World);
         _boss.charaterBody.forward = delta;
     }
 

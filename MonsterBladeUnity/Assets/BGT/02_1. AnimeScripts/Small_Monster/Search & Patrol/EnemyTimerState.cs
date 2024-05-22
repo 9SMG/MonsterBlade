@@ -17,7 +17,7 @@ public class EnemyTimerState : EnemyState
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _timer += Time.deltaTime;
-        if(_timer > time)
+        if (_timer > time)
         {
             animator.SetTrigger("isTime");
             _timer = 0.0f;
