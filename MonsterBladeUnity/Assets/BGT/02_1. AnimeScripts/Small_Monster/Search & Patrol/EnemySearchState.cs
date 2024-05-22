@@ -22,7 +22,7 @@ public class EnemySearchState : EnemyState
         float originDistance = Vector3.Distance(_enemy.transform.position, _enemy.originPos);
         float distance = Vector3.Distance(_enemy.transform.position, _enemy._player.transform.position);
 
-        if(originDistance > _enemy._maxMoveRange)
+        if (originDistance > _enemy._maxMoveRange)
         {
             _enemy._player.isTarget = false;
             animator.SetBool("isTarget", false);

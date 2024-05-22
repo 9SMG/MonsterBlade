@@ -21,8 +21,9 @@ public class BossPatrolState : BossState
             _direction = new Vector3(Random.Range(-10.0f, 10.0f), 0f, Random.Range(-10.0f, 10.0f)).normalized;
             return;
         }
-        _boss.charaterBody.forward = _direction;
-        _boss.transform.position += _direction * _boss._speed * Time.deltaTime;
+        Quaternion targetRotation = Quaternion.LookRotation(_direction);
+        _boss.charaterBody.rotation = Quaternion.Slerp(_boss.charaterBody.rotation, targetRotation, _boss._rotationSpeed * Time.deltaTime);
+        _boss.transform.Translate(_direction * _boss._speed * Time.deltaTime, Space.World);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

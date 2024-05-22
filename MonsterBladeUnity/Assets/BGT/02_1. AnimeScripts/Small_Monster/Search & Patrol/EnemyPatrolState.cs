@@ -21,8 +21,9 @@ public class EnemyPatrolState : EnemyState
             _direction = new Vector3(Random.Range(-10.0f, 10.0f), 0f, Random.Range(-10.0f, 10.0f)).normalized;
             return;
         }
-        _enemy.charaterBody.forward = _direction;
-        _enemy.transform.position += _direction * _enemy._speed * Time.deltaTime;
+        Quaternion targetRotation = Quaternion.LookRotation(_direction);
+        _enemy.charaterBody.rotation = Quaternion.Slerp(_enemy.charaterBody.rotation, targetRotation, _enemy._rotationSpeed * Time.deltaTime);
+        _enemy.transform.Translate(_direction * _enemy._speed * Time.deltaTime, Space.World);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

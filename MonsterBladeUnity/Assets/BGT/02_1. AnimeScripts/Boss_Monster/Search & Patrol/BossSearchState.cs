@@ -22,7 +22,7 @@ public class BossSearchState : BossState
         float originDistance = Vector3.Distance(_boss.transform.position, _boss.originPos);
         float distance = Vector3.Distance(_boss.transform.position, _boss._player.transform.position);
 
-        if(originDistance > _boss._maxMoveRange)
+        if (originDistance > _boss._maxMoveRange)
         {
             _boss._player.isTarget = false;
             animator.SetBool("isTarget", false);

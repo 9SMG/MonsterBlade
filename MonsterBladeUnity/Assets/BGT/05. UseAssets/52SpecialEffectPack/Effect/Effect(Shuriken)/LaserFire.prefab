@@ -285,7 +285,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3764,11 +3764,11 @@ ParticleSystem:
   TriggerModule:
     enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
     enter: 0
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
     primitives:
     - {fileID: 0}
@@ -4795,11 +4795,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   Active: {fileID: 11400000, guid: 389f2ecaf4f6bfc45bdfba98fc6a26f6, type: 2}
+  fallPlayer: {fileID: 0}
   damageAmount: 10
-  raycastDistance: 10
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  raycastDistance: 70
   Hitcheck: 0
 --- !u!1 &100002
 GameObject:
@@ -32447,13 +32445,14 @@ ParticleSystem:
   TriggerModule:
     enabled: 0
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
     enter: 0
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 0}
   SubModule:
     serializedVersion: 2
     enabled: 0

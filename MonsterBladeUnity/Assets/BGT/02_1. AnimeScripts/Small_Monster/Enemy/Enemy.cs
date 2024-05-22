@@ -8,9 +8,10 @@ public class Enemy : MonoBehaviour
     public MeshRenderer lifeBar;
     public PlayerCtrl _player;
     public Transform charaterBody;
+    DropCtrl dropCtrl;
     Animator anime;
 
-    [field:SerializeField]
+    [field: SerializeField]
     public float _searchRange { get; private set; }
     public float _maxMoveRange;
     public float _attackRange;
@@ -20,12 +21,14 @@ public class Enemy : MonoBehaviour
     public float _maxHp;
     public float _damage;
     public float _rotationSpeed;
+    public float _moveSpeed;
     public bool playerHit;
 
     public Vector3 originPos;
 
     void Awake()
     {
+        dropCtrl = GetComponentInChildren<DropCtrl>();
         anime = GetComponent<Animator>();
         originPos = transform.position;
         _curHp = _maxHp;
@@ -38,34 +41,31 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(_player == null)
+        if (_player == null)
         {
             Debug.Log("Null");
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
         }
     }
 
+    void FixedUpdate()
+    {
+        lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
+    }
+
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Arrow" && _curHp > 0)
+        if (col.gameObject.tag == "Arrow" && _curHp > 0)
         {
             Arrow arrow = col.GetComponent<Arrow>();
             _curHp -= arrow.damage;
-            lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
             StartCoroutine(Damage());
         }
-        if (col.gameObject.tag == "VRSword" && _curHp > 0)
-        {
-            VRSword vrRSword = col.GetComponent<VRSword>();
-            _curHp -= vrRSword.damage;
-            lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
-            StartCoroutine(Damage());
-        }
+
         if (col.gameObject.tag == "Skill" && _curHp > 0)
         {
             Skill skill = col.GetComponent<Skill>();
             _curHp -= skill.damage;
-            lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
             StartCoroutine(Damage());
         }
     }
@@ -92,6 +92,7 @@ public class Enemy : MonoBehaviour
 
         if (_curHp <= 0)
         {
+            dropCtrl.DropItem();
             StartCoroutine(Die());
         }
     }

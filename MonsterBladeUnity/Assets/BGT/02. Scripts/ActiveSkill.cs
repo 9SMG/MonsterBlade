@@ -34,7 +34,7 @@ public class ActiveSkill : MonoBehaviour
 
     public void InputSkill()
     {
-        if(Input.GetKey("r") && imgCool.fillAmount == 1)
+        if (Input.GetKey("r") && imgCool.fillAmount == 1)
         {
             StopAllCoroutines();
             if (imgCool == null)

@@ -46,12 +46,12 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator TarGetSetting()
     {
-        if(Input.GetKey(KeyCode.C) && targetSet == false)
+        if (Input.GetKey(KeyCode.C) && targetSet == false)
         {
             yield return new WaitForSeconds(0.2f);
             targetSet = true;
         }
-        else if(Input.GetKey(KeyCode.C) && targetSet == true)
+        else if (Input.GetKey(KeyCode.C) && targetSet == true)
         {
             yield return new WaitForSeconds(0.2f);
             targetSet = false;
@@ -105,7 +105,7 @@ public class TargetManager : MonoBehaviour
                 enemyTargetImage.SetActive(false);
             }
         }
-        else if(enemyTargetImage != null && targetSet == false)
+        else if (enemyTargetImage != null && targetSet == false)
         {
             enemyTargetImage.SetActive(false);
         }

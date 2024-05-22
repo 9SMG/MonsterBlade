@@ -19,15 +19,15 @@ public class EnemyResetPositionState : EnemyState
         Vector3 delta = _enemy.originPos - _enemy.transform.position;
         _enemy.transform.position += delta.normalized * _enemy._speed * Time.deltaTime;
         _enemy.charaterBody.forward = delta;
-        if(originDistance < 0.5f)
+        if (originDistance < 0.5f)
         {
             animator.SetBool("isReset", false);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        _enemy._curHp = _enemy._maxHp;
+    }
 }

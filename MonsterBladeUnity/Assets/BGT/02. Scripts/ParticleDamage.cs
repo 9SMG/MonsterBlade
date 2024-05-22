@@ -9,7 +9,6 @@ public class ParticleDamage : MonoBehaviour
     public Transform fallPlayer;
     public float damageAmount = 10f;
     public float raycastDistance = 10f;
-    public LayerMask hitLayer;
     public bool Hitcheck = false;
 
     ParticleSystem ps;
@@ -29,6 +28,12 @@ public class ParticleDamage : MonoBehaviour
             Debug.Log("Null");
             player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
         }
+        if (fallPlayer == null)
+        {
+            Debug.Log("Null");
+            fallPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            ps.trigger.SetCollider(0, fallPlayer);
+        }
     }
 
     void OnParticleTrigger()
@@ -40,12 +45,14 @@ public class ParticleDamage : MonoBehaviour
         for (int i = 0; i < numParticlesInside; i++)
         {
             Vector3 particlePosition = particles[i].position;
-            Vector3 playerPosition = player.transform.position;
+            Vector3 particleRaycast = transform.position + new Vector3(0f, 1f, 0f);
+            Vector3 playerPosition = fallPlayer.transform.position;
+            Vector3 playerRaycast = fallPlayer.transform.position + new Vector3(0f, 1f, 0f);
             RaycastHit hit;
 
-            if (Physics.Raycast(particlePosition, (playerPosition - particlePosition).normalized, out hit, raycastDistance))
+            if (Physics.Raycast(particleRaycast, (playerRaycast - particleRaycast).normalized, out hit, raycastDistance))
             {
-                Debug.DrawLine(particlePosition, hit.point, Color.red, 0.1f);
+                Debug.DrawLine(particleRaycast, hit.point, Color.red, 0.1f);
 
                 PlayerCtrl player = hit.collider.GetComponent<PlayerCtrl>();
                 if (player != null && Hitcheck == false)

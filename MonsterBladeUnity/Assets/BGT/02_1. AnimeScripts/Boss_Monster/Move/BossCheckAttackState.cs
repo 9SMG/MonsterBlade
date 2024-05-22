@@ -16,19 +16,23 @@ public class BossCheckAttackState : BossState
         float distance = Vector3.Distance(_boss.transform.position, _boss._player.transform.position);
         int randomNumber = Random.Range(1, 4);
 
-        if (distance < (_boss._attackRange *0.3) && randomNumber == 3)
+        if (_boss.checkNum != randomNumber)
         {
-            animator.SetTrigger("isAttack_3");
-        }
-        if (distance < (_boss._attackRange) && randomNumber == 1)
-        {
-            animator.SetTrigger("isAttack_1");
-            _boss.ActivateParticle();
-        }
-        if (distance < _boss._attackRange && randomNumber == 2)
-        {
-            animator.SetTrigger("isAttack_2");
-            _boss.ActivateRush();
+            if (distance < (_boss._attackRange * 0.3) && randomNumber == 3)
+            {
+                animator.SetTrigger("isAttack_3");
+            }
+            if (distance < (_boss._attackRange) && randomNumber == 1)
+            {
+                animator.SetTrigger("isAttack_1");
+                _boss.ActivateParticle();
+            }
+            if (distance < _boss._attackRange && randomNumber == 2)
+            {
+                animator.SetTrigger("isAttack_2");
+                _boss.ActivateRush();
+            }
+            _boss.checkNum = randomNumber;
         }
     }
 
