@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 950892497072754827, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
 --- !u!1 &354925045
@@ -499,7 +503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &673744472
 Transform:
   m_ObjectHideFlags: 0

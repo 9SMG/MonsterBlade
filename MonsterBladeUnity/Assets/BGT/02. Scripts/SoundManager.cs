@@ -52,6 +52,11 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
+        if (instance == null)
+            instance = Instance;
+        if (instance != this)
+            Destroy(this.gameObject);
+
         mClipsDictionary = new Dictionary<string, AudioClip>();
 
         AddClipsToDictionary(sBgmClips, "BGM");

@@ -42,6 +42,7 @@ public class BgmPlay : MonoBehaviour
         if (previousScene.IsValid())
         {
             StopAllCoroutines();
+            bgmEnd = false;
 
             if (sceneBgmMap.ContainsKey(previousScene.name))
             {
