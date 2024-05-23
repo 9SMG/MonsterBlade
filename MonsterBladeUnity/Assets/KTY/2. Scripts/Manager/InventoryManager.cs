@@ -120,14 +120,20 @@ public class InventoryManager : MonoBehaviour, IComparer<SlotInfo>
 		inven.SetActive(isOpen);
 		FollowWindow.instance.CloseWindow();
 
-		// 슬롯 쿨타임 계산
+		Cursor.visible = isOpen;
+
+		// 슬롯 쿨타임 계산 및 마우스 컨트롤
 		if (!isOpen)
 		{
 			DisabledTime(); // 창을 닫은 시간 체크
+
+			Cursor.lockState = CursorLockMode.Locked; // 마우스를 잠그세요
 		}
 		else
 		{
 			EnabledTime(); // 창을 열고 남은 시간 계산
+
+			Cursor.lockState = CursorLockMode.Confined; // 마우스를 이동 가능하게
 		}
 	}
 
