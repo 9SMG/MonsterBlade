@@ -9,7 +9,7 @@ public class Coin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		money = Random.Range(1000, 3000);
     }
 
 	private void OnTriggerEnter(Collider col)

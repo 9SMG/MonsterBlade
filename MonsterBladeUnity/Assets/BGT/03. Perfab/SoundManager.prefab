@@ -48,5 +48,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 37386e222ffa4ce47b4e5930ea495e1f, type: 3}
   - {fileID: 8300000, guid: dc3dc4354b4aca64aba9f4fc07097964, type: 3}
   - {fileID: 8300000, guid: ceed04a076ba76e4e81e6fc4c43b188f, type: 3}
-  sEffectClips: []
-  sVoiceClips: []
+  sEffectClips:
+  - {fileID: 8300000, guid: 28145a6d36f968742b22633c294282b9, type: 3}
+  - {fileID: 8300000, guid: fb64ecf3e1085744997acf3b04293baa, type: 3}
+  - {fileID: 8300000, guid: 986fb6cfcfa59e74981e3358c6140ce6, type: 3}
+  - {fileID: 8300000, guid: fb9321269375bf14abc69737548f8dfb, type: 3}
+  - {fileID: 8300000, guid: 503f73621b23b8f48a576cb322d82138, type: 3}
+  - {fileID: 8300000, guid: 6fa3482990694e14ebc1ec8f3506bde2, type: 3}
+  - {fileID: 8300000, guid: e7de5a0ea14982747965cf1f3f38cc0d, type: 3}
+  - {fileID: 8300000, guid: 5952fb4caedaba94c9a7af1454d952d6, type: 3}
+  - {fileID: 8300000, guid: dfa9ee3d885a6fe419d4d9a082e03dad, type: 3}
+  sVoiceClips:
+  - {fileID: 8300000, guid: d24e570295f5e1447817ceacc921bc33, type: 3}
+  - {fileID: 8300000, guid: 02be3c055d767384891c616fb7a3ec81, type: 3}
