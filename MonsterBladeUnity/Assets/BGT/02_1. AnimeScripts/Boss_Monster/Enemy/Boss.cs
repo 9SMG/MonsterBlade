@@ -93,6 +93,10 @@ public class Boss : MonoBehaviour
         lifeBar.material.SetFloat("_Progress", _curHp / _maxHp);
         if (_curHp / _maxHp <= 0.3)
         {
+            if (ground)
+            {
+                SoundManager.Instance.PlaySound2D("Monster screams - 57", 0f, false, SoundType.VOICE);
+            }
             ground = false;
             anime.runtimeAnimatorController = anim2;
         }
@@ -165,6 +169,7 @@ public class Boss : MonoBehaviour
         _rushRange = transform.Find("Rush").transform.gameObject;
         rushStart = true;
         _rushRange.SetActive(true);
+        SoundManager.Instance.PlaySound2D("Monster screams - 56", 0f, false, SoundType.VOICE);
         yield return new WaitForSeconds(4.4f);
         rushStart = false;
         _rushRange.SetActive(false);
@@ -182,6 +187,7 @@ public class Boss : MonoBehaviour
             Quaternion rotationEnd = Quaternion.LookRotation(particleDirection);
             ParticleSystem newParticle = Instantiate(particleGround, particlePosition, rotationEnd, firePosition);
             newParticle.Play();
+            SoundManager.Instance.PlaySound2D("Dragon+Spit+Fire+1_out",  0f, false, SoundType.EFFECT);
             Destroy(newParticle.gameObject, destroyDelay);
             yield return new WaitForSeconds(destroyDelay);
             _particleRange.SetActive(false);
@@ -196,6 +202,7 @@ public class Boss : MonoBehaviour
             Quaternion rotationEnd = Quaternion.LookRotation(particleDirection);
             ParticleSystem newParticle = Instantiate(particleFly, particlePosition, rotationEnd, firePosition);
             newParticle.Play();
+            SoundManager.Instance.PlaySound2D("Dragon+Spit+Fire+1_out",  0f, false, SoundType.EFFECT);
             Destroy(newParticle.gameObject, destroyDelay);
             yield return new WaitForSeconds(destroyDelay);
             _particleRange.SetActive(false);
@@ -210,7 +217,7 @@ public class Boss : MonoBehaviour
     IEnumerator Damage()
     {
         yield return new WaitForSeconds(0.2f);
-
+        SoundManager.Instance.PlaySound3D("61_Hit_03", this.transform, 0f, false, SoundType.EFFECT);
         if (_curHp <= 0)
         {
             StartCoroutine(Die());

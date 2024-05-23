@@ -32,7 +32,6 @@ public class BossSearchState : BossState
         {
             _boss._player.isTarget = true;
             animator.SetBool("isTarget", true);
-            //SoundManager.Instance.PlaySound2D("Encounter " + SoundManager.Range(1,1, true));
         }
         //Vector3 delta = _enemy.originPos - _enemy.transform.position;
         //_enemy.transform.position += delta.normalized * _enemy._speed * Time.deltaTime;

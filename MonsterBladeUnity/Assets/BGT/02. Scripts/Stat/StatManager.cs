@@ -7,7 +7,7 @@ public class StatManager : MonoBehaviour
 {
     public bool StatMenu = false;
 
-    [SerializeField] private StatInfo statInfo;
+    public StatInfo statInfo;
     [SerializeField] private TextMeshProUGUI mLvLabel;
     [SerializeField] private TextMeshProUGUI mStatPtLabel;
     [SerializeField] private TextMeshProUGUI mAttackCurrentLabel;
@@ -28,9 +28,7 @@ public class StatManager : MonoBehaviour
 
     void Update()
     {
-
         StartCoroutine(OpenStat()); 
-
     }
 
     public void LevelUp()
@@ -74,9 +72,9 @@ public class StatManager : MonoBehaviour
         mHpMaxLabel.text = statInfo.hpMax.ToString();
         mMpMaxLabel.text = statInfo.mpMax.ToString();
         mStaminaMaxLabel.text = statInfo.staminaMax.ToString();
-        mAttackCurrentLabel.text = statInfo.baseAttack.ToString();
-        mSpeedCurrentLabel.text = statInfo.baseMovementSpeed.ToString();
-        mDefenseCurrentLabel.text = statInfo.baseDefense.ToString();
+        mAttackCurrentLabel.text = statInfo.Attack.ToString();
+        mSpeedCurrentLabel.text = statInfo.MovementSpeed.ToString();
+        mDefenseCurrentLabel.text = statInfo.Defense.ToString();
     }
 
     public void BTN_UpgradeStat(int statIndex)

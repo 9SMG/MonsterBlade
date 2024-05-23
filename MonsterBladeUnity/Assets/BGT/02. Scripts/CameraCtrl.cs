@@ -22,6 +22,8 @@ public class CameraCtrl : MonoBehaviour
     public float finalDistance;
     public float smoothness = 10.0f;
 
+    bool lockCheck=false;
+
     PlayerCtrl player;
     Enemy enemy;
 
@@ -47,6 +49,16 @@ public class CameraCtrl : MonoBehaviour
     void Update()
     {
         CameraMove();
+        if(Input.GetKey(KeyCode.F1) && !lockCheck)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            lockCheck = true;
+        }
+        else if (Input.GetKey(KeyCode.F1) && lockCheck)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            lockCheck = false;
+        }
     }
 
     void LateUpdate()

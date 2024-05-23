@@ -8,13 +8,15 @@ public class ExpManager : MonoBehaviour
     [SerializeField] private Image mExpBar;
     StatManager statManager;
 
-    public float _curExp;
-    public float _curMaxExp = 100;
+    //public float _curExp;
+    //public float _curMaxExp;
 
     private Coroutine cUpdateExpBarFill;
 
     void Awake()
     {
+        //_curExp = statManager.statInfo._curEXP;
+        //_curMaxExp = statManager.statInfo._curMaxEXP;
         statManager = GetComponent<StatManager>();
     }
 
@@ -25,8 +27,8 @@ public class ExpManager : MonoBehaviour
 
     public void AddExp(float value)
     {
-        float expPrev = _curExp;
-        _curExp += value;
+        float expPrev = statManager.statInfo._curEXP;
+        statManager.statInfo._curEXP += value;
 
         if (cUpdateExpBarFill != null)
             StopCoroutine(cUpdateExpBarFill);
@@ -41,15 +43,15 @@ public class ExpManager : MonoBehaviour
         {
             process += Time.deltaTime;
 
-            expPrev = Mathf.Lerp(expPrev, _curExp, process);
-            mExpBar.fillAmount = expPrev / _curMaxExp;
+            expPrev = Mathf.Lerp(expPrev, statManager.statInfo._curEXP, process);
+            mExpBar.fillAmount = expPrev / statManager.statInfo._curMaxEXP;
 
-            if (expPrev / _curMaxExp >= 1f)
+            if (expPrev / statManager.statInfo._curMaxEXP >= 1f)
             {
                 expPrev = 0f;
                 process = 0f;
-                _curExp -= _curMaxExp;
-                _curMaxExp *= 2.0f;
+                statManager.statInfo._curEXP -= statManager.statInfo._curMaxEXP;
+                statManager.statInfo._curMaxEXP *= 2.0f;
 
                 statManager.LevelUp();
             }

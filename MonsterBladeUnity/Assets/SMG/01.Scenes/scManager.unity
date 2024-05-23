@@ -174,6 +174,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 950892497072754826, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
+      propertyPath: sEffectClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f05430eb8ef2b64d89c80696a603b07, type: 3}
+    - target: {fileID: 950892497072754826, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
+      propertyPath: sEffectClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: ddae3f1bcae94ae439d6e203ee79c7ae, type: 3}
+    - target: {fileID: 950892497072754826, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
+      propertyPath: sEffectClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: cd24f8657af9eed429bc9ff8a37a8c4b, type: 3}
     - target: {fileID: 950892497072754827, guid: 10d7dbfb38dcaab478f1df704f4a58e6, type: 3}
       propertyPath: m_Name
       value: SoundManager

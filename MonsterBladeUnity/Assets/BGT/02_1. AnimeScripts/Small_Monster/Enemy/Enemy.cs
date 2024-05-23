@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damage()
     {
+        SoundManager.Instance.PlaySound3D("61_Hit_03", this.transform, 0f, false, SoundType.EFFECT);
         anime.SetTrigger("isHit");
         yield return new WaitForSeconds(0.2f);
 

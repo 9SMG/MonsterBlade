@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1711397212043547348}
   - component: {fileID: 1711397212043547347}
   - component: {fileID: 1711397212043547346}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StaminaPotion
   m_TagString: Item
   m_Icon: {fileID: 0}
