@@ -5,17 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewStatInfo", menuName = "Stats/StatInfo")]
 public class StatInfo : ScriptableObject
 {
-    public int level;
+    public int level = 1;
     public float hpMax;
     public float mpMax;
     public float staminaMax;
-    public float baseAttack;
-    public float baseMovementSpeed;
-    public float baseDefense;
+    public float Attack;
+    public float MovementSpeed;
+    public float Defense;
 
     public float _curHP;
     public float _curMP;
     public float _curStamina;
+    public float _curEXP;
+    public float _curMaxEXP;
+
 
     public void InitStatData()
     {
@@ -44,13 +47,13 @@ public class StatInfo : ScriptableObject
                 _curStamina += 50;
                 break;
             case StatType.ATTACK:
-                baseAttack += 5;
+                Attack += 5;
                 break;
             case StatType.MOVEMENT_SPEED:
-                baseMovementSpeed += 1;
+                MovementSpeed += 1;
                 break;
             case StatType.DEFENSE:
-                baseDefense += 2.5f;
+                Defense += 2.5f;
                 break;
         }
     }

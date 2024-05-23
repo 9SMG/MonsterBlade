@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5336319537264335027}
   - component: {fileID: 5336319537264335026}
   - component: {fileID: 5336319537264335029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ManaPotion
   m_TagString: Item
   m_Icon: {fileID: 0}

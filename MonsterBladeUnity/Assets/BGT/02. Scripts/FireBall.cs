@@ -81,6 +81,7 @@ public class FireBall : MonoBehaviour
 
     IEnumerator MoveParticle(Transform objectTransform, Vector3 direction, float distance, float moveTime)
     {
+        bool check = true;
         float elapsedTime = 0f;
         while (elapsedTime < moveTime)
         {

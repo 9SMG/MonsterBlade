@@ -30,6 +30,7 @@ public class Item : MonoBehaviour
 			Rigidbody rig = GetComponent<Rigidbody>();
 			rig.isKinematic = true;
 
+			SoundManager.Instance.PlaySound2D("BellishAccept6", 0f, false, SoundType.EFFECT);
 
 			InventoryManager.instance.AddItem(_itemInfo);
 			Destroy(gameObject);

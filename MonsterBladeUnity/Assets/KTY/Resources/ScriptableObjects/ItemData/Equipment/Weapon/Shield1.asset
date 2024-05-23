@@ -21,4 +21,4 @@ MonoBehaviour:
   equipmentType: 0
   isWearable: 1
   weaponType: 0
-  Atk: 300
+  Atk: 5

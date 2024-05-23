@@ -28,6 +28,7 @@ public class RandomFall : MonoBehaviour
     {
         mProjector.fieldOfView = mInitFovSize;
         StartCoroutine(SpawnParticle());
+        StartCoroutine(EffectSound());
     }
 
     void Update()
@@ -47,5 +48,11 @@ public class RandomFall : MonoBehaviour
         Vector3 particlePosition = new Vector3(transform.position.x, mParticleSpawnYPos, transform.position.z);
         ParticleSystem newParticle = Instantiate(particlePrefab, particlePosition, Quaternion.identity);
         newParticle.Play();
+    }
+
+    IEnumerator EffectSound()
+    {
+        yield return new WaitForSeconds(2.5f);
+        SoundManager.Instance.PlaySound2D("Explosion+1_out", 0f, false, SoundType.EFFECT);
     }
 }
