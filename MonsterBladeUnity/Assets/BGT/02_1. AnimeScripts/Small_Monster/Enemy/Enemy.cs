@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
         anime = GetComponent<Animator>();
         originPos = transform.position;
         _curHp = _maxHp;
-        //expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
     }
 
     void Start()
@@ -47,6 +46,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Null");
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
+            expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
         }
     }
 
@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
         anime.SetBool("isDie", true);
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         dropCtrl.DropItem();
-        //expManager.AddExp(100);
+        expManager.AddExp(100);
         yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
     }

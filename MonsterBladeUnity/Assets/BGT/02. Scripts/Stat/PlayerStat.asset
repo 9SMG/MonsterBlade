@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b23bdd33e694c24cb0b7462f4bab6a4, type: 3}
   m_Name: PlayerStat
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
   hpMax: 20
   mpMax: 100
-  staminaMax: 100
-  baseAttack: 5
-  baseMovementSpeed: 2
+  staminaMax: 150
+  baseAttack: 15
+  baseMovementSpeed: 3
   baseDefense: 0
   _curHP: 20
   _curMP: 100
-  _curStamina: 100
+  _curStamina: 150

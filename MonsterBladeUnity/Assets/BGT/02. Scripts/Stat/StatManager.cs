@@ -5,14 +5,11 @@ using TMPro;
 
 public class StatManager : MonoBehaviour
 {
-    public static bool IsStatDialogEnable { private set; get; } = false;
+    public bool StatMenu = false;
 
     [SerializeField] private StatInfo statInfo;
     [SerializeField] private TextMeshProUGUI mLvLabel;
     [SerializeField] private TextMeshProUGUI mStatPtLabel;
-    [SerializeField] private TextMeshProUGUI mHpCurrentLabel;
-    [SerializeField] private TextMeshProUGUI mMpCurrentLabel;
-    [SerializeField] private TextMeshProUGUI mStaminaCurrentLabel;
     [SerializeField] private TextMeshProUGUI mAttackCurrentLabel;
     [SerializeField] private TextMeshProUGUI mSpeedCurrentLabel;
     [SerializeField] private TextMeshProUGUI mDefenseCurrentLabel;
@@ -20,22 +17,20 @@ public class StatManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mMpMaxLabel;
     [SerializeField] private TextMeshProUGUI mStaminaMaxLabel;
     [SerializeField] private GameObject[] mStatButtons;
-    [SerializeField] private GameObject mStatUiGo;
+    [SerializeField] private GameObject mStatUi;
 
-    private int CurrentStatPoint = 1;
+    int CurrentStatPoint = 1;
 
-    private void Awake()
+    void Awake()
     {
-        IsStatDialogEnable = false;
         statInfo.InitStatData();
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetKey(KeyCode.S))
-        {
-            ToggleStatMenu();
-        }
+
+        StartCoroutine(OpenStat()); 
+
     }
 
     public void LevelUp()
@@ -45,28 +40,28 @@ public class StatManager : MonoBehaviour
         UpdateStatTexts();
     }
 
-    public void ToggleStatMenu()
+    IEnumerator OpenStat()
     {
-        if (mStatUiGo.activeSelf)
-            TryCloseStatDialog();
-        else
-            TryOpenStatDialog();
-    }
-
-    private void TryOpenStatDialog()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        mStatUiGo.SetActive(true);
-        IsStatDialogEnable = true;
-        transform.SetAsLastSibling();
-        UpdateStatTexts();
-    }
-
-    private void TryCloseStatDialog()
-    {
-        IsStatDialogEnable = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        mStatUiGo.SetActive(false);
+        if (Input.GetKey(KeyCode.P))
+        {
+            if (!StatMenu)
+            {
+                Debug.Log("False");
+                Cursor.lockState = CursorLockMode.Confined;
+                mStatUi.SetActive(true);
+                UpdateStatTexts();
+                yield return new WaitForSeconds(0.2f);
+                StatMenu = true;
+            }
+            else if(StatMenu)
+            {
+                Debug.Log("True");
+                Cursor.lockState = CursorLockMode.Locked;
+                mStatUi.SetActive(false);
+                yield return new WaitForSeconds(0.2f);
+                StatMenu = false;
+            }
+        }
     }
 
     public void UpdateStatTexts()
@@ -76,12 +71,9 @@ public class StatManager : MonoBehaviour
 
         mLvLabel.text = statInfo.level.ToString();
         mStatPtLabel.text = CurrentStatPoint.ToString();
-        mHpCurrentLabel.text = statInfo._curHP.ToString();
-        mMpCurrentLabel.text = statInfo._curMP.ToString();
-        mStaminaCurrentLabel.text = statInfo._curStamina.ToString();
-        mHpMaxLabel.text = $"/{statInfo.hpMax}";
-        mMpMaxLabel.text = $"/{statInfo.mpMax}";
-        mStaminaMaxLabel.text = $"/{statInfo.staminaMax}";
+        mHpMaxLabel.text = statInfo.hpMax.ToString();
+        mMpMaxLabel.text = statInfo.mpMax.ToString();
+        mStaminaMaxLabel.text = statInfo.staminaMax.ToString();
         mAttackCurrentLabel.text = statInfo.baseAttack.ToString();
         mSpeedCurrentLabel.text = statInfo.baseMovementSpeed.ToString();
         mDefenseCurrentLabel.text = statInfo.baseDefense.ToString();
