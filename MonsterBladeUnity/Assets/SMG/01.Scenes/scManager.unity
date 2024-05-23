@@ -715,7 +715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1667022686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -817,6 +817,7 @@ MonoBehaviour:
   loadingCanvas: {fileID: 2090748729}
   gameLogo: {fileID: 1979438391}
   progressBar: {fileID: 1444993016}
+  fadeEffectImage: {fileID: 1667022687}
   backGroundViews:
   - {fileID: 1737216478}
   - {fileID: 356091479}
@@ -1108,7 +1109,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &2090748730
 RectTransform:
