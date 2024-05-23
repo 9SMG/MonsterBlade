@@ -45,11 +45,11 @@ public class FadeEffect : MonoBehaviour
         yield return null;
         Color color = image.color;
 
-        for(int i = 0; i <= 10; i ++)
+        for(int i = 0; i <= 50; i ++)
         {
-            color.a = 1f - (0.1f * i);
+            color.a = 1f - (0.02f * i);
             image.color = color;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
 }
