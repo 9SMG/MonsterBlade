@@ -110,7 +110,7 @@ public class CameraCtrl : MonoBehaviour
     }
     void ShotCheck()
     {
-        if (player.open == false && !player.diveRoll && !player.isMove)
+        if (player.open == false && !player.diveRoll)
         {
             if (Input.GetMouseButtonDown(1))
             {

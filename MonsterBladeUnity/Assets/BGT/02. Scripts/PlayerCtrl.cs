@@ -20,17 +20,19 @@ public class PlayerCtrl : MonoBehaviour
     TargetManager target;
     ParticleDamage particle;
 
+    public StatInfo statInfo;
     public GameObject[] pickUpItem;
     public bool[] checkPickUp = new bool[3];
-    public float speed = 5f;
+    public float speed = 2f;
     public float runSpeed = 8f;
     public float finalSpeed;
     public float rotationSpeed;
     public float smoothness = 10f;
     public float diveSpeed;
     public float gravity;
-    public float _curHp;
-    public float _maxHp;
+    public float MAXHP;
+    public float CURRHP;
+    public int LV;
     public bool togglecameraRotation;
     public bool run;
     public bool diveRoll;
@@ -44,6 +46,7 @@ public class PlayerCtrl : MonoBehaviour
     public GameObject[] weapons;
     public GameObject crossHair;
     public GameObject Inven;
+    public GameObject Look;
 
     float fireDelay;
     bool fireStart;
@@ -72,8 +75,9 @@ public class PlayerCtrl : MonoBehaviour
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
-        _curHp = _maxHp;
         attackHit = false;
+        MAXHP = statInfo.hpMax;
+        CURRHP = statInfo._curHP;
     }
 
     void Update()
@@ -82,6 +86,8 @@ public class PlayerCtrl : MonoBehaviour
         GetInput();
         ShotCheck();
         StartCoroutine(OpenInven());
+
+        LV = statInfo.level;
 
         if (Input.GetKey(KeyCode.Keypad2))
         {
@@ -171,8 +177,9 @@ public class PlayerCtrl : MonoBehaviour
     {
         attackHit = true;
         animator.SetTrigger("isHit");
-        _curHp -= damage;
-        if (_curHp <= 0 && !dieCheck)
+        statInfo._curHP -= damage;
+        Debug.Log("현재 체력: " + statInfo._curHP);
+        if (statInfo._curHP <= 0 && !dieCheck)
         {
             StartCoroutine(Die());
         }
@@ -221,8 +228,8 @@ public class PlayerCtrl : MonoBehaviour
 
     public void OnEnemySkillDamaged()
     {
-        _curHp -= particle.Active.damage;
-        if (_curHp <= 0 && !dieCheck)
+        statInfo._curHP -= particle.Active.damage;
+        if (statInfo._curHP <= 0 && !dieCheck)
         {
             StartCoroutine(Die());
         }
@@ -231,7 +238,7 @@ public class PlayerCtrl : MonoBehaviour
     void ShotCheck()
     {
         crossHair = transform.Find("CrossHair").transform.gameObject;
-        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll && !isMove)
+        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll)
         {
             //if (target.myEnemyTarget != null)
             //{
@@ -242,6 +249,14 @@ public class PlayerCtrl : MonoBehaviour
             crossHair.SetActive(true);
             animator.SetBool("isShotReady", true);
             shotReady = true;
+            if (target.myEnemyTarget == null)
+            {
+                charaterBody.LookAt(Look.transform.position);
+            }
+            else
+            {
+                charaterBody.LookAt(target.myEnemyTarget.transform.position);
+            }
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -263,12 +278,20 @@ public class PlayerCtrl : MonoBehaviour
         fireDelay += Time.deltaTime;
         fireStart = equipWeapon.attackRate < fireDelay;
 
-        if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD && !isMove)
+        if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD)
         {
             equipWeapon.Use();
             animator.SetBool("isShot", true);
             fireDelay = 0;
             shotD = true;
+            if (target.myEnemyTarget == null)
+            {
+                charaterBody.LookAt(Look.transform.position);
+            }
+            else
+            {
+                charaterBody.LookAt(target.myEnemyTarget.transform.position);
+            }
             //SoundManager.Instance.PlaySound2D("Voice " + SoundManager.Range(1, 5, true));
             StartCoroutine(ShotDelay());
         }
@@ -356,8 +379,9 @@ public class PlayerCtrl : MonoBehaviour
     {
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         isMove = moveInput.magnitude != 0;
+        runSpeed = speed * 4;
 
-        if (open == false && shotReady == false)
+        if (open == false )
         {
             if (isMove)
             {
@@ -376,7 +400,10 @@ public class PlayerCtrl : MonoBehaviour
                 {
                     controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
                 }
-                charaterBody.forward = moveDirection * Time.deltaTime;
+                if (!shotReady)
+                {
+                    charaterBody.forward = moveDirection * Time.deltaTime;
+                }
 
 
                 float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;

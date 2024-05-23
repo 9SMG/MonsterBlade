@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public Transform charaterBody;
     DropCtrl dropCtrl;
     Animator anime;
+    ExpManager expManager; 
 
     [field: SerializeField]
     public float _searchRange { get; private set; }
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
         anime = GetComponent<Animator>();
         originPos = transform.position;
         _curHp = _maxHp;
+        //expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
     }
 
     void Start()
@@ -92,7 +94,6 @@ public class Enemy : MonoBehaviour
 
         if (_curHp <= 0)
         {
-            dropCtrl.DropItem();
             StartCoroutine(Die());
         }
     }
@@ -102,6 +103,8 @@ public class Enemy : MonoBehaviour
         anime.SetBool("isAlive", false);
         anime.SetBool("isDie", true);
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        dropCtrl.DropItem();
+        //expManager.AddExp(100);
         yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
     }

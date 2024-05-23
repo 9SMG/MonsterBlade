@@ -8,6 +8,7 @@ public enum SoundType
     MASTER,
     BGM,
     EFFECT,
+    VOICE
 }
 
 public class SoundManager : MonoBehaviour
