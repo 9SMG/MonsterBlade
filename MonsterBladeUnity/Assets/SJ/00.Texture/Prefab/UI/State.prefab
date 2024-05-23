@@ -48,7 +48,6 @@ GameObject:
   - component: {fileID: 2120292049}
   - component: {fileID: 2120292048}
   - component: {fileID: 2120292047}
-  - component: {fileID: 2120292050}
   m_Layer: 5
   m_Name: SpImg
   m_TagString: State
@@ -128,18 +127,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &2120292050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120292045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b1d2796fee46fe4dadbd2c93528de5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1555579681879438642
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +138,6 @@ GameObject:
   - component: {fileID: 2754113418605803552}
   - component: {fileID: 5957800966006077355}
   - component: {fileID: 5693444277167095583}
-  - component: {fileID: 5707538060910399006}
   - component: {fileID: 141794972}
   m_Layer: 5
   m_Name: Prograss
@@ -217,18 +203,6 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5707538060910399006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555579681879438642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7384c475a089445459f2ef0f81480571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &141794972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +306,6 @@ GameObject:
   - component: {fileID: 7391573714315792827}
   - component: {fileID: 7391573714315792829}
   - component: {fileID: 7391573714315792828}
-  - component: {fileID: 7391573714933563716}
   m_Layer: 5
   m_Name: Mp
   m_TagString: State
@@ -397,18 +370,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7391573714933563716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7391573714315792826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f9c2313e8c2ce2409dbec1a1b77e677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7391573714484921270
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +460,6 @@ GameObject:
   - component: {fileID: 7391573714502570802}
   - component: {fileID: 7391573714502570804}
   - component: {fileID: 7391573714502570803}
-  - component: {fileID: 7391573715652229034}
   m_Layer: 5
   m_Name: Hp
   m_TagString: State
@@ -564,18 +524,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7391573715652229034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7391573714502570801}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12fcaaec887bf04eb648006eb27dd07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7391573714681306283
 GameObject:
   m_ObjectHideFlags: 0

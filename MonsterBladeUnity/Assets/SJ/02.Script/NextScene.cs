@@ -11,4 +11,9 @@ public class NextScene : MonoBehaviour
         //PassSceneManager.LoadScene("Map");
         MonsterBlade.Manager.LoadManager.Instance.LoadStage();
     }
+
+    public void BackScene()
+    {
+
+    }
 }
