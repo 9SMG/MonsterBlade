@@ -144,6 +144,14 @@ public class Boss : MonoBehaviour
             _curHp -= skill.damage;
             StartCoroutine(Damage());
         }
+
+        if (col.gameObject.tag == "VRSword" && _curHp > 0)
+        {
+            VRSword vrsword = col.GetComponent<VRSword>();
+            _curHp -= vrsword.damage;
+            lifeBar.material.SetFloat("_Progress", _curHp / 100.0f);
+            StartCoroutine(Damage());
+        }
     }
 
     //public void Attack()
