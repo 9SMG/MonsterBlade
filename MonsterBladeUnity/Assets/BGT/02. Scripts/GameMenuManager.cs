@@ -7,7 +7,8 @@ public class GameMenuManager : MonoBehaviour
 {
     public Slider mBGMSoundSlider;
     public Slider mEffectSoundSlider;
-    public Slider mMaterSoundSlider;
+    public Slider mMasterSoundSlider;
+    public Slider mVoiceSoundSlider;
 
 
     public void BGMVolume()
@@ -21,6 +22,11 @@ public class GameMenuManager : MonoBehaviour
 
     public void MasterVolume()
     {
-        SoundManager.Instance.SetVolume(SoundType.MASTER, mMaterSoundSlider.value);
+        SoundManager.Instance.SetVolume(SoundType.MASTER, mMasterSoundSlider.value);
+    }
+
+    public void VoiceVolume()
+    {
+        SoundManager.Instance.SetVolume(SoundType.VOICE, mVoiceSoundSlider.value);
     }
 }
