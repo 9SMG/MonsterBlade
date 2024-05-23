@@ -23,7 +23,7 @@ namespace MonsterBlade.Manager
         // In Game
         public static readonly string scnMap = "Map";
         public static readonly string scnUI = "UI";
-        //const string scnPhotonLobby;
+        public static readonly string scnPhotonLobby = "PhotonLobby";
 
         // Loading Canvas
         public Canvas loadingCanvas;
@@ -84,6 +84,7 @@ namespace MonsterBlade.Manager
             SetProgressBar(1f);
             //nowLoading = false;
 
+            yield return new WaitForSeconds(1f);
             ShowLoadingCanavas(false);
         }
 
@@ -200,7 +201,7 @@ namespace MonsterBlade.Manager
                 ao = SceneManager.LoadSceneAsync(scnMap, LoadSceneMode.Additive);
                 while (!ao.isDone)
                 {
-                    SetProgressBar(ao.progress / 2f);
+                    SetProgressBar(ao.progress / 3f);
                     yield return null;
                 }
             }
@@ -216,11 +217,16 @@ namespace MonsterBlade.Manager
             ao = SceneManager.LoadSceneAsync(scnUI, LoadSceneMode.Additive);
             while (!ao.isDone)
             {
-                SetProgressBar((ao.progress + 1f) / 2f);
+                SetProgressBar((ao.progress + 1f) / 3f);
                 yield return null;
             }
 
-            
+            ao = SceneManager.LoadSceneAsync(scnPhotonLobby, LoadSceneMode.Additive);
+            while (!ao.isDone)
+            {
+                SetProgressBar((ao.progress + 2f) / 3f);
+                yield return null;
+            }
         }
 
         void ResetLoadingCanvas()

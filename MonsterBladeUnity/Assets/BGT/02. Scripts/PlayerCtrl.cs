@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterBlade.MyPhoton;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class PlayerCtrl : MonoBehaviour
+public class PlayerCtrl : PunCharactor//MonoBehaviour
 {
     [SerializeField] public Transform charaterBody;
     Vector3 moveDirection;
@@ -51,8 +52,10 @@ public class PlayerCtrl : MonoBehaviour
     public bool isMove;
     int weaponsIndex = 0;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         particle = GameObject.FindWithTag("EnemySkill").GetComponent<ParticleDamage>();
         animator = GetComponent<Animator>();
         camera = Camera.main;
@@ -316,7 +319,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     void CameraRotation()
     {
-        if (togglecameraRotation != true)
+        if (togglecameraRotation != true)// || !IsMine)
         {
             Vector3 playerRotate = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -354,6 +357,11 @@ public class PlayerCtrl : MonoBehaviour
 
     void InputMoveMent()
     {
+        if(!IsMine)
+        {
+            SyncUpdate();
+            return;
+        }
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         isMove = moveInput.magnitude != 0;
 
@@ -392,6 +400,22 @@ public class PlayerCtrl : MonoBehaviour
                     moveDirection = diveDirection;
                 }
             }
+        }
+    }
+
+    protected override void PhotonSerializeViewData(bool bSend, object[] pvData)
+    {
+        base.PhotonSerializeViewData(bSend, pvData);
+        Debug.Log("child PhotonSerializeViewData");
+        pvDataLen = 3;
+        if (bSend)
+        {
+            pvData[2] = charaterBody.rotation;
+        }
+        else
+        {
+            latestCorrectRot = (Quaternion)pvData[2];
+            onUpdateRot = charaterBody.rotation;
         }
     }
 }

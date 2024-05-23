@@ -68,6 +68,14 @@ namespace MonsterBlade.MyPhoton
             //photonLobby.gameObject.SetActive(false);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                photonLobby.gameObject.SetActive(!Input.GetKey(KeyCode.LeftShift));
+            }
+        }
+
         public void SetConnect(bool bFail)
         {
             if(PhotonNetwork.connected)
@@ -186,20 +194,20 @@ namespace MonsterBlade.MyPhoton
 
             //PhotonNetwork.LoadLevelAsync("MultiTest");
 
-            if(!PhotonNetwork.isMasterClient)
-            {
-                //GameObject[] _objs = GameObject.FindGameObjectsWithTag("Player");
-                GameObject _obj = GameObject.FindGameObjectWithTag("Player");
+            //if(!PhotonNetwork.isMasterClient)
+            //{
+            //    //GameObject[] _objs = GameObject.FindGameObjectsWithTag("Player");
+            //    GameObject _obj = GameObject.FindGameObjectWithTag("Player");
 
-                PhotonNetwork.Instantiate("MyPhoton/ChildPunCharactor", _obj.transform.position, _obj.transform.rotation, 0);
+            //    PhotonNetwork.Instantiate("MyPhoton/ChildPunCharactor", _obj.transform.position, _obj.transform.rotation, 0);
 
-                // 본인 플레이어 생성
-                    // 플레이어 생성 위치
-                    // 그룹(선택)
-                    // 프리팹 위치(해당 플레이어 ctrl에 static으로?)
-                    // 세팅
-                    // Camera Setting
-            }
+            //    // 본인 플레이어 생성
+            //        // 플레이어 생성 위치
+            //        // 그룹(선택)
+            //        // 프리팹 위치(해당 플레이어 ctrl에 static으로?)
+            //        // 세팅
+            //        // Camera Setting
+            //}
         }
 
         public override void OnFailedToConnectToPhoton(DisconnectCause cause)
