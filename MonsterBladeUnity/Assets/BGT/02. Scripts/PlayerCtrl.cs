@@ -85,6 +85,12 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void Update()
     {
+        if (!IsMine)
+        {
+            SyncUpdate();
+            return;
+        }
+
         CameraRotation();
         GetInput();
         ShotCheck();
@@ -109,6 +115,12 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!IsMine)
+        {
+            //SyncUpdate();
+            return;
+        }
+
         GroundCheck();
         InputMoveMent();
         Fall();
@@ -121,6 +133,12 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void LateUpdate()
     {
+        if (!IsMine)
+        {
+            //SyncUpdate();
+            return;
+        }
+
         CameraRotation();
         //Interaction();
     }
@@ -432,11 +450,6 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void InputMoveMent()
     {
-        if(!IsMine)
-        {
-            SyncUpdate();
-            return;
-        }
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         isMove = moveInput.magnitude != 0;
         runSpeed = speed * 4;
