@@ -6,7 +6,7 @@ public class CameraCtrl : MonoBehaviour
 {
     public Transform objectToFollow;
     public float followSpeed = 10f;
-    public float sensitivity = 100f;
+    private float sensitivity = 100f;
     public float clampAngle = 70f;
     public float zoomSpeed = 5f;
 
@@ -49,13 +49,15 @@ public class CameraCtrl : MonoBehaviour
     void Update()
     {
         CameraMove();
-        if(Input.GetKey(KeyCode.F1) && !lockCheck)
+        if(Input.GetKeyDown(KeyCode.F1) && !lockCheck)
         {
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             lockCheck = true;
         }
-        else if (Input.GetKey(KeyCode.F1) && lockCheck)
+        else if (Input.GetKeyDown(KeyCode.F1) && lockCheck)
         {
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             lockCheck = false;
         }

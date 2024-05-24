@@ -87,11 +87,6 @@ public class PlayerCtrl : MonoBehaviour
         ShotCheck();
         StartCoroutine(OpenInven());
 
-        if (Input.GetKey(KeyCode.Keypad2))
-        {
-
-        }
-
         //Vector3 enemyPosition = target.myEnemyTarget.transform.position;
 
         //RaycastHit hit;
@@ -248,6 +243,7 @@ public class PlayerCtrl : MonoBehaviour
             dieCheck = false;
             statInfo._curHP = 10;
         }
+        open = InventoryManager.instance.isOpen; // 살아났을 때 인벤토리랑 이동에서 생기는 문제 해결을 위한 코드
         yield return null;
     }
 
@@ -257,20 +253,16 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (open == false)
             {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
                 animator.SetFloat("Blend", 0);
-                yield return new WaitForSeconds(0.2f);
-                open = true;
+				open = true;
+				yield return new WaitForSeconds(0.2f);
             }
-            else if (open == true)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                yield return new WaitForSeconds(0.2f);
-                open = false;
-            }
-        }
+			else if (open == true)
+			{
+				open = false;
+				yield return new WaitForSeconds(0.2f);
+			}
+		}
     }
 
     public void OnEnemySkillDamaged()
@@ -407,7 +399,7 @@ public class PlayerCtrl : MonoBehaviour
 
     void DiveRoll()
     {
-        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false)
+        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false && !shotReady)
         {
             SoundManager.Instance.PlaySound2D("30_Jump_03_out", 0f, false, SoundType.EFFECT);
             diveDirection = moveDirection;
