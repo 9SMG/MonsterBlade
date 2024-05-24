@@ -21,17 +21,20 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     TargetManager target;
     ParticleDamage particle;
 
+    public GameObject SpawnPos;
+    public StatInfo statInfo;
     public GameObject[] pickUpItem;
     public bool[] checkPickUp = new bool[3];
-    public float speed = 5f;
+    public float speed = 2f;
     public float runSpeed = 8f;
     public float finalSpeed;
     public float rotationSpeed;
     public float smoothness = 10f;
     public float diveSpeed;
     public float gravity;
-    public float _curHp;
-    public float _maxHp;
+    public float MAXHP;
+    public float CURRHP;
+    public int LV;
     public bool togglecameraRotation;
     public bool run;
     public bool diveRoll;
@@ -45,6 +48,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     public GameObject[] weapons;
     public GameObject crossHair;
     public GameObject Inven;
+    public GameObject Look;
 
     float fireDelay;
     bool fireStart;
@@ -72,10 +76,10 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void Start()
     {
+        speed = statInfo.MovementSpeed;
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
-        _curHp = _maxHp;
         attackHit = false;
     }
 
@@ -85,11 +89,6 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         GetInput();
         ShotCheck();
         StartCoroutine(OpenInven());
-
-        if (Input.GetKey(KeyCode.Keypad2))
-        {
-
-        }
 
         //Vector3 enemyPosition = target.myEnemyTarget.transform.position;
 
@@ -115,6 +114,9 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         Fall();
         DiveRoll();
         Attack();
+        MAXHP = statInfo.hpMax;
+        CURRHP = statInfo._curHP;
+        LV = statInfo.level;
     }
 
     void LateUpdate()
@@ -172,10 +174,23 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     IEnumerator HitDamage(float damage)
     {
+        float hitDamage = damage - statInfo.Defense;
+        if (hitDamage > 0)
+        {
+            statInfo._curHP -= hitDamage;
+            if(statInfo._curHP <statInfo.hpMax)
+            {
+                statInfo._curHP = 0;
+            }
+        }
+        else if(hitDamage <= 0)
+        {
+            statInfo._curHP -= 1;
+        }
         attackHit = true;
         animator.SetTrigger("isHit");
-        _curHp -= damage;
-        if (_curHp <= 0 && !dieCheck)
+        Debug.Log("현재 체력: " + statInfo._curHP);
+        if (statInfo._curHP <= 0 && !dieCheck)
         {
             StartCoroutine(Die());
         }
@@ -185,47 +200,90 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     IEnumerator Die()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerCtrl playerCtrl = player.GetComponent<PlayerCtrl>();
+        PlayerCtrl playerCtrl = this.GetComponent<PlayerCtrl>();
+
+        if(shotReady)
+        {
+            crossHair.SetActive(false);
+            animator.SetBool("isShotReady", false);
+            shotReady = false;
+        }
         dieCheck = true;
         animator.SetBool("isAlive", false);
         animator.SetTrigger("isDie");
         if (playerCtrl != null)
         {
             playerCtrl.enabled = false;
-            player.tag = "Untagged";
+            this.tag = "Untagged";
         }
+        yield return new WaitForSeconds(5f);
+
+        StartCoroutine(Respawn());
+    }
+
+    IEnumerator Respawn()
+    {
+        PlayerCtrl playerCtrl = this.GetComponent<PlayerCtrl>();
+        PlayerCtrl[] scripts = FindObjectsOfType<PlayerCtrl>();
+        animator.SetBool("isAlive", true);
+
+        controller.enabled = false;
+        this.transform.position = SpawnPos.transform.position;
+        controller.enabled = true;
+
+        foreach (PlayerCtrl script in scripts)
+        {
+            if (script.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Destroy(script);
+            }
+        }
+
+        if (playerCtrl != null)
+        {
+            playerCtrl.enabled = true;
+            this.tag = "Player";
+            dieCheck = false;
+            statInfo._curHP = 10;
+        }
+        open = InventoryManager.instance.isOpen; // 살아났을 때 인벤토리랑 이동에서 생기는 문제 해결을 위한 코드
         yield return null;
     }
 
     IEnumerator OpenInven()
     {
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.B))
         {
             if (open == false)
             {
-                Cursor.lockState = CursorLockMode.Confined;
-                Inven.SetActive(true);
-                Cursor.visible = true;
                 animator.SetFloat("Blend", 0);
-                yield return new WaitForSeconds(0.2f);
-                open = true;
+				open = true;
+				yield return new WaitForSeconds(0.2f);
             }
-            else if (open == true)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Inven.SetActive(false);
-                Cursor.visible = false;
-                yield return new WaitForSeconds(0.2f);
-                open = false;
-            }
-        }
+			else if (open == true)
+			{
+				open = false;
+				yield return new WaitForSeconds(0.2f);
+			}
+		}
     }
 
     public void OnEnemySkillDamaged()
     {
-        _curHp -= particle.Active.damage;
-        if (_curHp <= 0 && !dieCheck)
+        float particleDamage = particle.Active.damage - statInfo.Defense;
+        if (particleDamage > 0)
+        {
+            statInfo._curHP -= particleDamage;
+            if (statInfo._curHP < statInfo.hpMax)
+            {
+                statInfo._curHP = 0;
+            }
+        }
+        else if (particleDamage <= 0)
+        {
+            statInfo._curHP -= 1;
+        }
+        if (statInfo._curHP <= 0 && !dieCheck)
         {
             StartCoroutine(Die());
         }
@@ -234,7 +292,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     void ShotCheck()
     {
         crossHair = transform.Find("CrossHair").transform.gameObject;
-        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll && !isMove)
+        if (Input.GetMouseButtonDown(1) && open == false && !diveRoll)
         {
             //if (target.myEnemyTarget != null)
             //{
@@ -245,6 +303,14 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
             crossHair.SetActive(true);
             animator.SetBool("isShotReady", true);
             shotReady = true;
+            if (target.myEnemyTarget == null)
+            {
+                charaterBody.LookAt(Look.transform.position);
+            }
+            else
+            {
+                charaterBody.LookAt(target.myEnemyTarget.transform.position);
+            }
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -266,12 +332,20 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         fireDelay += Time.deltaTime;
         fireStart = equipWeapon.attackRate < fireDelay;
 
-        if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD && !isMove)
+        if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD)
         {
             equipWeapon.Use();
             animator.SetBool("isShot", true);
             fireDelay = 0;
             shotD = true;
+            if (target.myEnemyTarget == null)
+            {
+                charaterBody.LookAt(Look.transform.position);
+            }
+            else
+            {
+                charaterBody.LookAt(target.myEnemyTarget.transform.position);
+            }
             //SoundManager.Instance.PlaySound2D("Voice " + SoundManager.Range(1, 5, true));
             StartCoroutine(ShotDelay());
         }
@@ -328,8 +402,9 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
     void DiveRoll()
     {
-        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false)
+        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false && !shotReady)
         {
+            SoundManager.Instance.PlaySound2D("30_Jump_03_out", 0f, false, SoundType.EFFECT);
             diveDirection = moveDirection;
             animator.SetBool("isDiveRoll", true);
             diveRoll = true;
@@ -364,8 +439,9 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         }
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         isMove = moveInput.magnitude != 0;
+        runSpeed = speed * 4;
 
-        if (open == false && shotReady == false)
+        if (open == false )
         {
             if (isMove)
             {
@@ -384,7 +460,10 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
                 {
                     controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
                 }
-                charaterBody.forward = moveDirection * Time.deltaTime;
+                if (!shotReady)
+                {
+                    charaterBody.forward = moveDirection * Time.deltaTime;
+                }
 
 
                 float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
@@ -393,12 +472,12 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
             else if (!isMove)
             {
-                animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
                 if (diveRoll)
                 {
                     controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
                     moveDirection = diveDirection;
                 }
+                animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
             }
         }
     }

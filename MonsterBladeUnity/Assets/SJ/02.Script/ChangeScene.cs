@@ -19,4 +19,8 @@ public class ChangeScene : MonoBehaviour
         //LoadingSceneManager.LoadScene("GameLobby");
         LoadManager.Instance.LoadLobby();
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     public Transform charaterBody;
     DropCtrl dropCtrl;
     Animator anime;
+    ExpManager expManager;
+    StatManager statManager;
 
     [field: SerializeField]
     public float _searchRange { get; private set; }
@@ -45,6 +47,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Null");
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
+            expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
+            statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
         }
     }
 
@@ -58,14 +62,21 @@ public class Enemy : MonoBehaviour
         if (col.gameObject.tag == "Arrow" && _curHp > 0)
         {
             Arrow arrow = col.GetComponent<Arrow>();
-            _curHp -= arrow.damage;
+            _curHp -= statManager.statInfo.Attack;
             StartCoroutine(Damage());
         }
 
         if (col.gameObject.tag == "Skill" && _curHp > 0)
         {
             Skill skill = col.GetComponent<Skill>();
-            _curHp -= skill.damage;
+            _curHp -= statManager.statInfo.Attack;
+            StartCoroutine(Damage());
+        }
+        if (col.gameObject.tag == "VRSword" && _curHp > 0)
+        {
+            VRSword vrsword = col.GetComponent<VRSword>();
+            _curHp -= vrsword.damage;
+            lifeBar.material.SetFloat("_Progress", _curHp / 100.0f);
             StartCoroutine(Damage());
         }
     }
@@ -87,12 +98,12 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damage()
     {
+        SoundManager.Instance.PlaySound2D("61_Hit_03", 0f, false, SoundType.EFFECT);
         anime.SetTrigger("isHit");
         yield return new WaitForSeconds(0.2f);
 
         if (_curHp <= 0)
         {
-            dropCtrl.DropItem();
             StartCoroutine(Die());
         }
     }
@@ -102,6 +113,8 @@ public class Enemy : MonoBehaviour
         anime.SetBool("isAlive", false);
         anime.SetBool("isDie", true);
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        dropCtrl.DropItem();
+        expManager.AddExp(100);
         yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
     }

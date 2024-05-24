@@ -18,6 +18,10 @@ public class VRSword : MonoBehaviour
         {
             Debug.Log("Hit");
         }
+        if (col.gameObject.tag == "Boss")
+        {
+            Debug.Log("BossHit");
+        }
     }
 
 }

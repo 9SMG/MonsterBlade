@@ -21,5 +21,5 @@ MonoBehaviour:
   equipmentType: 1
   isWearable: 1
   armorType: 0
-  Def: 500
-  MaxHpPlus: 500
+  Def: 5
+  MaxHpPlus: 50

@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+	// 아이템 데이타
 	public ItemData itemData;
+	// 수량
 	public int amount = 1;
 
+	// 획득 시 슬롯 정보가 될 아이템 정보 객체 생성
 	public SlotInfo _itemInfo = new SlotInfo();
 
 	private void Start()
 	{
+		// 정보 값 할당
 		_itemInfo.item = itemData;
 		_itemInfo.amount = amount;
 	}
@@ -26,6 +30,7 @@ public class Item : MonoBehaviour
 			Rigidbody rig = GetComponent<Rigidbody>();
 			rig.isKinematic = true;
 
+			SoundManager.Instance.PlaySound2D("BellishAccept6", 0f, false, SoundType.EFFECT);
 
 			InventoryManager.instance.AddItem(_itemInfo);
 			Destroy(gameObject);

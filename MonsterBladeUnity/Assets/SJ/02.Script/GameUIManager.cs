@@ -7,11 +7,7 @@ public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager instance = null; // 싱글톤
     // [플레이어 스테이터스]
-    [SerializeField] private PlayerHpUI playerHpUI;          // 체력
-    [SerializeField] private Text HpPercent; // 체력 텍스트
-    [SerializeField] public PlayerMpUI  playerMpUI;          // 마나
-    [SerializeField] private PlayerSpUI  playerSpUI;          // 스태미너
-    [SerializeField] private PlayerExpUI playerExpUI;         // 경험치
+    public PlayerStateUI playStateUI;          // 플레이어 스테이트
 
     // 플레이어 스킬
     [SerializeField] private PlayerSkillUI playerSkiUI; // 플레이어 스킬 1번
@@ -25,24 +21,20 @@ public class GameUIManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            if(instance != this)
+            if (instance != this)
             {
                 Destroy(this.gameObject);
             }
         }
+        playStateUI = GameObject.Find("Player").GetComponent<PlayerStateUI>();
         #region 플레이어 UI
-        playerHpUI = GameObject.Find("Hp").GetComponent<PlayerHpUI>();
-        HpPercent = GameObject.Find("HpPercent").GetComponent<Text>();
-        playerMpUI  = GameObject.Find("Mp").GetComponent<PlayerMpUI>();
-        playerSpUI  = GameObject.Find("SpImg").GetComponent<PlayerSpUI>();
-        playerExpUI = GameObject.Find("Prograss").GetComponent<PlayerExpUI>();
         playerSkiUI = GameObject.Find("BuffDelay").GetComponent<PlayerSkillUI>();
         #endregion
 
@@ -59,13 +51,7 @@ public class GameUIManager : MonoBehaviour
     void Start()
     {
         #region 플레이어 UI Start
-        GameUIManager.instance.playerHpUI.PlayerHpBar();
-        GameUIManager.instance.playerMpUI.PlayerMpBar();
-
-        GameUIManager.instance.playerSpUI.PlayerSpBar();
-
-        GameUIManager.instance.playerExpUI.PlayerExpBar();
-
+        //GameUIManager.instance.playStateUI.PlayerHpBar();
         GameUIManager.instance.playerSkiUI.PlayerSkiUIBar();
         #endregion
 
@@ -82,6 +68,27 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void PlayerHpUI(float curHpUI, float maxHpUI)
+    {
+        playStateUI.curHpUI = curHpUI;
+        playStateUI.maxHpUI = maxHpUI;
+    }
+    public void PlayerMpUI(float curMpUI, float maxMpUI)
+    {
+        playStateUI.curMpUI = curMpUI;
+        playStateUI.maxMpUI = maxMpUI;
+    }
+    public void PlayerSpUI(float curSpUI, float maxSpUI)
+    {
+        playStateUI.curSpUI = curSpUI;
+        playStateUI.maxSpUI = maxSpUI;
+    }
+    public void PlayerExpUI(float curExpUI, float maxExpUI)
+    {
+        playStateUI.curExpUI = curExpUI;
+        playStateUI.maxExpUI = maxExpUI;
     }
 }

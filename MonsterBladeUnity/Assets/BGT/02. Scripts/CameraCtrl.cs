@@ -6,7 +6,7 @@ public class CameraCtrl : MonoBehaviour
 {
     public Transform objectToFollow;
     public float followSpeed = 10f;
-    public float sensitivity = 100f;
+    private float sensitivity = 100f;
     public float clampAngle = 70f;
     public float zoomSpeed = 5f;
 
@@ -21,6 +21,8 @@ public class CameraCtrl : MonoBehaviour
     public float maxDistance;
     public float finalDistance;
     public float smoothness = 10.0f;
+
+    bool lockCheck=false;
 
     PlayerCtrl player;
     Enemy enemy;
@@ -47,6 +49,18 @@ public class CameraCtrl : MonoBehaviour
     void Update()
     {
         CameraMove();
+        if(Input.GetKeyDown(KeyCode.F1) && !lockCheck)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            lockCheck = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.F1) && lockCheck)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            lockCheck = false;
+        }
     }
 
     void LateUpdate()
@@ -110,7 +124,7 @@ public class CameraCtrl : MonoBehaviour
     }
     void ShotCheck()
     {
-        if (player.open == false && !player.diveRoll && !player.isMove)
+        if (player.open == false && !player.diveRoll)
         {
             if (Input.GetMouseButtonDown(1))
             {

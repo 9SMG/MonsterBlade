@@ -16,7 +16,7 @@ MonoBehaviour:
   statusEffect: 0
   damage: 20
   range: 0
-  manaCost: 0
+  manaCost: 20
   castTime: 0
   CoolTime: 1
   skill_Icon: {fileID: 21300000, guid: e30998b7eae8385488bafb104cab7295, type: 3}

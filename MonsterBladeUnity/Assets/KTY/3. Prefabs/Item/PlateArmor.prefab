@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6958096539477365844}
   - component: {fileID: 6958096539477365847}
   - component: {fileID: 6958096539477365846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlateArmor
   m_TagString: Item
   m_Icon: {fileID: 0}
