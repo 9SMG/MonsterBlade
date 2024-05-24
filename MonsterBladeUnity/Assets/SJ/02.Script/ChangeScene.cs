@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using LoadManager = MonsterBlade.Manager.LoadManager;
+
 public class ChangeScene : MonoBehaviour
 {
     //private void Update()
@@ -15,8 +17,6 @@ public class ChangeScene : MonoBehaviour
     public void SceneChange()
     {
         //LoadingSceneManager.LoadScene("GameLobby");
-        MonsterBlade.Manager.LoadManager.Instance.LoadLobby();
-
-
+        LoadManager.Instance.LoadLobby();
     }
 }

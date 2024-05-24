@@ -57,10 +57,7 @@ namespace MonsterBlade.MyPhoton
             ConnectedIcon = Resources.Load<Sprite>("MyPhoton/Connected Icon");
             DisconnectedIcon = Resources.Load<Sprite>("MyPhoton/Disconnected Icon");
 
-
             DebugLogPlayerInfo();
-
-            
         }
 
         private void Start()

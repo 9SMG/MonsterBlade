@@ -40,8 +40,6 @@ public class SnapShot : EditorWindow
      */
     void OnGUI()
     {
-
-
         if (GUILayout.Button("Save Map texture as PNG"))
         {
             if(_cam == null)

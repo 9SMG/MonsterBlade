@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using LoadManager = MonsterBlade.Manager.LoadManager;
+
 public class NextScene : MonoBehaviour
 {
 
     public void SceneChange()
     {
         //PassSceneManager.LoadScene("Map");
-        MonsterBlade.Manager.LoadManager.Instance.LoadStage();
+        LoadManager.Instance.LoadStage();
     }
 }

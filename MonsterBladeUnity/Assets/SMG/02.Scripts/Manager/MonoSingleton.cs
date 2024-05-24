@@ -36,7 +36,6 @@ namespace MonsterBlade.Manager
             return null;
         }
 
-
         protected virtual void Awake()
         {
             if (_instance == null)

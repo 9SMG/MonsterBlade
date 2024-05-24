@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using UnityEngine.UI;
-
 using MonsterBlade.Manager;
 
 namespace MonsterBlade.Manager
@@ -72,11 +71,11 @@ namespace MonsterBlade.Manager
             ShowGameLogo(bShowLogo);
 
             // Unload
-            yield return new WaitForSeconds(1f);
             UnloadAll();
+            yield return new WaitForSeconds(1f);
 
             // Start LoadSceneAsync
-            
+
             SetProgressBar(0f);
             yield return loadRoutine;
 
@@ -134,8 +133,6 @@ namespace MonsterBlade.Manager
 
 
         }
-
-
 
         void UnloadTitle()
         {
@@ -207,12 +204,6 @@ namespace MonsterBlade.Manager
             }
 
             yield return WaitLoadAndActiveScene(scnMap);
-
-            //while (!SceneManager.SetActiveScene(SceneManager.GetSceneByName(scnMap)))
-            //    yield return null;
-
-            //for (int i = 0; i < 50; i++)
-            //    yield return new WaitForSeconds(0.1f);
 
             ao = SceneManager.LoadSceneAsync(scnUI, LoadSceneMode.Additive);
             while (!ao.isDone)
