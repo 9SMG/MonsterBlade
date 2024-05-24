@@ -9,7 +9,7 @@ public class PlayerStateOnOff : MonoBehaviour
 
     void Awake()
     {
-        Player = GameObject.Find("Player");
+        Player = GameObject.Find("Player(Archer)");
         VRplayer = GameObject.Find("VRplayer");
     }
 
