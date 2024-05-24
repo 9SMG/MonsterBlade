@@ -9661,6 +9661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicSword_Fire
       objectReference: {fileID: 0}
+    - target: {fileID: 2246628438968665541, guid: c149ff8f782a6124f997d3596d46a8b6, type: 3}
+      propertyPath: damage
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c149ff8f782a6124f997d3596d46a8b6, type: 3}
 --- !u!1 &770420381
