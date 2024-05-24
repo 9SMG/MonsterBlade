@@ -50,7 +50,7 @@ public class InventoryManager : MonoBehaviour, IComparer<SlotInfo>
 
 	//int prevListCount; // 이전 리스트 수
 
-	bool isOpen = false; // 인벤토리 열림 여부
+	[HideInInspector] public bool isOpen = false; // 인벤토리 열림 여부
 
 	public bool fullInven = false; // 인벤토리 꽉참 여부
 

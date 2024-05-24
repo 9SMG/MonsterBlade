@@ -9501,7 +9501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 1345394117}
   followSpeed: 10
-  sensitivity: 500
   clampAngle: 70
   zoomSpeed: 5
   mainCamera: {fileID: 1584886599}
@@ -9660,6 +9659,10 @@ PrefabInstance:
     - target: {fileID: 2246152846007663867, guid: c149ff8f782a6124f997d3596d46a8b6, type: 3}
       propertyPath: m_Name
       value: MagicSword_Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246628438968665541, guid: c149ff8f782a6124f997d3596d46a8b6, type: 3}
+      propertyPath: damage
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c149ff8f782a6124f997d3596d46a8b6, type: 3}
@@ -28133,7 +28136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 613841226992155169}
   followSpeed: 10
-  sensitivity: 500
   clampAngle: 70
   zoomSpeed: 5
   mainCamera: {fileID: 613841225779501779}
@@ -42795,6 +42797,10 @@ PrefabInstance:
       propertyPath: TriggerModule.primitives.Array.data[0]
       value: 
       objectReference: {fileID: 1854281550}
+    - target: {fileID: 2934648610207178594, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
+      propertyPath: raycastDistance
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 2934648610591008292, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
       propertyPath: TriggerModule.primitives.Array.data[0]
       value: 
@@ -42849,7 +42855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2934648610884759110, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
       propertyPath: raycastDistance
-      value: 70
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
