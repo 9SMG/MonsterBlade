@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/SMG/01.Scenes/scManager.unity
+    guid: bde1f816f173485438b7d6a44adc6c9a
+  - enabled: 1
     path: Assets/SJ/01.Scene/Start.unity
     guid: 5c5b1e4664fa1ee48a8fdffc47b976ed
   - enabled: 1
@@ -23,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SJ/01.Scene/LobbyLoading.unity
     guid: aad1bda3388c5c54381834b587afcc96
-  - enabled: 1
-    path: Assets/SMG/01.Scenes/scManager.unity
-    guid: bde1f816f173485438b7d6a44adc6c9a
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 233520fa4b3de0f469b3bb85c78b154f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 96b49f9808e71c842999fe4aa2df08e3, type: 2}

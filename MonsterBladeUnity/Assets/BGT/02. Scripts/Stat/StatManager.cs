@@ -28,7 +28,11 @@ public class StatManager : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(OpenStat()); 
+        StartCoroutine(OpenStat());
+        if (Input.GetKey(KeyCode.F2))
+        {
+            CurrentStatPoint += 100;
+        }
     }
 
     public void LevelUp()
@@ -44,7 +48,7 @@ public class StatManager : MonoBehaviour
         {
             if (!StatMenu)
             {
-                Debug.Log("False");
+                Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 mStatUi.SetActive(true);
                 UpdateStatTexts();
@@ -53,7 +57,7 @@ public class StatManager : MonoBehaviour
             }
             else if(StatMenu)
             {
-                Debug.Log("True");
+                Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 mStatUi.SetActive(false);
                 yield return new WaitForSeconds(0.2f);

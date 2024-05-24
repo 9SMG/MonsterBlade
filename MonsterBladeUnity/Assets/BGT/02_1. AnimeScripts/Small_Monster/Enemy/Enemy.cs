@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
     public Transform charaterBody;
     DropCtrl dropCtrl;
     Animator anime;
-    ExpManager expManager; 
+    ExpManager expManager;
+    StatManager statManager;
 
     [field: SerializeField]
     public float _searchRange { get; private set; }
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("Null");
             _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
             expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
+            statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
         }
     }
 
@@ -60,14 +62,14 @@ public class Enemy : MonoBehaviour
         if (col.gameObject.tag == "Arrow" && _curHp > 0)
         {
             Arrow arrow = col.GetComponent<Arrow>();
-            _curHp -= arrow.damage;
+            _curHp -= statManager.statInfo.Attack;
             StartCoroutine(Damage());
         }
 
         if (col.gameObject.tag == "Skill" && _curHp > 0)
         {
             Skill skill = col.GetComponent<Skill>();
-            _curHp -= skill.damage;
+            _curHp -= statManager.statInfo.Attack;
             StartCoroutine(Damage());
         }
         if (col.gameObject.tag == "VRSword" && _curHp > 0)
@@ -96,7 +98,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damage()
     {
-        SoundManager.Instance.PlaySound3D("61_Hit_03", this.transform, 0f, false, SoundType.EFFECT);
+        SoundManager.Instance.PlaySound2D("61_Hit_03", 0f, false, SoundType.EFFECT);
         anime.SetTrigger("isHit");
         yield return new WaitForSeconds(0.2f);
 
