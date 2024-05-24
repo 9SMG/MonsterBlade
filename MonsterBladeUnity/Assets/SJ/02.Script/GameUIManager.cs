@@ -68,7 +68,7 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void PlayerHpUI(float curHpUI, float maxHpUI)

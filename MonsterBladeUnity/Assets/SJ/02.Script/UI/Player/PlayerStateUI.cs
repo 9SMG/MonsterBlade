@@ -29,7 +29,7 @@ public class PlayerStateUI : MonoBehaviour
 
     private void Update()
     {
-        SetHp(90,100);
+        SetHp(100,100);
         SetMp(60, 100);
         SetSp(10, 100);
         SetExp(10, 100);
