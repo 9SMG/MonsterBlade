@@ -96,7 +96,7 @@ public class ServerSettings : ScriptableObject
     public string VoiceAppID = "";
     public string ChatAppID = "";
 
-    public HostingOption HostType = HostingOption.NotSet;
+    public HostingOption HostType = HostingOption.PhotonCloud; //HostingOption.NotSet;
 
     public CloudRegionCode PreferredRegion;
     public CloudRegionFlag EnabledRegions = (CloudRegionFlag)(-1);

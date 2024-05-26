@@ -59,6 +59,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     protected override void Awake()
     {
         base.Awake();
+        SetPhotonViewDataLen(3);
 
         particle = GameObject.FindWithTag("EnemySkill").GetComponent<ParticleDamage>();
         animator = GetComponent<Animator>();
@@ -72,6 +73,8 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         isTarget = false;
         isMove = false;
         animator.SetBool("isAlive", true);
+
+        Debug.Log("End PlayerCtrl:Awake()");
     }
 
     void Start()
@@ -81,13 +84,14 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         gravity = 5.0f;
         MoveDir = Vector3.zero;
         attackHit = false;
+        Debug.Log("End PlayerCtrl:Start()");
     }
 
     void Update()
     {
         if (!IsMine)
         {
-            SyncUpdate();
+            UpdateSync();
             return;
         }
 
@@ -117,7 +121,6 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     {
         if (!IsMine)
         {
-            //SyncUpdate();
             return;
         }
 
@@ -135,7 +138,6 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     {
         if (!IsMine)
         {
-            //SyncUpdate();
             return;
         }
 
@@ -495,19 +497,48 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         }
     }
 
+
+
+    /// 
+    /// Photon Multi
+    /// 
+
+    protected Quaternion latestCorrectCharRot = Quaternion.identity;
+    protected Quaternion onUpdateCharRot = Quaternion.identity;
+
     protected override void PhotonSerializeViewData(bool bSend, object[] pvData)
     {
         base.PhotonSerializeViewData(bSend, pvData);
-        Debug.Log("child PhotonSerializeViewData");
-        pvDataLen = 3;
         if (bSend)
         {
             pvData[2] = charaterBody.rotation;
         }
         else
         {
-            latestCorrectRot = (Quaternion)pvData[2];
+            latestCorrectCharRot = (Quaternion)pvData[2];
             onUpdateRot = charaterBody.rotation;
         }
+    }
+
+    protected override void UpdateSync()
+    {
+        base.UpdateSync();
+        if (firstRecv)
+            return;
+        if (fraction < limitTime)
+        {
+            fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
+            charaterBody.rotation = Quaternion.Lerp(onUpdateCharRot, latestCorrectCharRot, fraction / limitTime);
+        }
+        else
+        {
+            charaterBody.rotation = latestCorrectCharRot;
+        }
+    }
+
+    protected override void InitSync()
+    {
+        base.InitSync();
+        charaterBody.rotation = latestCorrectCharRot;
     }
 }

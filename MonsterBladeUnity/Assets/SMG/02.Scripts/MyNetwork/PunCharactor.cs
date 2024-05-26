@@ -17,13 +17,13 @@ namespace MonsterBlade.MyPhoton
         protected Quaternion latestCorrectRot = Quaternion.identity;
         protected Quaternion onUpdateRot = Quaternion.identity;
 
-        float fraction;
+        protected float fraction;
 
-        float limitTime = 0.2f;
+        protected float limitTime = 0.2f;
 
-        bool firstRecv = true;
+        protected bool firstRecv = true;
 
-        protected int pvDataLen = 2;
+        int pvDataLen = 2;
 
         protected bool IsMine
         {
@@ -57,7 +57,6 @@ namespace MonsterBlade.MyPhoton
 
                     pv.synchronization = ViewSynchronization.UnreliableOnChange;
                 }
-
                 pvData = new object[10];    // Max Serialize Queue
             }
         }
@@ -68,29 +67,47 @@ namespace MonsterBlade.MyPhoton
         }
 
 
-        protected virtual void SyncUpdate()
+        protected virtual void UpdateSync()
         {
             if (firstRecv)
                 return;
-            SyncPosAndRotUpdate();
+            UpdateSyncPosAndRot();
         }
 
-
-        //protected virtual void Update()
-        //{
-        //    if (!PhotonNetwork.inRoom)
-        //        return;
-
-        //    Debug.Log("PunCharactor<T>: Update()");
-        //}
-
-        protected void SyncPosAndRotUpdate()
+        protected void UpdateSyncPos()
         {
             if (fraction < limitTime)
             {
                 //fraction += Time.deltaTime;
                 fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
-                //Debug.Log("fraction: " + fraction);
+                transform.position = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction / limitTime);
+            }
+            else
+            {
+                transform.position = latestCorrectPos;
+            }
+        }
+
+        protected void UpdateSyncRot()
+        {
+            if (fraction < limitTime)
+            {
+                //fraction += Time.deltaTime;
+                fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
+                transform.rotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction / limitTime);
+            }
+            else
+            {
+                transform.rotation = latestCorrectRot;
+            }
+        }
+
+        protected void UpdateSyncPosAndRot()
+        {
+            if (fraction < limitTime)
+            {
+                //fraction += Time.deltaTime;
+                fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
                 transform.position = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction / limitTime);
                 transform.rotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction / limitTime);
             }
@@ -155,8 +172,9 @@ namespace MonsterBlade.MyPhoton
                     pvData[i] = stream.ReceiveNext();
                 }
 
-                //pos = (Vector3)pvData[0];
-                //rot = (Quaternion)pvData[1];
+                //latestCorrectPos = (Vector3)pvData[0];
+                //latestCorrectRot = (Quaternion)pvData[1];
+                PhotonSerializeViewData(false, pvData);
 
                 //Debug.Log("recv pos: " + pos);
                 //Debug.Log("recv rot: " + rot);
@@ -164,10 +182,7 @@ namespace MonsterBlade.MyPhoton
                 onUpdatePos = transform.position;
                 onUpdateRot = transform.rotation;
 
-                //latestCorrectPos = pos;
-                //latestCorrectRot = rot;
-
-                PhotonSerializeViewData(false, pvData);
+                
 
                 fraction = 0;
 
@@ -179,9 +194,9 @@ namespace MonsterBlade.MyPhoton
             }
         }
 
-        protected virtual void PhotonSerializeViewData(bool bSend, object[] pvData)
+        protected virtual void PhotonSerializeViewData(bool bWrite, object[] pvData)
         {
-            if(bSend)
+            if(bWrite)
             {
                 pvData[0] = transform.position;
                 pvData[1] = transform.rotation;
@@ -191,6 +206,11 @@ namespace MonsterBlade.MyPhoton
                 latestCorrectPos = (Vector3)pvData[0];
                 latestCorrectRot = (Quaternion)pvData[1];
             }
+        }
+
+        protected void SetPhotonViewDataLen(int len = 2)
+        {
+            pvDataLen = len;
         }
     }
 }

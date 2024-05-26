@@ -189,22 +189,22 @@ namespace MonsterBlade.MyPhoton
         {
             base.OnJoinedRoom();
 
-            //PhotonNetwork.LoadLevelAsync("MultiTest");
+            //PhotonNetwork.LoadLevel("Map");
 
-            //if(!PhotonNetwork.isMasterClient)
-            //{
-            //    //GameObject[] _objs = GameObject.FindGameObjectsWithTag("Player");
-            //    GameObject _obj = GameObject.FindGameObjectWithTag("Player");
+            if(!PhotonNetwork.isMasterClient)
+            {
+                //GameObject[] _objs = GameObject.FindGameObjectsWithTag("Player");
+                //GameObject _obj = GameObject.FindGameObjectWithTag("Player");
 
-            //    PhotonNetwork.Instantiate("MyPhoton/ChildPunCharactor", _obj.transform.position, _obj.transform.rotation, 0);
+                PhotonNetwork.Instantiate("SMG/Player(Archer)", new Vector3(90, 0.2f, 350), Quaternion.identity, 0);
 
-            //    // 본인 플레이어 생성
-            //        // 플레이어 생성 위치
-            //        // 그룹(선택)
-            //        // 프리팹 위치(해당 플레이어 ctrl에 static으로?)
-            //        // 세팅
-            //        // Camera Setting
-            //}
+                // 본인 플레이어 생성
+                // 플레이어 생성 위치
+                // 그룹(선택)
+                // 프리팹 위치(해당 플레이어 ctrl에 static으로?)
+                // 세팅
+                // Camera Setting
+            }
         }
 
         public override void OnFailedToConnectToPhoton(DisconnectCause cause)
@@ -259,7 +259,7 @@ namespace MonsterBlade.MyPhoton
             base.OnPhotonCustomRoomPropertiesChanged(propertiesThatChanged);
         }
 
-
+        
         public void JoinRoom(string name, string pw = null)
         {
             if (name == null)
@@ -332,6 +332,14 @@ namespace MonsterBlade.MyPhoton
             Debug.Log("UserId: " + player.UserId);
             Debug.Log("ID: " + player.ID);
             Debug.Log("NickName: " + player.NickName);
+        }
+
+        public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
+        {
+            base.OnPhotonPlayerConnected(newPlayer);
+
+            
+
         }
 
     }
