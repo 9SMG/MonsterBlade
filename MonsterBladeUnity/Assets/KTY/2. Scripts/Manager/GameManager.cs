@@ -4,15 +4,12 @@ using UnityEngine;
 
 using UnityEngine.UI;
 /*
- * 1. 딕셔너리 확인 용
- * 
  * 2. 아이템 사용 테스팅
  */
 
 public class GameManager : MonoBehaviour
 {
 	Transform status;
-	Transform BuffPnl;
 
 	Image img_Eq1;
 	Image img_Eq2;
@@ -82,6 +79,10 @@ public class GameManager : MonoBehaviour
 	[Space(10)]
 	public bool isSick;
 
+	//-----------------------------------------------------------
+	StatManager statManager;
+	//-----------------------------------------------------------
+
 	private void Awake()
 	{
 		// 스테이터스 레퍼런스 --------------------------------------------
@@ -101,18 +102,18 @@ public class GameManager : MonoBehaviour
 		img_Eq2 = txt_Eq2.GetComponentInChildren<Image>();
 
 
-		BuffPnl = status.GetChild(8);
-		img_Sick = BuffPnl.GetChild(0).GetComponent<Image>();
+		//--------------------------------------------------------------
+		statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
 	}
 
 	private void Start()
 	{
-		isSick = true;
+		//isSick = true;
 
-		if (isSick)
-		{
-			isSick = ItemManager.instance.BuffCoolTime(0.5f, isSick);
-		}
+		//if (isSick)
+		//{
+		//	isSick = ItemManager.instance.BuffCoolTime(0.5f, isSick);
+		//}
 	}
 
 	private void Update()
@@ -121,34 +122,81 @@ public class GameManager : MonoBehaviour
 
 		ChangeStatus(eq1, eq2);
 
-		if (hp > MaxHp)
-		{
-			hp = MaxHp;
-		}
+		//if (hp > MaxHp)
+		//{
+		//	hp = MaxHp;
+		//}
 
-		if (mana > maxMp)
-		{
-			mana = maxMp;
-		}
+		//if (mana > maxMp)
+		//{
+		//	mana = maxMp;
+		//}
 
-		if (stamina > maxSp)
-		{
-			stamina = maxSp;
-		}
+		//if (stamina > maxSp)
+		//{
+		//	stamina = maxSp;
+		//}
 
 
 	}
+
+	///// <summary>
+	///// 스테이터스 UI세팅
+	///// </summary>
+	//void ShowSetting()
+	//{
+	//	MaxHp = maxHp + it_Hp;
+
+	//	txt_Hp.text = "HP: " + hp.ToString("0,0") + "/" + MaxHp.ToString("0,0");
+	//	txt_Mp.text = "MP: " + mana.ToString("0,0") + "/" + maxMp.ToString("0,0");
+	//	txt_Sp.text = "SP: " + stamina.ToString("0,0") + "/" + maxSp.ToString("0,0");
+
+	//	txt_Atk.text = "ATK: " + (atk + it_Atk).ToString("0,0");
+	//	txt_Def.text = "DEF: " + (def + it_Def).ToString("0,0");
+
+	//	if (eq1 == null)
+	//	{
+	//		txt_Eq1.text = "무기: 없음";
+	//		img_Eq1.sprite = defSpr;
+	//	}
+	//	else
+	//	{
+	//		txt_Eq1.text = "무기: " + eq1.itemName;
+	//		img_Eq1.sprite = eq1.itemSpr;
+	//	}
+
+	//	if (eq2 == null)
+	//	{
+	//		txt_Eq2.text = "방어구: 없음";
+	//		img_Eq2.sprite = defSpr;
+	//	}
+
+	//	else
+	//	{
+	//		txt_Eq2.text = "방어구: " + eq2.itemName;
+	//		img_Eq2.sprite = eq2.itemSpr;
+	//	}
+
+	//	if (isSick)
+	//	{
+	//		img_Sick.sprite = sickSpr;
+	//	}
+	//	else
+	//	{
+	//		img_Sick.sprite = defSpr;
+	//	}
+	//}
 
 	/// <summary>
 	/// 스테이터스 UI세팅
 	/// </summary>
 	void ShowSetting()
 	{
-		MaxHp = maxHp + it_Hp;
+		MaxHp = statManager.statInfo.hpMax + it_Hp;
 
-		txt_Hp.text = "HP: " + hp.ToString("0,0") + "/" + MaxHp.ToString("0,0");
-		txt_Mp.text = "MP: " + mana.ToString("0,0") + "/" + maxMp.ToString("0,0");
-		txt_Sp.text = "SP: " + stamina.ToString("0,0") + "/" + maxSp.ToString("0,0");
+		txt_Hp.text = "HP: " + statManager.statInfo._curHP.ToString("0,0") + "/" + MaxHp.ToString("0,0");
+		txt_Mp.text = "MP: " + statManager.statInfo._curMP.ToString("0,0") + "/" + statManager.statInfo.mpMax.ToString("0,0");
+		txt_Sp.text = "SP: " + statManager.statInfo._curStamina.ToString("0,0") + "/" + statManager.statInfo.staminaMax.ToString("0,0");
 
 		txt_Atk.text = "ATK: " + (atk + it_Atk).ToString("0,0");
 		txt_Def.text = "DEF: " + (def + it_Def).ToString("0,0");
@@ -176,15 +224,16 @@ public class GameManager : MonoBehaviour
 			img_Eq2.sprite = eq2.itemSpr;
 		}
 
-		if (isSick)
-		{
-			img_Sick.sprite = sickSpr;
-		}
-		else
-		{
-			img_Sick.sprite = defSpr;
-		}
+		//if (isSick)
+		//{
+		//	img_Sick.sprite = sickSpr;
+		//}
+		//else
+		//{
+		//	img_Sick.sprite = defSpr;
+		//}
 	}
+
 
 	void ChangeStatus(WeaponData _wp, ArmorData _am)
 	{
@@ -225,14 +274,14 @@ public class GameManager : MonoBehaviour
 			eq2 = null;
 	}
 
-	/// <summary>
-	/// 딕셔너리 테스팅
-	/// </summary>
-	public void Test()
-	{
-		foreach (var read in ItemDictionary.itemDic)
-		{
-			Debug.Log("Key: " + read.Key + ", Value: " + read.Value);
-		}
-	}
+	///// <summary>
+	///// 딕셔너리 테스팅
+	///// </summary>
+	//public void Test()
+	//{
+	//	foreach (var read in ItemDictionary.itemDic)
+	//	{
+	//		Debug.Log("Key: " + read.Key + ", Value: " + read.Value);
+	//	}
+	//}
 }

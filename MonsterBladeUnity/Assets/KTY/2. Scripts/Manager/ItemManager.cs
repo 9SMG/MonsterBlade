@@ -6,8 +6,8 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager instance; // 싱글톤 일 때
 
-    [SerializeField] GameManager gManager; // 플레이어 스탯 관련 클래스가 오게 될 것.
-    [SerializeField] StatManager statManager;
+	[SerializeField] GameManager gManager; // 플레이어 스탯 관련 클래스가 오게 될 것.
+	[SerializeField] StatManager statManager; // 플레이어 관련 스탯 연결을 위함.
 
     enum Consumable { HPPotion = 2001, MPPotion, SPPotion, CLPotion, Mochi, }
     Consumable csNum;
@@ -18,8 +18,8 @@ public class ItemManager : MonoBehaviour
 	{
         instance = this;  // 싱글톤 일 때
 
-        gManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
+		gManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+		statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
 
     }
 
@@ -52,7 +52,7 @@ public class ItemManager : MonoBehaviour
 		switch (csNum)
 		{
             case Consumable.HPPotion:
-                statManager.statInfo._curHP += 500; // 하드 코딩 말고 따로 직접 조작 가능한 변수로 뺄 수도.
+                statManager.statInfo._curHP += 500;
                 if(statManager.statInfo._curHP > statManager.statInfo.hpMax)
                 {
                     statManager.statInfo._curHP = statManager.statInfo.hpMax;
