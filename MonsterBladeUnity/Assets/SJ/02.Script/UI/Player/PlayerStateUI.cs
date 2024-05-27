@@ -25,11 +25,29 @@ public class PlayerStateUI : MonoBehaviour
     // 플레이어 레벨
     public float playerLevel;
 
+    // 플레이어 닉네임
+    private string playerNickname;
+
     private Image[] stateBars;
     private Text[] stateTexts;
 
     private void Start()
     {
+        // 닉네임 불러오기
+        if (PlayerPrefs.HasKey("PlayerNickname"))
+        {
+            playerNickname = PlayerPrefs.GetString("PlayerNickname");
+            Debug.Log("Player Nickname: " + playerNickname);
+        }
+        else
+        {
+            // 닉네임이 없으면 기본값 설정
+            playerNickname = "Player";
+            PlayerPrefs.SetString("PlayerNickname", playerNickname);
+            PlayerPrefs.Save();
+            Debug.Log("Default Player Nickname Set: " + playerNickname);
+        }
+
         curHpUI = maxHpUI;
         curMpUI = maxMpUI;
         curSpUI = maxSpUI;
