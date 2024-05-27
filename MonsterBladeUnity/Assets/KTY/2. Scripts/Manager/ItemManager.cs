@@ -89,24 +89,6 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public bool BuffCoolTime(float coolTime, bool isBuff)
-	{
-        isActive = isBuff;
-        Debug.Log("함수 실행 됬음");
-        StartCoroutine(CoolTime(coolTime));
-        return isBuff = isActive;
-	}
-
-    // 버프 디버프는 어떻게 해결하지?
-    IEnumerator CoolTime(float coolTime)
-	{
-        Debug.Log("코루틴 실행 됬음");
-        isActive = true;
-        yield return new WaitForSeconds(coolTime);
-        Debug.Log("쿨타임 실행 됬음");
-        isActive = false;
-	}
-
     /// <summary>
     /// 찹쌀떡 기능
     /// </summary>

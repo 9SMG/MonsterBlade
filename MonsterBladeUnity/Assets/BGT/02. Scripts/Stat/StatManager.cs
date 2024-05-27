@@ -25,8 +25,6 @@ public class StatManager : MonoBehaviour
 
     void Awake()
     {
-        arrow = GetComponent<Arrow>();
-        skill = GetComponent<Skill>();
         statInfo.InitStatData();
     }
 
@@ -91,7 +89,5 @@ public class StatManager : MonoBehaviour
         CurrentStatPoint--;
         statInfo.UpgradeBaseStat((StatType)statIndex);
         UpdateStatTexts();
-        arrow.damage = statInfo.Attack;
-        skill.damage += statInfo.Attack;
     }
 }
