@@ -51,7 +51,7 @@ public class GameUIManager : MonoBehaviour
         {
             playStateUI.TakeDamage(10);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             playStateUI.UseSkill(20f); // 예시로 마나 20을 소모하는 스킬
         }

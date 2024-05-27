@@ -39,6 +39,7 @@ TagManager:
   - pUIText
   - mPartyHp
   - mPartyHpText
+  - bbbb
   layers:
   - Default
   - TransparentFX
