@@ -19,10 +19,14 @@ public class StatManager : MonoBehaviour
     [SerializeField] private GameObject[] mStatButtons;
     [SerializeField] private GameObject mStatUi;
 
+    Arrow arrow;
+    Skill skill;
     int CurrentStatPoint = 1;
 
     void Awake()
     {
+        arrow = GetComponent<Arrow>();
+        skill = GetComponent<Skill>();
         statInfo.InitStatData();
     }
 
@@ -87,5 +91,7 @@ public class StatManager : MonoBehaviour
         CurrentStatPoint--;
         statInfo.UpgradeBaseStat((StatType)statIndex);
         UpdateStatTexts();
+        arrow.damage = statInfo.Attack;
+        skill.damage += statInfo.Attack;
     }
 }
