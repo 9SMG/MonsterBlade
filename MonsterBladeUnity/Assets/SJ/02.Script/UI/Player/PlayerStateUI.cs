@@ -6,17 +6,24 @@ using UnityEngine.UI;
 
 public class PlayerStateUI : MonoBehaviour
 {
+    // 현재체력, 최대체력
     public float curHpUI;
     public float maxHpUI = 100.0f;
 
+    // 현재마나, 최대마나
     public float curMpUI;
     public float maxMpUI;
 
+    // 현재 Sp, 최대Sp
     public float curSpUI;
     public float maxSpUI;
 
+    // 현재 경험치, 최대 경험지
     public float curExpUI;
     public float maxExpUI;
+
+    // 플레이어 레벨
+    public float playerLevel;
 
     private Image[] stateBars;
     private Text[] stateTexts;
@@ -43,14 +50,6 @@ public class PlayerStateUI : MonoBehaviour
         //stateTexts[2] = GameObject.Find("ExpText").GetComponent<Text>(); // 예: ExpText 오브젝트
 
         UpdateAllUI();
-    }
-
-    // 공격시 체력감소
-    public void TakeDamage(float damage)
-    {
-        curHpUI -= damage;
-        curHpUI = Mathf.Clamp(curHpUI, 0, maxHpUI);
-        UpdateHpUI();
     }
 
     public void SetHp(float curHpUI, float maxHpUI)
@@ -118,6 +117,7 @@ public class PlayerStateUI : MonoBehaviour
             float fillAmount = curExpUI / maxExpUI;
             stateBars[3].fillAmount = fillAmount;
             //stateTexts[2].text = Mathf.RoundToInt(fillAmount * 100f) + "%";
+            Debug.Log($"Exp Fill Amount: {fillAmount}");  // 디버그 로그 추가
         }
     }
 
@@ -127,6 +127,14 @@ public class PlayerStateUI : MonoBehaviour
         UpdateMpUI();
         UpdateSpUI();
         UpdateExpUI();
+    }
+
+    // 공격시 체력감소
+    public void TakeDamage(float damage)
+    {
+        curHpUI -= damage;
+        curHpUI = Mathf.Clamp(curHpUI, 0, maxHpUI);
+        UpdateHpUI();
     }
 
     // 마나만 소모하는 스킬 사용 메서드
@@ -147,20 +155,28 @@ public class PlayerStateUI : MonoBehaviour
     public void GainExperience(float exp)
     {
         curExpUI += exp;
+        Debug.Log($"Gained Experience: {exp}, Current Exp: {curExpUI}/{maxExpUI}"); // 디버그 로그 추가
         if (curExpUI >= maxExpUI)
         {
             curExpUI -= maxExpUI;
-            // 레벨업 처리 (레벨업 시 필요한 추가 로직을 여기에 작성)
-            LevelUp();
+            PlayerLevelUp();
         }
         UpdateExpUI();
     }
 
-    private void LevelUp()
+    private void PlayerLevelUp()
     {
-        // 레벨업 시 필요한 로직 (예: 플레이어의 레벨 증가, 최대 경험치 증가 등)
-        // 예시:
-        maxExpUI *= 1.1f; // 다음 레벨업에 필요한 경험치를 증가시킴
-                          // 레벨업 애니메이션이나 사운드 효과 추가 가능
+        // 플레이어 레벨 증가
+        playerLevel++;
+        // 현재 경험치 초기화
+        curExpUI = 0;
+        // 최대 체력 증가
+        maxHpUI += 20;
+        curHpUI = maxHpUI;
+        SetHp(curHpUI, maxHpUI);
+        // 최대 경험치 증가
+        maxExpUI *= 1.5f;
+        // 경험치 텍스트 업데이트
+        Debug.Log("Level Up! New Level: " + playerLevel + ", New Max HP: " + maxHpUI);
     }
 }
