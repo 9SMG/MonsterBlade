@@ -4938,7 +4938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &553336913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18666,9 +18666,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2934648608920894058, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
+      propertyPath: ShapeModule.m_Rotation.x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934648608920894058, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
       propertyPath: TriggerModule.primitives.Array.data[0]
       value: 
       objectReference: {fileID: 1854281550}
+    - target: {fileID: 2934648610207178594, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
+      propertyPath: raycastDistance
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934648610591008292, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
+      propertyPath: ShapeModule.m_Rotation.x
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 2934648610591008292, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
       propertyPath: TriggerModule.primitives.Array.data[0]
       value: 
@@ -18723,7 +18735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2934648610884759110, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
       propertyPath: raycastDistance
-      value: 70
+      value: 38
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e5128d3cb3e98944b43ac9a9fbf806a, type: 3}
@@ -19222,6 +19234,10 @@ PrefabInstance:
       propertyPath: particleGround
       value: 
       objectReference: {fileID: 614076174}
+    - target: {fileID: 5203206842129642270, guid: f34e434e50635b54a8d61d3f5cc22257, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6461045044775664361, guid: f34e434e50635b54a8d61d3f5cc22257, type: 3}
       propertyPath: m_RootOrder
       value: 13
