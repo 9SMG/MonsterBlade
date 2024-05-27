@@ -31,11 +31,7 @@ public class GameUIManager : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {
-        playStateUI.SetHp(playStateUI.curHpUI, playStateUI.maxHpUI);
-        playStateUI.SetMp(playStateUI.curMpUI, playStateUI.maxMpUI);
-        playStateUI.SetSp(playStateUI.curSpUI, playStateUI.maxSpUI);
-        playStateUI.SetExp(0, playStateUI.maxExpUI);  // 경험치는 보통 0부터 시작
+    { 
 
         bossStateUI.BossSetHp(bossStateUI.curBossHpUI, bossStateUI.maxBossHpUI);
 

@@ -23,11 +23,6 @@ public class PlayerStateUI : MonoBehaviour
 
     private void Start()
     {
-        curHpUI = maxHpUI;
-        curMpUI = maxMpUI;
-        curSpUI = maxSpUI;
-        curExpUI = 0;  // 경험치는 보통 0부터 시작합니다.
-
         Debug.Log($"Initial HP: {curHpUI}/{maxHpUI}");
         Debug.Log($"Initial MP: {curMpUI}/{maxMpUI}");
         Debug.Log($"Initial SP: {curSpUI}/{maxSpUI}");
@@ -94,8 +89,6 @@ public class PlayerStateUI : MonoBehaviour
             float fillAmount = curHpUI / maxHpUI;
             stateBars[0].fillAmount = fillAmount;
             stateTexts[0].text = Mathf.RoundToInt(fillAmount * 100f) + "%";
-
-            Debug.Log($"HP Fill Amount: {fillAmount}"); // 디버그 로그 추가
         }
     }
 
@@ -120,7 +113,7 @@ public class PlayerStateUI : MonoBehaviour
 
     private void UpdateExpUI()
     {
-        if (stateBars.Length > 3 && stateTexts.Length > 2)
+        if (stateBars.Length > 3)
         {
             float fillAmount = curExpUI / maxExpUI;
             stateBars[3].fillAmount = fillAmount;

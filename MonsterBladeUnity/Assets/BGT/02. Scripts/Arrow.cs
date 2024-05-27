@@ -9,14 +9,8 @@ public class Arrow : MonoBehaviour
     Boss bossHP;
     StatManager statManager;
 
-	private void Awake()
-	{
-        statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
-    }
-
-	void Start()
+    void Start()
     {
-        damage = statManager.statInfo.Attack;
         bossHP = GameObject.FindWithTag("Boss").GetComponent<Boss>();
         Destroy(this.gameObject, deadtime);
     }

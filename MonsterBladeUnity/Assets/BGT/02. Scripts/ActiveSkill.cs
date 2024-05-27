@@ -41,6 +41,7 @@ public class ActiveSkill : MonoBehaviour
             GameUIManager.instance.playStateUI.UseSkill(Active.manaCost);
             //Debug.Log(playerStateUI.curMpUI);
             //Debug.Log("Skill");
+
             StopAllCoroutines();
             if (imgCool == null)
             {
