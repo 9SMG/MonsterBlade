@@ -129,23 +129,30 @@ public class GameManager : MonoBehaviour
 
 		ChangeStatus(eq1, eq2);
 
+		// 인벤토리가 켜지면 스탯 창도 켜짐
 		status.gameObject.SetActive(InventoryManager.instance.isOpen);
 
-		// 디버프 치트
-		if (Input.GetKeyDown(KeyCode.Alpha9))
+		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			OnSick();
+			// 아이템 소환 치트
+			if (Input.GetKeyDown(KeyCode.F6) && !isCheat)
+			{
+
+				Debug.Log("치팅!");
+				isCheat = true;
+
+				ItemSpawnCheat();
+			}
+
+			// 디버프 치트
+			if (Input.GetKeyDown(KeyCode.F7))
+			{
+				OnSick();
+			}
 		}
 
-		// 아이템 소환 치트
-		if (Input.GetKeyDown(KeyCode.Alpha8) && !isCheat)
-		{
-			Debug.Log("치팅!");
-			isCheat = true;
 
-			ItemSpawnCheat();
-		}
-
+		// 스탯 갱신
 		if (statManager.statInfo._curHP > MaxHp)
 		{
 			statManager.statInfo._curHP = MaxHp;
