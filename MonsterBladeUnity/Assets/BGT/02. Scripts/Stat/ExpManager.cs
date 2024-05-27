@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ExpManager : MonoBehaviour
 {
-    [SerializeField] private Image mExpBar;
+    //[SerializeField] private Image mExpBar;
     StatManager statManager;
 
     //public float _curExp;
@@ -46,7 +46,7 @@ public class ExpManager : MonoBehaviour
             process += Time.deltaTime;
 
             expPrev = Mathf.Lerp(expPrev, statManager.statInfo._curEXP, process);
-            mExpBar.fillAmount = expPrev / statManager.statInfo._curMaxEXP;
+            //mExpBar.fillAmount = expPrev / statManager.statInfo._curMaxEXP;
 
             if (expPrev / statManager.statInfo._curMaxEXP >= 1f)
             {
