@@ -16,6 +16,7 @@ public class Arrow : MonoBehaviour
 
 	void Start()
     {
+        damage = statManager.statInfo.Attack;
         bossHP = GameObject.FindWithTag("Boss").GetComponent<Boss>();
         Destroy(this.gameObject, deadtime);
     }
@@ -27,17 +28,17 @@ public class Arrow : MonoBehaviour
             if (col.gameObject.tag == "BossHeadColl")
             {
                 Debug.Log("Head !!!");
-                bossHP._headHp -= statManager.statInfo.Attack; ;
+                bossHP._headHp -= damage;
             }
             if (col.gameObject.tag == "BossLegColl")
             {
                 Debug.Log("Leg !!!");
-                bossHP._legHp -= statManager.statInfo.Attack; ;
+                bossHP._legHp -= damage;
             }
             if (col.gameObject.tag == "BossWingColl")
             {
                 Debug.Log("Wing !!!");
-                bossHP._wingHp -= statManager.statInfo.Attack; ;
+                bossHP._wingHp -= damage;
             }
             Destroy(this.gameObject);
         }

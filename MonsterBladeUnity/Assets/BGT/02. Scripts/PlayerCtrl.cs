@@ -73,7 +73,6 @@ public class PlayerCtrl : MonoBehaviour
 
     void Start()
     {
-        speed = statInfo.MovementSpeed;
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
@@ -114,6 +113,7 @@ public class PlayerCtrl : MonoBehaviour
         MAXHP = statInfo.hpMax;
         CURRHP = statInfo._curHP;
         LV = statInfo.level;
+        speed = statInfo.MovementSpeed;
     }
 
     void LateUpdate()
@@ -391,7 +391,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     void CameraRotation()
     {
-        if (togglecameraRotation != true)
+        if (togglecameraRotation != true && !open)
         {
             Vector3 playerRotate = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
