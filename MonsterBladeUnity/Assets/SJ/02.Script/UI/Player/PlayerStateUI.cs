@@ -30,13 +30,17 @@ public class PlayerStateUI : MonoBehaviour
 
     private void Start()
     {
+        curHpUI = maxHpUI;
+        curMpUI = maxMpUI;
+        curSpUI = maxSpUI;
+        curExpUI = 0;  // 경험치는 보통 0부터 시작합니다.
+        playerLevel = 1;
+
         Debug.Log($"Initial HP: {curHpUI}/{maxHpUI}");
         Debug.Log($"Initial MP: {curMpUI}/{maxMpUI}");
         Debug.Log($"Initial SP: {curSpUI}/{maxSpUI}");
         Debug.Log($"Initial EXP: {curExpUI}/{maxExpUI}");
-
-        stateBars = GameObject.FindGameObjectsWithTag("State").Select(go => go.GetComponent<Image>()).ToArray();
-        stateTexts = GameObject.FindGameObjectsWithTag("pUIText").Select(go => go.GetComponent<Text>()).ToArray();
+        Debug.Log($"Initial Level: {playerLevel}");
 
         stateBars = new Image[4];
         stateBars[0] = GameObject.Find("HpUI").GetComponent<Image>(); // 예: HpBar 오브젝트
@@ -44,10 +48,10 @@ public class PlayerStateUI : MonoBehaviour
         stateBars[2] = GameObject.Find("SpUI").GetComponent<Image>(); // 예: SpBar 오브젝트
         stateBars[3] = GameObject.Find("ExpUI").GetComponent<Image>(); // 예: ExpBar 오브젝트
 
-        stateTexts = new Text[2];
+        stateTexts = new Text[3];
         stateTexts[0] = GameObject.Find("HpPercent").GetComponent<Text>(); // 예: HpText 오브젝트
         stateTexts[1] = GameObject.Find("MpPercent").GetComponent<Text>(); // 예: MpText 오브젝트
-        //stateTexts[2] = GameObject.Find("ExpText").GetComponent<Text>(); // 예: ExpText 오브젝트
+        stateTexts[2] = GameObject.Find("ExpText").GetComponent<Text>(); // 예: ExpText 오브젝트
 
         UpdateAllUI();
     }
@@ -84,10 +88,11 @@ public class PlayerStateUI : MonoBehaviour
     {
         if (stateBars.Length > 0 && stateTexts.Length > 0)
         {
-
             float fillAmount = curHpUI / maxHpUI;
             stateBars[0].fillAmount = fillAmount;
             stateTexts[0].text = Mathf.RoundToInt(fillAmount * 100f) + "%";
+
+            Debug.Log($"HP Fill Amount: {fillAmount}"); // 디버그 로그 추가
         }
     }
 
@@ -112,11 +117,11 @@ public class PlayerStateUI : MonoBehaviour
 
     private void UpdateExpUI()
     {
-        if (stateBars.Length > 3)
+        if (stateBars.Length > 3 && stateTexts.Length > 2)
         {
             float fillAmount = curExpUI / maxExpUI;
             stateBars[3].fillAmount = fillAmount;
-            //stateTexts[2].text = Mathf.RoundToInt(fillAmount * 100f) + "%";
+            stateTexts[2].text = playerLevel.ToString(); // 예: Level 2
             Debug.Log($"Exp Fill Amount: {fillAmount}");  // 디버그 로그 추가
         }
     }
@@ -127,6 +132,7 @@ public class PlayerStateUI : MonoBehaviour
         UpdateMpUI();
         UpdateSpUI();
         UpdateExpUI();
+        UpdateLevelUI();
     }
 
     // 공격시 체력감소
@@ -142,7 +148,7 @@ public class PlayerStateUI : MonoBehaviour
     {
         if (curMpUI >= manaCost)
         {
-            curMpUI -= (int)manaCost;
+            curMpUI -= manaCost;
             SetMp(curMpUI, maxMpUI);
             Debug.Log("Skill used, remaining mana: " + curMpUI);
         }
@@ -162,21 +168,29 @@ public class PlayerStateUI : MonoBehaviour
             PlayerLevelUp();
         }
         UpdateExpUI();
+
     }
 
     private void PlayerLevelUp()
     {
         // 플레이어 레벨 증가
         playerLevel++;
-        // 현재 경험치 초기화
-        curExpUI = 0;
         // 최대 체력 증가
         maxHpUI += 20;
         curHpUI = maxHpUI;
-        SetHp(curHpUI, maxHpUI);
         // 최대 경험치 증가
         maxExpUI *= 1.5f;
+        // 레벨 텍스트 업데이트
+        UpdateLevelUI();
         // 경험치 텍스트 업데이트
+        UpdateExpUI();
+        // 최대 체력과 현재 체력 업데이트
+        SetHp(curHpUI, maxHpUI);
         Debug.Log("Level Up! New Level: " + playerLevel + ", New Max HP: " + maxHpUI);
+    }
+
+    private void UpdateLevelUI()
+    {
+        stateTexts[2].text = playerLevel.ToString(); // 예: Level 2
     }
 }

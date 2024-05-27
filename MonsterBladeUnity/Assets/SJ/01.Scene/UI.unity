@@ -3154,6 +3154,38 @@ PrefabInstance:
       propertyPath: maxExpUI
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 4253084191918618665, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 37.568
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253084191918618665, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 22.3242
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253084191918618665, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000029504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253084191918618665, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700164828040830268, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_Text
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700164828040830268, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700164828040830268, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700164828040830268, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 5693444277167095583, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: m_FillAmount
       value: 0
@@ -3251,8 +3283,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8206606685222854613, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_Name
+      value: ExpText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206606685222854613, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: m_TagString
-      value: pLevel
+      value: pUIText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5216220649d606c44afa7de811090a11, type: 3}

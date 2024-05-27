@@ -41,27 +41,27 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 누르면 체력감소 
+        //// 누르면 체력감소 
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            playStateUI.TakeDamage(10);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            playStateUI.UseSkill(20f); // 예시로 마나 20을 소모하는 스킬
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            bossStateUI.BossTakeDamage(15f); // 예시로 마나 20을 소모하는 스킬
-        }
+        //if (Input.GetKeyDown(KeyCode.F9))
+        //{
+        //    playStateUI.TakeDamage(10);
+        //}
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    playStateUI.UseSkill(20f); // 예시로 마나 20을 소모하는 스킬
+        //}
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    bossStateUI.BossTakeDamage(15f); // 예시로 마나 20을 소모하는 스킬
+        //}
         if(Input.GetKeyDown(KeyCode.F2))
         {
             playStateUI.GainExperience(10f);
         }
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            partyStateUI.PartyTakeDamage(20f); // 예시로 마나 20을 소모하는 스킬
-        }
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    partyStateUI.PartyTakeDamage(20f); // 예시로 마나 20을 소모하는 스킬
+        //}
     }
 }

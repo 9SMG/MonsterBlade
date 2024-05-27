@@ -113,6 +113,5 @@ public class StatManager : MonoBehaviour
 
         Debug.LogError(weapon.damage);
         Debug.LogError(skill.Active.damage);
-
     }
 }
