@@ -7682,6 +7682,7 @@ MonoBehaviour:
   mana: 100
   stamina: 100
   isSick: 0
+  itemBox: {fileID: 0}
 --- !u!1001 &979373452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19054,6 +19055,10 @@ PrefabInstance:
       propertyPath: mLvLabel
       value: 
       objectReference: {fileID: 307718228}
+    - target: {fileID: 6267504581992511914, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+      propertyPath: statInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
     - target: {fileID: 6267504581992511914, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
       propertyPath: mHpMaxLabel
       value: 
