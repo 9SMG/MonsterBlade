@@ -601,7 +601,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MOSTER BLADE
+  m_Text: MONSTER BLADE
 --- !u!222 &782980115
 CanvasRenderer:
   m_ObjectHideFlags: 0
