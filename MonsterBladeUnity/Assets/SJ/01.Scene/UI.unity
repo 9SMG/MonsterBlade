@@ -3194,6 +3194,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: pName
       objectReference: {fileID: 0}
+    - target: {fileID: 7391573714484921272, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391573714484921272, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391573714484921272, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7391573715504087088, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: m_Name
       value: State
