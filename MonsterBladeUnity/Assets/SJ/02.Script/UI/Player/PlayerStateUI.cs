@@ -92,7 +92,7 @@ public class PlayerStateUI : MonoBehaviour
             stateBars[0].fillAmount = fillAmount;
             stateTexts[0].text = Mathf.RoundToInt(fillAmount * 100f) + "%";
 
-            Debug.Log($"HP Fill Amount: {fillAmount}"); // 디버그 로그 추가
+            //Debug.Log($"HP Fill Amount: {fillAmount}"); // 디버그 로그 추가
         }
     }
 
@@ -122,7 +122,7 @@ public class PlayerStateUI : MonoBehaviour
             float fillAmount = curExpUI / maxExpUI;
             stateBars[3].fillAmount = fillAmount;
             stateTexts[2].text = playerLevel.ToString(); // 예: Level 2
-            Debug.Log($"Exp Fill Amount: {fillAmount}");  // 디버그 로그 추가
+            //Debug.Log($"Exp Fill Amount: {fillAmount}");  // 디버그 로그 추가
         }
     }
 
@@ -144,19 +144,21 @@ public class PlayerStateUI : MonoBehaviour
     }
 
     // 마나만 소모하는 스킬 사용 메서드
-    public void UseSkill(float manaCost)
-    {
-        if (curMpUI >= manaCost)
-        {
-            curMpUI -= manaCost;
-            SetMp(curMpUI, maxMpUI);
-            Debug.Log("Skill used, remaining mana: " + curMpUI);
-        }
-        else
-        {
-            Debug.Log("Not enough mana to use skill.");
-        }
-    }
+    //public void UseSkill(float manaCost)
+    //{
+    //    Debug.Log("mana");
+    //    if (curMpUI >= manaCost)
+    //    {
+    //        Debug.Log("manaUse");
+    //        curMpUI -= manaCost;
+    //        SetMp(curMpUI, maxMpUI);
+    //        Debug.Log("Skill used, remaining mana: " + curMpUI);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Not enough mana to use skill.");
+    //    }
+    //}
 
     public void GainExperience(float exp)
     {
@@ -165,30 +167,10 @@ public class PlayerStateUI : MonoBehaviour
         if (curExpUI >= maxExpUI)
         {
             curExpUI -= maxExpUI;
-            PlayerLevelUp();
         }
         UpdateExpUI();
 
     }
-
-    private void PlayerLevelUp()
-    {
-        // 플레이어 레벨 증가
-        playerLevel++;
-        // 최대 체력 증가
-        maxHpUI += 20;
-        curHpUI = maxHpUI;
-        // 최대 경험치 증가
-        maxExpUI *= 1.5f;
-        // 레벨 텍스트 업데이트
-        UpdateLevelUI();
-        // 경험치 텍스트 업데이트
-        UpdateExpUI();
-        // 최대 체력과 현재 체력 업데이트
-        SetHp(curHpUI, maxHpUI);
-        Debug.Log("Level Up! New Level: " + playerLevel + ", New Max HP: " + maxHpUI);
-    }
-
     private void UpdateLevelUI()
     {
         stateTexts[2].text = playerLevel.ToString(); // 예: Level 2

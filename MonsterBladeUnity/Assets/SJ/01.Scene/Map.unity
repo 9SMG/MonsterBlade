@@ -13998,7 +13998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758087975}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80.9, y: 0, z: 130.9}
+  m_LocalPosition: {x: 108.3, y: 0, z: 296.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 644587606}
@@ -19143,7 +19143,8 @@ PrefabInstance:
       propertyPath: statInfo
       value: 
       objectReference: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5264828239084249975, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
 --- !u!1001 &7946049590832121547
 PrefabInstance:
@@ -19234,6 +19235,10 @@ PrefabInstance:
       propertyPath: particleGround
       value: 
       objectReference: {fileID: 614076174}
+    - target: {fileID: 5203206841929506815, guid: f34e434e50635b54a8d61d3f5cc22257, type: 3}
+      propertyPath: <_searchRange>k__BackingField
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 5203206842129642270, guid: f34e434e50635b54a8d61d3f5cc22257, type: 3}
       propertyPath: m_IsActive
       value: 0

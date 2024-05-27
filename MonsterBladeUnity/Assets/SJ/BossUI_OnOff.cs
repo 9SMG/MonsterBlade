@@ -7,7 +7,7 @@ public class BossUI_OnOff : MonoBehaviour
     public GameObject Boss_UI;
     public GameObject player;
     public GameObject Point;
-    public float activationDistance = 60.0f;
+    public float activationDistance = 200.0f;
 
     private void Awake()
     {
