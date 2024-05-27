@@ -52,15 +52,15 @@ public class ItemManager : MonoBehaviour
 		switch (csNum)
 		{
             case Consumable.HPPotion:
-                statManager.statInfo._curHP += 500;
-                if(statManager.statInfo._curHP > statManager.statInfo.hpMax)
+                statManager.statInfo._curHP += 20;
+                if(statManager.statInfo._curHP > statManager.statInfo.hpMax + statManager.statInfo._eqHP)
                 {
-                    statManager.statInfo._curHP = statManager.statInfo.hpMax;
+                    statManager.statInfo._curHP = statManager.statInfo.hpMax + statManager.statInfo._eqHP;
                 }
                 break;
 
             case Consumable.MPPotion:
-                statManager.statInfo._curMP += 500;
+                statManager.statInfo._curMP += 50;
                 if (statManager.statInfo._curMP > statManager.statInfo.mpMax)
                 {
                     statManager.statInfo._curMP = statManager.statInfo.mpMax;
@@ -68,7 +68,7 @@ public class ItemManager : MonoBehaviour
                 break;
 
             case Consumable.SPPotion:
-                statManager.statInfo._curStamina += 100;
+                statManager.statInfo._curStamina += 50;
                 if (statManager.statInfo._curStamina > statManager.statInfo.staminaMax)
                 {
                     statManager.statInfo._curStamina = statManager.statInfo.staminaMax;
@@ -116,10 +116,10 @@ public class ItemManager : MonoBehaviour
 	{
 		while (Time.time - _time <= 5.0f)
 		{
-            statManager.statInfo._curHP += 100;
-            if (statManager.statInfo._curHP > statManager.statInfo.hpMax)
+            statManager.statInfo._curHP += 5;
+            if (statManager.statInfo._curHP > statManager.statInfo.hpMax + statManager.statInfo._eqHP)
             {
-                statManager.statInfo._curHP = statManager.statInfo.hpMax;
+                statManager.statInfo._curHP = statManager.statInfo.hpMax + statManager.statInfo._eqHP;
             }
             yield return new WaitForSeconds(1.0f);
 		}
