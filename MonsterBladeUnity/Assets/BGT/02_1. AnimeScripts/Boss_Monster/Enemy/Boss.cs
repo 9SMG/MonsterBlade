@@ -82,6 +82,7 @@ public class Boss : MonoBehaviour
         {
             _curHp = 170;
         }
+        GameUIManager.instance.bossStateUI.BossSetHp(_curHp, _maxHp);
     }
 
     void FixedUpdate()
