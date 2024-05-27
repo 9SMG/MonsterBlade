@@ -174,7 +174,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             statInfo._curHP -= hitDamage;
             GameUIManager.instance.playStateUI.TakeDamage(hitDamage);
-            if (statInfo._curHP <statInfo.hpMax)
+            if (statInfo._curHP < hitDamage)
             {
                 statInfo._curHP = 0;
             }
@@ -270,7 +270,7 @@ public class PlayerCtrl : MonoBehaviour
         if (particleDamage > 0)
         {
             statInfo._curHP -= particleDamage;
-            if (statInfo._curHP < statInfo.hpMax)
+            if (statInfo._curHP < particleDamage)
             {
                 statInfo._curHP = 0;
             }

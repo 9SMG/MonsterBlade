@@ -11854,6 +11854,7 @@ MonoBehaviour:
   mana: 100
   stamina: 100
   isSick: 0
+  itemBox: {fileID: 0}
 --- !u!1 &978296198
 GameObject:
   m_ObjectHideFlags: 0
@@ -23198,7 +23199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charaterBody: {fileID: 20390326}
   SpawnPos: {fileID: 1808156677}
-  statInfo: {fileID: 11400000, guid: 52686ff312a388441b26fa35cde62a0c, type: 2}
+  statInfo: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
   pickUpItem: []
   checkPickUp: 000000
   speed: 2
@@ -23289,7 +23290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StatMenu: 0
-  statInfo: {fileID: 11400000, guid: 52686ff312a388441b26fa35cde62a0c, type: 2}
+  statInfo: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
   mLvLabel: {fileID: 307718228}
   mStatPtLabel: {fileID: 1043337546}
   mAttackCurrentLabel: {fileID: 1403813778}
