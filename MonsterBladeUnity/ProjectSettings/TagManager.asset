@@ -27,6 +27,19 @@ TagManager:
   - BossChestColl
   - BossWingColl
   - VRSword
+  - Item
+  - Coin
+  - BossUI
+  - BossTxtUI
+  - Boss_UI
+  - PartyHp
+  - PlayerSki
+  - State
+  - Exp
+  - pUIText
+  - mPartyHp
+  - mPartyHpText
+  - bbbb
   layers:
   - Default
   - TransparentFX

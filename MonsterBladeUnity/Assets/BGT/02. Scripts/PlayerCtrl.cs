@@ -175,7 +175,8 @@ public class PlayerCtrl : MonoBehaviour
         if (hitDamage > 0)
         {
             statInfo._curHP -= hitDamage;
-            if(statInfo._curHP <statInfo.hpMax)
+            GameUIManager.instance.playStateUI.TakeDamage(hitDamage);
+            if (statInfo._curHP <statInfo.hpMax)
             {
                 statInfo._curHP = 0;
             }
