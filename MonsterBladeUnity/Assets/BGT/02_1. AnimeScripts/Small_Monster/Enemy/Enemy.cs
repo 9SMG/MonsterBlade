@@ -62,14 +62,14 @@ public class Enemy : MonoBehaviour
         if (col.gameObject.tag == "Arrow" && _curHp > 0)
         {
             Arrow arrow = col.GetComponent<Arrow>();
-            _curHp -= statManager.statInfo.Attack;
+            _curHp -= arrow.damage;
             StartCoroutine(Damage());
         }
 
         if (col.gameObject.tag == "Skill" && _curHp > 0)
         {
             Skill skill = col.GetComponent<Skill>();
-            _curHp -= statManager.statInfo.Attack;
+            _curHp -= skill.damage;
             StartCoroutine(Damage());
         }
         if (col.gameObject.tag == "VRSword" && _curHp > 0)
