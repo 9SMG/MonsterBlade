@@ -4,15 +4,12 @@ using UnityEngine;
 
 using UnityEngine.UI;
 /*
- * 1. 딕셔너리 확인 용
- * 
  * 2. 아이템 사용 테스팅
  */
 
 public class GameManager : MonoBehaviour
 {
 	Transform status;
-	Transform BuffPnl;
 
 	Image img_Eq1;
 	Image img_Eq2;
@@ -75,12 +72,22 @@ public class GameManager : MonoBehaviour
 	[Space(10)]
 	[Header("플레이어 상태")]
 	[Space(50)]
-	public float hp = 1000;
+	public float hp = 20;
 	public float mana = 100;
 	public float stamina = 100;
 
 	[Space(10)]
 	public bool isSick;
+
+	//-----------------------------------------------------------
+	StatManager statManager;
+	//-----------------------------------------------------------
+
+
+	// Cheat ----------------------------------------------------
+	bool isCheat = false;
+	public GameObject itemBox;
+	//-----------------------------------------------------------
 
 	private void Awake()
 	{
@@ -100,19 +107,20 @@ public class GameManager : MonoBehaviour
 		img_Eq1 = txt_Eq1.GetComponentInChildren<Image>();
 		img_Eq2 = txt_Eq2.GetComponentInChildren<Image>();
 
+		img_Sick = txt_Hp.GetComponentInChildren<Image>();
 
-		BuffPnl = status.GetChild(8);
-		img_Sick = BuffPnl.GetChild(0).GetComponent<Image>();
+		//--------------------------------------------------------------
+		statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
 	}
 
 	private void Start()
 	{
-		isSick = true;
+		//isSick = true;
 
-		if (isSick)
-		{
-			isSick = ItemManager.instance.BuffCoolTime(0.5f, isSick);
-		}
+		//if (isSick)
+		//{
+		//	isSick = ItemManager.instance.BuffCoolTime(0.5f, isSick);
+		//}
 	}
 
 	private void Update()
@@ -121,37 +129,108 @@ public class GameManager : MonoBehaviour
 
 		ChangeStatus(eq1, eq2);
 
-		if (hp > MaxHp)
+		// 인벤토리가 켜지면 스탯 창도 켜짐
+		status.gameObject.SetActive(InventoryManager.instance.isOpen);
+
+		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			hp = MaxHp;
+			// 아이템 소환 치트
+			if (Input.GetKeyDown(KeyCode.F6) && !isCheat)
+			{
+
+				Debug.Log("치팅!");
+				isCheat = true;
+
+				ItemSpawnCheat();
+			}
+
+			// 디버프 치트
+			if (Input.GetKeyDown(KeyCode.F7))
+			{
+				OnSick();
+			}
 		}
 
-		if (mana > maxMp)
+
+		// 스탯 갱신
+		if (statManager.statInfo._curHP > MaxHp)
 		{
-			mana = maxMp;
+			statManager.statInfo._curHP = MaxHp;
 		}
 
-		if (stamina > maxSp)
+		if (statManager.statInfo._curMP > maxMp)
 		{
-			stamina = maxSp;
+			statManager.statInfo._curMP = maxMp;
+		}
+
+		if (statManager.statInfo._curStamina > maxSp)
+		{
+			statManager.statInfo._curStamina = maxSp;
 		}
 
 
 	}
+
+	///// <summary>
+	///// 스테이터스 UI세팅
+	///// </summary>
+	//void ShowSetting()
+	//{
+	//	MaxHp = maxHp + it_Hp;
+
+	//	txt_Hp.text = "HP: " + hp.ToString("0,0") + "/" + MaxHp.ToString("0,0");
+	//	txt_Mp.text = "MP: " + mana.ToString("0,0") + "/" + maxMp.ToString("0,0");
+	//	txt_Sp.text = "SP: " + stamina.ToString("0,0") + "/" + maxSp.ToString("0,0");
+
+	//	txt_Atk.text = "ATK: " + (atk + it_Atk).ToString("0,0");
+	//	txt_Def.text = "DEF: " + (def + it_Def).ToString("0,0");
+
+	//	if (eq1 == null)
+	//	{
+	//		txt_Eq1.text = "무기: 없음";
+	//		img_Eq1.sprite = defSpr;
+	//	}
+	//	else
+	//	{
+	//		txt_Eq1.text = "무기: " + eq1.itemName;
+	//		img_Eq1.sprite = eq1.itemSpr;
+	//	}
+
+	//	if (eq2 == null)
+	//	{
+	//		txt_Eq2.text = "방어구: 없음";
+	//		img_Eq2.sprite = defSpr;
+	//	}
+
+	//	else
+	//	{
+	//		txt_Eq2.text = "방어구: " + eq2.itemName;
+	//		img_Eq2.sprite = eq2.itemSpr;
+	//	}
+
+	//	if (isSick)
+	//	{
+	//		img_Sick.sprite = sickSpr;
+	//	}
+	//	else
+	//	{
+	//		img_Sick.sprite = defSpr;
+	//	}
+	//}
 
 	/// <summary>
 	/// 스테이터스 UI세팅
 	/// </summary>
 	void ShowSetting()
 	{
-		MaxHp = maxHp + it_Hp;
+		MaxHp = statManager.statInfo.hpMax + statManager.statInfo._eqHP;
 
-		txt_Hp.text = "HP: " + hp.ToString("0,0") + "/" + MaxHp.ToString("0,0");
-		txt_Mp.text = "MP: " + mana.ToString("0,0") + "/" + maxMp.ToString("0,0");
-		txt_Sp.text = "SP: " + stamina.ToString("0,0") + "/" + maxSp.ToString("0,0");
+		txt_Hp.text = "HP: " + statManager.statInfo._curHP.ToString("0,0") + "/" + MaxHp.ToString("0,0");
+		txt_Mp.text = "MP: " + statManager.statInfo._curMP.ToString("0,0") + "/" + statManager.statInfo.mpMax.ToString("0,0");
+		txt_Sp.text = "SP: " + statManager.statInfo._curStamina.ToString("0,0") + "/" + statManager.statInfo.staminaMax.ToString("0,0");
 
-		txt_Atk.text = "ATK: " + (atk + it_Atk).ToString("0,0");
-		txt_Def.text = "DEF: " + (def + it_Def).ToString("0,0");
+		txt_Atk.text = "ATK: " + (statManager.statInfo.Attack + statManager.statInfo._eqAtk).ToString("0,0");
+		txt_Def.text = "DEF: " + (statManager.statInfo.Defense + statManager.statInfo._eqDef).ToString("0,0");
 
 		if (eq1 == null)
 		{
@@ -186,53 +265,101 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	// 장비 장착
 	void ChangeStatus(WeaponData _wp, ArmorData _am)
 	{
 		if (_wp == null && _am == null)
 		{
-			it_Hp = 0;
-			it_Atk = 0;
-			it_Def = 0;
+			statManager.statInfo._eqHP = 0;
+			statManager.statInfo._eqAtk = 0;
+			statManager.statInfo._eqDef = 0;
 		}
 		else if (_am == null)
 		{
-			it_Hp = 0;
-			it_Atk = _wp.Atk;
-			it_Def = 0;
+			statManager.statInfo._eqHP = 0;
+			statManager.statInfo._eqAtk = _wp.Atk;
+			statManager.statInfo._eqDef = 0;
 		}
 		else if (_wp == null)
 		{
-			it_Hp = _am.MaxHpPlus;
-			it_Atk = 0;
-			it_Def = _am.Def;
+			statManager.statInfo._eqHP = _am.MaxHpPlus;
+			statManager.statInfo._eqAtk = 0;
+			statManager.statInfo._eqDef = _am.Def;
 		}
 		else
 		{
-			it_Hp = _am.MaxHpPlus;
-			it_Atk = _wp.Atk;
-			it_Def = _am.Def;
+			statManager.statInfo._eqHP = _am.MaxHpPlus;
+			statManager.statInfo._eqAtk = _wp.Atk;
+			statManager.statInfo._eqDef = _am.Def;
 		}
 	}
 
+	// 무기 해제
 	public void UneqWeapon()
 	{
 		if (eq1 != null)
 			eq1 = null;
 	}
+
+	// 방어구 해제
 	public void UneqArmor()
 	{
 		if (eq2 != null)
 			eq2 = null;
 	}
 
-	/// <summary>
-	/// 딕셔너리 테스팅
-	/// </summary>
-	public void Test()
+
+	// 디버프 테스트 ------------------------------------------------------
+	public void OnSick()
 	{
-		foreach (var read in ItemDictionary.itemDic)
+		if (!isSick)
 		{
-			Debug.Log("Key: " + read.Key + ", Value: " + read.Value);
+			isSick = true;
+			StartCoroutine(SickCoroutine(Time.time));
 		}
 	}
+
+	IEnumerator SickCoroutine(float _time)
+	{
+		while (Time.time - _time <= 10.0f)
+		{
+			if (!isSick)
+			{
+				break;
+			}
+			else
+			{
+				yield return new WaitForSeconds(1.0f);
+
+				statManager.statInfo._curHP -= 1;
+				if (statManager.statInfo._curHP < 0)
+				{
+					statManager.statInfo._curHP = 0;
+				}
+			}
+		}
+		isSick = false;
+		yield return null;
+	}
+
+	// 아이템 치트 --------------------------------------------------
+	void ItemSpawnCheat()
+	{
+		Vector3 spawnPos = new Vector3(100, 10, 340);
+
+		itemBox.transform.position = spawnPos;
+
+		Instantiate(itemBox);
+	}
+
+	///// <summary>
+	///// 딕셔너리 테스팅
+	///// </summary>
+	//public void Test()
+	//{
+	//	foreach (var read in ItemDictionary.itemDic)
+	//	{
+	//		Debug.Log("Key: " + read.Key + ", Value: " + read.Value);
+	//	}
+	//}
 }

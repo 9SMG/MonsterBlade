@@ -25,8 +25,11 @@ public class StatManager : MonoBehaviour
 
     void Awake()
     {
+<<<<<<< HEAD
         weapon = GetComponentInChildren<Weapon>();
         skill = GetComponent<ActiveSkill>();
+=======
+>>>>>>> InvenUpgrade1
         statInfo.InitStatData();
     }
 
@@ -103,6 +106,7 @@ public class StatManager : MonoBehaviour
         CurrentStatPoint--;
         statInfo.UpgradeBaseStat((StatType)statIndex);
         UpdateStatTexts();
+<<<<<<< HEAD
 
         if (prevAttack < statInfo.Attack)
         {
@@ -112,5 +116,7 @@ public class StatManager : MonoBehaviour
 
         Debug.LogError(weapon.damage);
         Debug.LogError(skill.Active.damage);
+=======
+>>>>>>> InvenUpgrade1
     }
 }

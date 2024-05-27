@@ -110,9 +110,7 @@ public class PlayerCtrl : MonoBehaviour
         Fall();
         DiveRoll();
         Attack();
-        MAXHP = statInfo.hpMax;
-        CURRHP = statInfo._curHP;
-        LV = statInfo.level;
+       
         speed = statInfo.MovementSpeed;
     }
 
@@ -171,7 +169,7 @@ public class PlayerCtrl : MonoBehaviour
 
     IEnumerator HitDamage(float damage)
     {
-        float hitDamage = damage - statInfo.Defense;
+        float hitDamage = damage - (statInfo.Defense + statInfo._eqDef) ;
         if (hitDamage > 0)
         {
             statInfo._curHP -= hitDamage;
@@ -268,7 +266,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void OnEnemySkillDamaged()
     {
-        float particleDamage = particle.Active.damage - statInfo.Defense;
+        float particleDamage = particle.Active.damage - (statInfo.Defense + statInfo._eqDef);
         if (particleDamage > 0)
         {
             statInfo._curHP -= particleDamage;

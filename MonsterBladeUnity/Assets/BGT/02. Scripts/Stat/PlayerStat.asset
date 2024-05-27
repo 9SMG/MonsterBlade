@@ -16,11 +16,20 @@ MonoBehaviour:
   hpMax: 20
   mpMax: 100
   staminaMax: 100
-  Attack: 5
+  Attack: 10
   MovementSpeed: 2
   Defense: 0
+<<<<<<< HEAD
   _curHP: 0
   _curMP: 0
   _curStamina: 0
+=======
+  _curHP: 40
+  _curMP: 100
+  _curStamina: 100
+>>>>>>> InvenUpgrade1
   _curEXP: 0
   _curMaxEXP: 100
+  _eqHP: 100
+  _eqAtk: 0
+  _eqDef: 10
