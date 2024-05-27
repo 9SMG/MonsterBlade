@@ -18,7 +18,7 @@ public class ActiveSkill : MonoBehaviour
 
     void Awake()
     {
-        target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
+        target = GetComponent<TargetManager>();// GameObject.FindWithTag("Player").GetComponent<TargetManager>();
     }
 
     void Start()

@@ -24,12 +24,13 @@ public class CameraCtrl : MonoBehaviour
 
     bool lockCheck=false;
 
-    PlayerCtrl player;
+    public PlayerCtrl player;
     Enemy enemy;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCtrl>();
+        
         enemy = GetComponent<Enemy>();
     }
 

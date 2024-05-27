@@ -12,7 +12,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     Vector3 MoveDir;
     Vector3 diveDirection;
     Animator animator;
-    Camera camera;
+    public Camera camera;
     CharacterController controller;
     Ray ray;
     RaycastHit hitInfo;
@@ -63,7 +63,8 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
         particle = GameObject.FindWithTag("EnemySkill").GetComponent<ParticleDamage>();
         animator = GetComponent<Animator>();
-        camera = Camera.main;
+        animatorPun = animator;
+        //camera = Camera.main;
         controller = GetComponent<CharacterController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         target = GetComponent<TargetManager>();
@@ -72,19 +73,42 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         shotD = false;
         isTarget = false;
         isMove = false;
-        animator.SetBool("isAlive", true);
+        SetBoolRPC("isAlive", true); //animator.SetBool("isAlive", true);
 
-        Debug.Log("End PlayerCtrl:Awake()");
+        if (SpawnPos == null)
+            SpawnPos = GameObject.Find("PlayerSpwanPos");
     }
 
     void Start()
     {
+        if(!IsMine)
+        {
+            Camera[] _cams = GetComponentsInChildren<Camera>();
+            foreach(Camera cam in _cams)
+            {
+                cam.gameObject.SetActive(false);
+            }
+            GetComponentInChildren<CameraCtrl>().gameObject.SetActive(false);
+
+            return;
+        }
+
+        Camera[] cams = transform.root.GetComponentsInChildren<Camera>();
+        foreach (Camera cam in cams)
+        {
+            if (cam.CompareTag("MainCamera"))
+            {
+                camera = cam;
+                break;
+            }
+        }
+
+
         speed = statInfo.MovementSpeed;
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
         attackHit = false;
-        Debug.Log("End PlayerCtrl:Start()");
     }
 
     void Update()
@@ -208,7 +232,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
             statInfo._curHP -= 1;
         }
         attackHit = true;
-        animator.SetTrigger("isHit");
+        SetTriggerRPC("isHit"); //animator.SetTrigger("isHit");
         Debug.Log("현재 체력: " + statInfo._curHP);
         if (statInfo._curHP <= 0 && !dieCheck)
         {
@@ -225,12 +249,12 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         if(shotReady)
         {
             crossHair.SetActive(false);
-            animator.SetBool("isShotReady", false);
+            SetBoolRPC("isShotReady", false); //animator.SetBool("isShotReady", false);
             shotReady = false;
         }
         dieCheck = true;
-        animator.SetBool("isAlive", false);
-        animator.SetTrigger("isDie");
+        SetBoolRPC("isAlive", false);  //animator.SetBool("isAlive", false);
+        SetTriggerRPC("isDie"); //animator.SetTrigger("isDie");
         if (playerCtrl != null)
         {
             playerCtrl.enabled = false;
@@ -245,7 +269,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     {
         PlayerCtrl playerCtrl = this.GetComponent<PlayerCtrl>();
         PlayerCtrl[] scripts = FindObjectsOfType<PlayerCtrl>();
-        animator.SetBool("isAlive", true);
+        SetBoolRPC("isAlive", true); //animator.SetBool("isAlive", true);
 
         controller.enabled = false;
         this.transform.position = SpawnPos.transform.position;
@@ -276,8 +300,8 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         {
             if (open == false)
             {
-                animator.SetFloat("Blend", 0);
-				open = true;
+                SetFloatRPC("Blend", 0);  //animator.SetFloat("Blend", 0);
+                open = true;
 				yield return new WaitForSeconds(0.2f);
             }
 			else if (open == true)
@@ -321,7 +345,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
             //    transform.rotation = rotation;
             //}
             crossHair.SetActive(true);
-            animator.SetBool("isShotReady", true);
+            SetBoolRPC("isShotReady", true); //animator.SetBool("isShotReady", true);
             shotReady = true;
             if (target.myEnemyTarget == null)
             {
@@ -335,7 +359,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         else if (Input.GetMouseButtonUp(1))
         {
             crossHair.SetActive(false);
-            animator.SetBool("isShotReady", false);
+            SetBoolRPC("isShotReady", false); //animator.SetBool("isShotReady", false);
             shotReady = false;
         }
     }
@@ -355,7 +379,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD)
         {
             equipWeapon.Use();
-            animator.SetBool("isShot", true);
+            SetBoolRPC("isShot", true); //animator.SetBool("isShot", true);
             fireDelay = 0;
             shotD = true;
             if (target.myEnemyTarget == null)
@@ -374,7 +398,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     IEnumerator ShotDelay()
     {
         yield return new WaitForSeconds(equipWeapon.attackRate);
-        animator.SetBool("isShot", false);
+        SetBoolRPC("isShot", false); //animator.SetBool("isShot", false);
         shotD = false;
     }
 
@@ -391,15 +415,21 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, 0.1f))
         {
+            if(groundCheck == false)
+            {
+                SetBoolRPC("isGround", true); //animator.SetBool("isGround", true);
+                SetBoolRPC("isFall", false); //animator.SetBool("isFall", false);
+            }
             groundCheck = true;
-            animator.SetBool("isGround", true);
-            animator.SetBool("isFall", false);
         }
         else
         {
+            if(groundCheck == true)
+            {   
+                SetBoolRPC("isGround", false); //animator.SetBool("isGround", false);
+                SetBoolRPC("isFall", true); //animator.SetBool("isFall", true);
+            }
             groundCheck = false;
-            animator.SetBool("isGround", false);
-            animator.SetBool("isFall", true);
         }
     }
 
@@ -426,7 +456,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         {
             SoundManager.Instance.PlaySound2D("30_Jump_03_out", 0f, false, SoundType.EFFECT);
             diveDirection = moveDirection;
-            animator.SetBool("isDiveRoll", true);
+            SetBoolRPC("isDiveRoll", true); //animator.SetBool("isDiveRoll", true);
             diveRoll = true;
             StartCoroutine(DiveCheck());
             StartCoroutine(DiveRemovePlayerTag());
@@ -435,7 +465,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
     IEnumerator DiveCheck()
     {
         yield return new WaitForSeconds(1f);
-        animator.SetBool("isDiveRoll", false);
+        SetBoolRPC("isDiveRoll", false); //animator.SetBool("isDiveRoll", false);
         diveRoll = false;
     }
 
@@ -482,7 +512,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
 
 
                 float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
-                animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+                SetFloatRPC("Blend", percent, true); //animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
             }
 
             else if (!isMove)
@@ -492,7 +522,7 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
                     controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
                     moveDirection = diveDirection;
                 }
-                animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
+                SetFloatRPC("Blend", 0, true); //animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
             }
         }
     }
@@ -515,30 +545,48 @@ public class PlayerCtrl : PunCharactor//MonoBehaviour
         }
         else
         {
-            latestCorrectCharRot = (Quaternion)pvData[2];
-            onUpdateRot = charaterBody.rotation;
+            //latestCorrectCharRot = (Quaternion)pvData[2];
+            //onUpdateRot = charaterBody.rotation;
+            charaterBody.rotation = (Quaternion)pvData[2];
         }
     }
 
     protected override void UpdateSync()
     {
-        base.UpdateSync();
+        //base.UpdateSync();
         if (firstRecv)
             return;
-        if (fraction < limitTime)
-        {
-            fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
-            charaterBody.rotation = Quaternion.Lerp(onUpdateCharRot, latestCorrectCharRot, fraction / limitTime);
-        }
-        else
-        {
-            charaterBody.rotation = latestCorrectCharRot;
-        }
+
+        fraction += Time.deltaTime;
+        //UpdateSyncPos();
+        //UpdateSyncRot();
+        UpdateSyncPosAndRot();
+
+        //if (fraction < limitTime)
+        //{
+        //    fraction = Mathf.Clamp(Time.deltaTime + fraction, 0f, limitTime - 0.01f);
+        //    charaterBody.rotation = Quaternion.Lerp(onUpdateCharRot, latestCorrectCharRot, fraction / limitTime);
+        //}
+        //else
+        //{
+        //    charaterBody.rotation = latestCorrectCharRot;
+        //}
     }
 
     protected override void InitSync()
     {
         base.InitSync();
         charaterBody.rotation = latestCorrectCharRot;
+    }
+
+    public override void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        base.OnPhotonInstantiate(info);
+        //Debug.Log(gameObject.name + " : " + info.ToString());
+        //Debug.Log(gameObject.name + " : " + info.photonView.isMine);
+        //if(info.sender.IsLocal)
+        //{
+        //    Debug.Log(gameObject.name + " is Mine");
+        //}
     }
 }

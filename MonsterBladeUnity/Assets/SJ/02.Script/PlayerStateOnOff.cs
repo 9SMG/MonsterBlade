@@ -21,6 +21,8 @@ public class PlayerStateOnOff : MonoBehaviour
 
     void Update()
     {
+        if (!Player.GetComponent<PlayerCtrl>().IsMine)
+            return;
         // 키보드 입력을 통해 VRplayer와 Player를 토글합니다.
         if (Input.GetKeyDown(KeyCode.V))
         {

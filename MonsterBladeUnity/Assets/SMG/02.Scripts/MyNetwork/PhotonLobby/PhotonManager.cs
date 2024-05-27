@@ -195,7 +195,7 @@ namespace MonsterBlade.MyPhoton
             {
                 //GameObject[] _objs = GameObject.FindGameObjectsWithTag("Player");
                 //GameObject _obj = GameObject.FindGameObjectWithTag("Player");
-
+                
                 PhotonNetwork.Instantiate("SMG/Player(Archer)", new Vector3(90, 0.2f, 350), Quaternion.identity, 0);
 
                 // 본인 플레이어 생성

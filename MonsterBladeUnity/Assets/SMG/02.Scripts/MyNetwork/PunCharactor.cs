@@ -19,19 +19,21 @@ namespace MonsterBlade.MyPhoton
 
         protected float fraction;
 
-        protected float limitTime = 0.2f;
+        protected float limitTime = 0.3f;
 
         protected bool firstRecv = true;
 
         int pvDataLen = 2;
 
-        protected bool IsMine
+        protected Animator animatorPun;
+
+        public bool IsMine
         {
             get
             {
                 if (pv == null)
                     return true;
-                return !PhotonNetwork.inRoom || pv.isMine;
+                return (!PhotonNetwork.inRoom) || pv.isMine;
             }
         }
 
@@ -61,6 +63,14 @@ namespace MonsterBlade.MyPhoton
             }
         }
 
+        [ContextMenu("LogIsMine")]
+        void LogIsMine()
+        {
+            Debug.Log(gameObject.name +" isMine? : " +IsMine);
+        }
+
+        
+
         protected virtual void InitSync()
         {
             InitSyncPosAndRot();
@@ -71,6 +81,8 @@ namespace MonsterBlade.MyPhoton
         {
             if (firstRecv)
                 return;
+
+            fraction += Time.deltaTime;
             UpdateSyncPosAndRot();
         }
 
@@ -212,6 +224,57 @@ namespace MonsterBlade.MyPhoton
         {
             pvDataLen = len;
         }
+
+        //// Animator
+
+        [PunRPC]
+        protected void SetBoolRPC(string name, bool value)
+        {
+            if (PhotonNetwork.inRoom && pv.isMine)
+            {
+                pv.RPC("SetBoolRPC", PhotonTargets.Others, name, value);
+            }
+
+            animatorPun.SetBool(name, value);
+        }
+
+        [PunRPC]
+        protected void SetTriggerRPC(string name)
+        {
+            if (PhotonNetwork.inRoom && pv.isMine)
+            {
+                pv.RPC("SetTriggerRPC", PhotonTargets.Others, name);
+            }
+
+            animatorPun.SetTrigger(name);
+        }
+
+        [PunRPC]
+        protected void SetFloatRPC(string name, float value, bool blend = false)
+        {
+            if (PhotonNetwork.inRoom && pv.isMine)
+            {
+                pv.RPC("SetFloatRPC", PhotonTargets.Others, name, value, blend);
+            }
+            if(blend)
+                animatorPun.SetFloat(name, value, 0.1f, Time.deltaTime);
+            else animatorPun.SetFloat(name, value);
+        }
+
+        /// 
+        /// InputMovement
+        /// 
+        //[PunRPC]
+        //protected void SetFloatRPC(string name, float value, float dampTime, float deltaTime)
+        //{
+        //    if (PhotonNetwork.inRoom && pv.isMine)
+        //    {
+        //        pv.RPC("SetFloatRPC", PhotonTargets.Others, 
+        //            name, value, dampTime, deltaTime);
+        //    }
+
+        //    animatorPun.SetFloat(name, value, 0.1f, Time.deltaTime);
+        //}
     }
 }
 

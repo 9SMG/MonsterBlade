@@ -13,13 +13,34 @@ public class Weapon : MonoBehaviour
     public TrailRenderer trailRenderer;
     public Transform ArrowPos;
     public GameObject Arrow;
+    
+    
+
+    /// temp ///
+    public Camera myCam;
+    public TargetManager target;
     public GameObject targetObject;
-    TargetManager target;
 
     void Awake()
     {
-        targetObject = GameObject.FindGameObjectWithTag("Target");
-        target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
+        //targetObject = GameObject.FindGameObjectWithTag("Target");
+        //target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
+        
+        //Camera[] cams = transform.root.GetComponentsInChildren<Camera>();
+        //foreach (Camera cam in cams)
+        //{
+        //    if (cam.CompareTag("MainCamera"))
+        //    {
+        //        myCam = cam;
+        //        break;
+        //    }
+        //}
+    }
+
+    [ContextMenu("DebugLogCam")]
+    void DebugLogMainCam()
+    {
+        Debug.Log("Camera.main.root: " + myCam.transform.root.name);
     }
 
     void FixedUpdate()
@@ -29,8 +50,8 @@ public class Weapon : MonoBehaviour
 
     void MoveTargetToCameraCenter()
     {
-        Vector3 cameraPosition = Camera.main.transform.position;
-        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraPosition = myCam.transform.position;
+        Vector3 cameraForward = myCam.transform.forward;
         Vector3 targetPosition = cameraPosition + cameraForward * 50f;
 
         targetObject.transform.position = targetPosition;
