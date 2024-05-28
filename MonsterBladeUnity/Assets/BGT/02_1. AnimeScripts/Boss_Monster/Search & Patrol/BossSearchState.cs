@@ -25,7 +25,7 @@ public class BossSearchState : BossState
         Vector3 bossPosition = _boss.transform.position;
         Vector3 bossRaycast = _boss.transform.position + new Vector3(0f, 1f, 0f);
         Vector3 playerPosition = _boss._player.transform.position;
-        Vector3 playerRaycast = _boss._player.transform.position + new Vector3(0f, 1f, 0f);
+        Vector3 playerRaycast = _boss._player.transform.position + new Vector3(0f, 0.2f, 0f);
 
         if (originDistance > _boss._maxMoveRange)
         {

@@ -53,6 +53,6 @@ public class RandomFall : MonoBehaviour
     IEnumerator EffectSound()
     {
         yield return new WaitForSeconds(2.5f);
-        SoundManager.Instance.PlaySound2D("Explosion+1_out", 0f, false, SoundType.EFFECT);
+        SoundManager.Instance.PlaySound2D("Explosion+1_out", 0f, false, SoundType.EXPL);
     }
 }

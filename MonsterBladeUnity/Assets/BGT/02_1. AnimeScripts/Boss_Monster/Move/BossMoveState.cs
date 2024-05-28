@@ -46,7 +46,8 @@ public class BossMoveState : BossState
             animator.SetBool("isTarget", false);
         }
 
-        Vector3 delta = _boss._player.transform.position - _boss.transform.position;
+        Vector3 dt = _boss._player.transform.position - _boss.transform.position;
+        Vector3 delta = new Vector3(dt.x, 0f, dt.z);
         Vector3 moveDirection = delta.normalized * _boss._speed * Time.deltaTime;
 
         _boss.transform.Translate(moveDirection, Space.World);

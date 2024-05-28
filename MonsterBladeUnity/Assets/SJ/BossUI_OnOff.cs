@@ -36,6 +36,10 @@ public class BossUI_OnOff : MonoBehaviour
                 Boss_UI.SetActive(false);
             }
         }
+        else if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
 }

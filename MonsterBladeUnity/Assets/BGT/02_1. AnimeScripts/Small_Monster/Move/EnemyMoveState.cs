@@ -37,7 +37,7 @@ public class EnemyMoveState : EnemyState
             }
         }
         Vector3 delta = _enemy._player.transform.position - _enemy.transform.position;
-        Vector3 direction = delta.normalized;
+        Vector3 direction = new Vector3(delta.x, 0f, delta.z).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         _enemy.charaterBody.rotation = Quaternion.Slerp(_enemy.charaterBody.rotation, targetRotation, _enemy._rotationSpeed * Time.deltaTime);
 
