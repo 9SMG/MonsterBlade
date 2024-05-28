@@ -64,7 +64,10 @@ public class Weapon : MonoBehaviour
     IEnumerator Shot()
     {
         GameObject instantArrow = Instantiate(Arrow, ArrowPos.position, ArrowPos.rotation);
+        Arrow arrow = instantArrow.GetComponent<Arrow>();
         Rigidbody arrowRigid = instantArrow.GetComponent<Rigidbody>();
+
+        arrow.damage = damage;
 
         if (target.myEnemyTarget != null && target.targetSet == true)
         {

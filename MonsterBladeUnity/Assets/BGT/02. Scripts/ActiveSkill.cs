@@ -16,8 +16,10 @@ public class ActiveSkill : MonoBehaviour
     public GameObject Skill;
     TargetManager target;
 
+    //public PlayerStateUI playerStateUI;
     void Awake()
     {
+        //playerStateUI = GameObject.FindGameObjectWithTag("bbbb").GetComponent<PlayerStateUI>();
         target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
     }
 
@@ -36,6 +38,10 @@ public class ActiveSkill : MonoBehaviour
     {
         if (Input.GetKey("r") && imgCool.fillAmount == 1)
         {
+            GameUIManager.instance.playStateUI.UseSkill(Active.manaCost);
+            //Debug.Log(playerStateUI.curMpUI);
+            //Debug.Log("Skill");
+
             StopAllCoroutines();
             if (imgCool == null)
             {

@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15.3532, y: 16.554}
-  m_SizeDelta: {x: 17.6045, y: 15}
+  m_AnchoredPosition: {x: -12.9582, y: 16.554}
+  m_SizeDelta: {x: 22.3945, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &855654257
 CanvasRenderer:
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: F1
+  m_Text: F3
 --- !u!1 &2515651618485679536
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ SortingGroup:
   m_GameObject: {fileID: 2515651619803820154}
   m_Enabled: 1
   m_SortingLayerID: -1088414633
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
 --- !u!114 &7438330533452193989
 MonoBehaviour:
@@ -350,7 +350,7 @@ SortingGroup:
   m_GameObject: {fileID: 2515651619817296341}
   m_Enabled: 1
   m_SortingLayerID: -1088414633
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!1 &8604662046694333425
 GameObject:

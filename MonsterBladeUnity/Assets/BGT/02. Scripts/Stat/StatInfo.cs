@@ -19,6 +19,10 @@ public class StatInfo : ScriptableObject
     public float _curEXP;
     public float _curMaxEXP;
 
+    //Ãß°¡
+    public float _eqHP;
+    public float _eqAtk;
+    public float _eqDef;
 
     public void InitStatData()
     {

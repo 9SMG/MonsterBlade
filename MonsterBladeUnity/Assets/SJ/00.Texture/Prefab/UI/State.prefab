@@ -31,10 +31,10 @@ RectTransform:
   m_Father: {fileID: 7391573715504087089}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 167, y: 342}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2120292045
 GameObject:
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2120292048}
   - component: {fileID: 2120292047}
   m_Layer: 5
-  m_Name: SpImg
+  m_Name: SpUI
   m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 112, y: 377}
+  m_AnchoredPosition: {x: 0, y: 24.7}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2120292049
@@ -140,8 +140,8 @@ GameObject:
   - component: {fileID: 5693444277167095583}
   - component: {fileID: 141794972}
   m_Layer: 5
-  m_Name: Prograss
-  m_TagString: Exp
+  m_Name: ExpUI
+  m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 7391573714315792829}
   - component: {fileID: 7391573714315792828}
   m_Layer: 5
-  m_Name: Mp
+  m_Name: MpUI
   m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,7 +404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -144.3, y: -62.9}
+  m_AnchoredPosition: {x: -190.76, y: -62.9}
   m_SizeDelta: {x: 118.4857, y: 20.8668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7391573714484921273
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 7391573714502570804}
   - component: {fileID: 7391573714502570803}
   m_Layer: 5
-  m_Name: Hp
+  m_Name: HpUI
   m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 7391573714832255939}
   m_Layer: 5
   m_Name: HpPercent
-  m_TagString: Untagged
+  m_TagString: pUIText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 7391573715315102280}
   m_Layer: 5
   m_Name: MpPercent
-  m_TagString: Untagged
+  m_TagString: pUIText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -769,6 +769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7391573715504087089}
+  - component: {fileID: 1663416804}
   m_Layer: 5
   m_Name: State
   m_TagString: Untagged
@@ -800,6 +801,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 79.2}
   m_SizeDelta: {x: 578.5618, y: 96.0553}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1663416804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391573715504087088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d2376b9fa38524c96be8761536e8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHpUI: 100
+  maxHpUI: 100
+  curMpUI: 100
+  maxMpUI: 100
+  curSpUI: 100
+  maxSpUI: 100
+  curExpUI: 100
+  maxExpUI: 100
 --- !u!1 &7391573715611388929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,7 +1166,7 @@ GameObject:
   - component: {fileID: 4700164828040830268}
   m_Layer: 5
   m_Name: Level
-  m_TagString: Untagged
+  m_TagString: pUIText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

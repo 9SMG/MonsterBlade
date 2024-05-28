@@ -19,19 +19,33 @@ public class StatManager : MonoBehaviour
     [SerializeField] private GameObject[] mStatButtons;
     [SerializeField] private GameObject mStatUi;
 
+    Weapon weapon;
+    ActiveSkill skill;
     int CurrentStatPoint = 1;
 
     void Awake()
     {
+        weapon = GetComponentInChildren<Weapon>();
+        skill = GetComponent<ActiveSkill>();
         statInfo.InitStatData();
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()
     {
+        GameUIManager.instance.playStateUI.SetHp(statInfo._curHP, statInfo.hpMax);
+        GameUIManager.instance.playStateUI.SetMp(statInfo._curMP, statInfo.mpMax);
+        GameUIManager.instance.playStateUI.SetSp(statInfo._curStamina, statInfo.staminaMax);
+        GameUIManager.instance.playStateUI.SetExp(statInfo._curEXP, statInfo._curMaxEXP);
         StartCoroutine(OpenStat());
         if (Input.GetKey(KeyCode.F2))
         {
             CurrentStatPoint += 100;
+            UpdateStatTexts();
         }
     }
 
@@ -83,9 +97,21 @@ public class StatManager : MonoBehaviour
 
     public void BTN_UpgradeStat(int statIndex)
     {
+        float prevAttack = statInfo.Attack;
+
         if (CurrentStatPoint <= 0) return;
         CurrentStatPoint--;
         statInfo.UpgradeBaseStat((StatType)statIndex);
         UpdateStatTexts();
+
+
+        if (prevAttack < statInfo.Attack)
+        {
+            weapon.damage = statInfo.Attack;
+            skill.Active.damage += 5;
+        }
+
+        Debug.LogError(weapon.damage);
+        Debug.LogError(skill.Active.damage);
     }
 }

@@ -29,6 +29,8 @@ public class ExpManager : MonoBehaviour
     {
         float expPrev = statManager.statInfo._curEXP;
         statManager.statInfo._curEXP += value;
+        GameUIManager.instance.playStateUI.GainExperience(value);
+
 
         if (cUpdateExpBarFill != null)
             StopCoroutine(cUpdateExpBarFill);

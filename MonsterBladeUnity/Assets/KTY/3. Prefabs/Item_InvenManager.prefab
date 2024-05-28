@@ -59,6 +59,7 @@ MonoBehaviour:
   mana: 100
   stamina: 100
   isSick: 0
+  itemBox: {fileID: 4527683460092113882, guid: bc05592cc0d94b042b631562f43058d5, type: 3}
 --- !u!1 &7404796769722055837
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gManager: {fileID: 0}
+  statManager: {fileID: 0}
 --- !u!1001 &7404796770613170247
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -19,8 +19,11 @@ MonoBehaviour:
   Attack: 5
   MovementSpeed: 2
   Defense: 0
-  _curHP: 20
-  _curMP: 100
-  _curStamina: 100
+  _curHP: 0
+  _curMP: 0
+  _curStamina: 0
   _curEXP: 0
   _curMaxEXP: 100
+  _eqHP: 0
+  _eqAtk: 0
+  _eqDef: 0

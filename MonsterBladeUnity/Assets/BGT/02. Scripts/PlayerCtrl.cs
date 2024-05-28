@@ -73,7 +73,6 @@ public class PlayerCtrl : MonoBehaviour
 
     void Start()
     {
-        speed = statInfo.MovementSpeed;
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
@@ -111,9 +110,8 @@ public class PlayerCtrl : MonoBehaviour
         Fall();
         DiveRoll();
         Attack();
-        MAXHP = statInfo.hpMax;
-        CURRHP = statInfo._curHP;
-        LV = statInfo.level;
+       
+        speed = statInfo.MovementSpeed;
     }
 
     void LateUpdate()
@@ -171,11 +169,12 @@ public class PlayerCtrl : MonoBehaviour
 
     IEnumerator HitDamage(float damage)
     {
-        float hitDamage = damage - statInfo.Defense;
+        float hitDamage = damage - (statInfo.Defense + statInfo._eqDef) ;
         if (hitDamage > 0)
         {
             statInfo._curHP -= hitDamage;
-            if(statInfo._curHP <statInfo.hpMax)
+            GameUIManager.instance.playStateUI.TakeDamage(hitDamage);
+            if (statInfo._curHP < hitDamage)
             {
                 statInfo._curHP = 0;
             }
@@ -267,11 +266,11 @@ public class PlayerCtrl : MonoBehaviour
 
     public void OnEnemySkillDamaged()
     {
-        float particleDamage = particle.Active.damage - statInfo.Defense;
+        float particleDamage = particle.Active.damage - (statInfo.Defense + statInfo._eqDef);
         if (particleDamage > 0)
         {
             statInfo._curHP -= particleDamage;
-            if (statInfo._curHP < statInfo.hpMax)
+            if (statInfo._curHP < particleDamage)
             {
                 statInfo._curHP = 0;
             }
@@ -390,7 +389,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     void CameraRotation()
     {
-        if (togglecameraRotation != true)
+        if (togglecameraRotation != true && !open)
         {
             Vector3 playerRotate = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);

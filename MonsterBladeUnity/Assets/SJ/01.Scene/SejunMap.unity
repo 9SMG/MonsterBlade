@@ -3164,7 +3164,7 @@ Terrain:
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
@@ -4346,7 +4346,7 @@ Terrain:
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
@@ -8312,7 +8312,7 @@ Terrain:
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
@@ -14736,6 +14736,7 @@ MonoBehaviour:
   maxSpUI: 0
   curExpUI: 0
   maxExpUI: 0
+  playerLevel: 0
 --- !u!1001 &1114990836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22532,7 +22533,7 @@ Terrain:
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
@@ -23659,6 +23660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charaterBody: {fileID: 20390326}
+  SpawnPos: {fileID: 0}
   statInfo: {fileID: 11400000, guid: 52686ff312a388441b26fa35cde62a0c, type: 2}
   pickUpItem: []
   checkPickUp: 000000
@@ -23735,8 +23737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mExpBar: {fileID: 553336913}
-  _curExp: 0
-  _curMaxExp: 100
 --- !u!114 &1854281553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27036,8 +27036,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 176.9, y: -177}
-  m_SizeDelta: {x: 320, y: 320}
+  m_AnchoredPosition: {x: 175.56177, y: -173.10089}
+  m_SizeDelta: {x: 260.4096, y: 263.8766}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2034200884
 MonoBehaviour:
@@ -28567,7 +28567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e53353f734a46844b9059b1dacc6bcc8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e7853496a3b9142bfb1e1a340405f5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29050,6 +29050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gManager: {fileID: 0}
+  statManager: {fileID: 0}
 --- !u!1 &2143419171
 GameObject:
   m_ObjectHideFlags: 0
