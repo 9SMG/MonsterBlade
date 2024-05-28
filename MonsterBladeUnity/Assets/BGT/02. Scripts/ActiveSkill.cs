@@ -14,13 +14,13 @@ public class ActiveSkill : MonoBehaviour
     public Image imgCool;
     public Transform ArrowPos;
     public GameObject Skill;
-    TargetManager target;
+    public TargetManager target;
 
     //public PlayerStateUI playerStateUI;
     void Awake()
     {
         //playerStateUI = GameObject.FindGameObjectWithTag("bbbb").GetComponent<PlayerStateUI>();
-        target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
+        //target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
     }
 
     void Start()
@@ -36,21 +36,21 @@ public class ActiveSkill : MonoBehaviour
 
     public void InputSkill()
     {
-        if (Input.GetKey("r") && imgCool.fillAmount == 1)
+        if (Input.GetKey("r") && imgCool.fillAmount == 1 && player.statInfo._curMP >= Active.manaCost)
         {
-            GameUIManager.instance.playStateUI.UseSkill(Active.manaCost);
             //Debug.Log(playerStateUI.curMpUI);
             //Debug.Log("Skill");
-
+            player.statInfo._curMP -= Active.manaCost;
+            GameUIManager.instance.playStateUI.SetMp(player.statInfo._curMP, player.statInfo.mpMax);
             StopAllCoroutines();
-            if (imgCool == null)
-            {
-                Debug.Log("imgCool = null");
-            }
-            else
-            {
-                Debug.Log("imgCool = notNull");
-            }
+            //if (imgCool == null)
+            //{
+            //    Debug.Log("imgCool = null");
+            //}
+            //else
+            //{
+            //    Debug.Log("imgCool = notNull");
+            //}
             skillCheck = true;
         }
     }
@@ -61,7 +61,7 @@ public class ActiveSkill : MonoBehaviour
         {
             skillCheck = false;
             //StopCoroutine(Active_Stop);
-            Debug.Log("Skill");
+            //Debug.Log("Skill");
             StartCoroutine(Skill_Start());
             StartCoroutine(Active_Cool());
         }

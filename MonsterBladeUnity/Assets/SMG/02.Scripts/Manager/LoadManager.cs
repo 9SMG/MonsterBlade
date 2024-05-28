@@ -23,12 +23,14 @@ namespace MonsterBlade.Manager
         // In Game
         public static readonly string scnMap = "Map";
         public static readonly string scnUI = "UI";
-        //const string scnPhotonLobby;
+        public static readonly string scnPhotonLobby = "PhotonLobby";
 
         // Loading Canvas
         public Canvas loadingCanvas;
         public Text gameLogo;
         public Image progressBar;
+
+        public FadeEffect fadeEffectImage;
 
         //[SerializeField]
         //bool nowLoading;
@@ -53,13 +55,8 @@ namespace MonsterBlade.Manager
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        IEnumerator Loading(IEnumerator loadRoutine)
+        ///// Loading /////
+        IEnumerator Loading(IEnumerator loadRoutine, bool bShowLogo = false)
         {
             //if(nowLoading)
             //{
@@ -67,28 +64,30 @@ namespace MonsterBlade.Manager
             //    yield break;
             //}
             //nowLoading = true;
-
-            Debug.Log("Start Loading(IEnumerator loadRoutine)");
+            Debug.Log("Loading(" + loadRoutine.ToString() + ")");
 
             // Loading Canvas Init
-            //ResetLoadingCanvas();
+            ResetLoadingCanvas();
 
             // Visible Loading Canvas
             ShowLoadingCanavas(true);
+            ShowGameLogo(bShowLogo);
 
-            //Load Start
-            SetProgressBar(0f);
-
+            // Unload
             UnloadAll();
+            yield return new WaitForSeconds(1f);
+
+            // Start LoadSceneAsync
+
+            SetProgressBar(0f);
             yield return loadRoutine;
 
-            // Load End
+            // End LoadSceneAsync
             SetProgressBar(1f);
             //nowLoading = false;
 
+            yield return new WaitForSeconds(1f);
             ShowLoadingCanavas(false);
-
-            Debug.Log("End Loading(IEnumerator loadRoutine)");
         }
 
         void UnloadAll()
@@ -98,44 +97,48 @@ namespace MonsterBlade.Manager
             UnloadStage();
         }
 
-        public void LoadTitle()
+        IEnumerator WaitLoadAndActiveScene(string activeSceneName)
         {
-            SceneManager.LoadScene(scnStart, LoadSceneMode.Additive);
-
-            //while (!SceneManager.GetSceneByName(scnStart).isLoaded) ;
-
-            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(scnStart));
-
-            StartCoroutine(DelayLoadScene(scnStart));
-        }
-
-        IEnumerator DelayLoadScene(string sceneName)
-        {
-            Scene scene = SceneManager.GetSceneByName(sceneName);
-
+            Scene scene = SceneManager.GetSceneByName(activeSceneName);
             while (!scene.isLoaded)
                 yield return null;
 
             SceneManager.SetActiveScene(scene);
         }
 
-        [ContextMenu("Test")]
-        public void TestSetActiveScene()
+        ///// Title /////
+        public void LoadTitle()
         {
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(scnStart));
+            StartCoroutine(LoadTitleCoroutine());
+
+            //SceneManager.LoadScene(scnStart, LoadSceneMode.Additive);
+
+            //while(!SceneManager.SetActiveScene(SceneManager.GetSceneByName(scnStart)));
+            //StartCoroutine(DelayLoadScene(scnStart));
         }
 
         void UnloadTitle()
         {
-            if(SceneManager.GetSceneByName(scnStart).isLoaded)
+            if (SceneManager.GetSceneByName(scnStart).isLoaded)
                 SceneManager.UnloadSceneAsync(scnStart);
         }
 
+        IEnumerator LoadTitleCoroutine()
+        {
+            ShowLoadingCanavas(false);
+            UnloadAll();
+            yield return null;
+
+            SceneManager.LoadScene(scnStart, LoadSceneMode.Additive);
+
+            yield return WaitLoadAndActiveScene(scnStart);
+        }
+
+        ///// Lobby /////
         public void LoadLobby()
         {
-            Debug.Log("LoadLobby()");
-            StartCoroutine(Loading(LoadLobbyCoroutine()));
-            StartCoroutine(DelayLoadScene(scnGameLobby));
+            StartCoroutine(Loading(LoadLobbyCoroutine(), true));
+            //StartCoroutine(DelayLoadScene(scnGameLobby));
         }
 
         void UnloadLobby()
@@ -143,14 +146,9 @@ namespace MonsterBlade.Manager
             if (SceneManager.GetSceneByName(scnGameLobby).isLoaded)
                 SceneManager.UnloadSceneAsync(scnGameLobby);
         }
+
         IEnumerator LoadLobbyCoroutine()
         {
-            Debug.Log("Start LoadLobbyCoroutine()");
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    yield return new WaitForSeconds(0.1f);
-            //    SetProgressBar(i * 0.01f);
-            //}
             AsyncOperation ao = SceneManager.LoadSceneAsync(scnGameLobby, LoadSceneMode.Additive);
             while (!ao.isDone)
             {
@@ -158,14 +156,14 @@ namespace MonsterBlade.Manager
                 yield return null;
             }
 
-            Debug.Log("End LoadLobbyCoroutine()");
+            yield return WaitLoadAndActiveScene(scnGameLobby);
         }
 
+        ///// Stage /////
         public void LoadStage()
         {
-            // Loading
             StartCoroutine(Loading(LoadStageCoroutine()));
-            StartCoroutine(DelayLoadScene(scnMap));
+            //StartCoroutine(DelayLoadScene(scnMap, scnUI));
         }
 
         void UnloadStage()
@@ -181,28 +179,35 @@ namespace MonsterBlade.Manager
         IEnumerator LoadStageCoroutine()
         {
             AsyncOperation ao;
-            if ( !SceneManager.GetSceneByName(scnMap).isLoaded )
+            if (!SceneManager.GetSceneByName(scnMap).isLoaded)
             {
                 ao = SceneManager.LoadSceneAsync(scnMap, LoadSceneMode.Additive);
                 while (!ao.isDone)
                 {
-                    SetProgressBar(ao.progress / 2f);
+                    SetProgressBar(ao.progress / 3f);
                     yield return null;
                 }
             }
-            
+
+            yield return WaitLoadAndActiveScene(scnMap);
 
             ao = SceneManager.LoadSceneAsync(scnUI, LoadSceneMode.Additive);
             while (!ao.isDone)
             {
-                SetProgressBar((ao.progress + 1f) / 2f);
+                SetProgressBar((ao.progress + 1f) / 3f);
+                yield return null;
+            }
+
+            ao = SceneManager.LoadSceneAsync(scnPhotonLobby, LoadSceneMode.Additive);
+            while (!ao.isDone)
+            {
+                SetProgressBar((ao.progress + 2f) / 3f);
                 yield return null;
             }
         }
 
-        
 
-
+        ///// Etc /////
         void ResetLoadingCanvas()
         {
             if (backGroundViews.Count <= 0)
@@ -228,6 +233,9 @@ namespace MonsterBlade.Manager
             if (loadingCanvas == null)
                 return;
 
+            if (bShow)
+                fadeEffectImage.StartEffect(); // fadeEffectImage.ResetEffect(); //
+
             loadingCanvas.enabled = bShow;
         }
 
@@ -246,7 +254,6 @@ namespace MonsterBlade.Manager
 
             gameLogo.enabled = bShow;
         }
-
     }
 }
 
