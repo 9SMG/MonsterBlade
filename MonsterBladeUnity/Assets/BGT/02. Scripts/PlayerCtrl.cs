@@ -450,8 +450,9 @@ public class PlayerCtrl : PunCharactor //MonoBehaviour
 
     void DiveRoll()
     {
-        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false && !shotReady)
+        if (Input.GetKey(KeyCode.Space) && !diveRoll && groundCheck && open == false && !shotReady && statInfo._curMP >= 10f)
         {
+            statInfo._curMP -= 10f;
             SoundManager.Instance.PlaySound2D("30_Jump_03_out", 0f, false, SoundType.EFFECT);
             diveDirection = moveDirection;
             SetBoolRPC("isDiveRoll", true); //animator.SetBool("isDiveRoll", true);

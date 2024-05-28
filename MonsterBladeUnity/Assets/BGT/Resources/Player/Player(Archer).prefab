@@ -7187,7 +7187,7 @@ MonoBehaviour:
   rotationSpeed: 0
   smoothness: 10
   diveSpeed: 20
-  gravity: 5
+  gravity: 20
   MAXHP: 0
   CURRHP: 0
   LV: 0
@@ -7352,7 +7352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f72b268db517c479176d7b4bbe56e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mExpBar: {fileID: 0}
 --- !u!114 &2804545841954724851
 MonoBehaviour:
   m_ObjectHideFlags: 0
