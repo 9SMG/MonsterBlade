@@ -14,13 +14,13 @@ public class ActiveSkill : MonoBehaviour
     public Image imgCool;
     public Transform ArrowPos;
     public GameObject Skill;
-    TargetManager target;
+    public TargetManager target;
 
     //public PlayerStateUI playerStateUI;
     void Awake()
     {
         //playerStateUI = GameObject.FindGameObjectWithTag("bbbb").GetComponent<PlayerStateUI>();
-        target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
+        //target = GameObject.FindWithTag("Player").GetComponent<TargetManager>();
     }
 
     void Start()

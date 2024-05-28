@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterBlade.MyPhoton;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class PlayerCtrl : MonoBehaviour
+public class PlayerCtrl : PunCharactor //MonoBehaviour
 {
     [SerializeField] public Transform charaterBody;
     Vector3 moveDirection;
     Vector3 MoveDir;
     Vector3 diveDirection;
     Animator animator;
-    Camera camera;
+    public Camera camera;
     CharacterController controller;
     Ray ray;
     RaycastHit hitInfo;
@@ -55,11 +56,15 @@ public class PlayerCtrl : MonoBehaviour
     public bool isMove;
     int weaponsIndex = 0;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        SetPhotonViewDataLen(3);
+
         particle = GameObject.FindWithTag("EnemySkill").GetComponent<ParticleDamage>();
         animator = GetComponent<Animator>();
-        camera = Camera.main;
+        animatorPun = animator; // Photon AnimatorRPC
+        //camera = Camera.main;
         controller = GetComponent<CharacterController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         target = GetComponent<TargetManager>();
@@ -68,11 +73,36 @@ public class PlayerCtrl : MonoBehaviour
         shotD = false;
         isTarget = false;
         isMove = false;
-        animator.SetBool("isAlive", true);
+        SetBoolRPC("isAlive", true); //animator.SetBool("isAlive", true);
+
+        if (SpawnPos == null)
+            SpawnPos = GameObject.Find("PlayerSpwanPos");
     }
 
     void Start()
     {
+        if (!IsMine)
+        {
+            Camera[] _cams = GetComponentsInChildren<Camera>();
+            foreach (Camera cam in _cams)
+            {
+                cam.gameObject.SetActive(false);
+            }
+            GetComponentInChildren<CameraCtrl>().gameObject.SetActive(false);
+
+            return;
+        }
+
+        //Camera[] cams = transform.root.GetComponentsInChildren<Camera>();
+        //foreach (Camera cam in cams)
+        //{
+        //    if (cam.CompareTag("MainCamera"))
+        //    {
+        //        camera = cam;
+        //        break;
+        //    }
+        //}
+
         diveSpeed = 10.0f;
         gravity = 5.0f;
         MoveDir = Vector3.zero;
@@ -81,6 +111,12 @@ public class PlayerCtrl : MonoBehaviour
 
     void Update()
     {
+        if (!IsMine)
+        {
+            UpdateSync();
+            return;
+        }
+
         CameraRotation();
         GetInput();
         ShotCheck();
@@ -105,6 +141,11 @@ public class PlayerCtrl : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!IsMine)
+        {
+            return;
+        }
+
         GroundCheck();
         InputMoveMent();
         Fall();
@@ -116,6 +157,11 @@ public class PlayerCtrl : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!IsMine)
+        {
+            return;
+        }
+
         CameraRotation();
         //Interaction();
     }
@@ -184,7 +230,7 @@ public class PlayerCtrl : MonoBehaviour
             statInfo._curHP -= 1;
         }
         attackHit = true;
-        animator.SetTrigger("isHit");
+        SetTriggerRPC("isHit"); //animator.SetTrigger("isHit");
         Debug.Log("현재 체력: " + statInfo._curHP);
         if (statInfo._curHP <= 0 && !dieCheck)
         {
@@ -201,12 +247,12 @@ public class PlayerCtrl : MonoBehaviour
         if(shotReady)
         {
             crossHair.SetActive(false);
-            animator.SetBool("isShotReady", false);
+            SetBoolRPC("isShotReady", false); //animator.SetBool("isShotReady", false);
             shotReady = false;
         }
         dieCheck = true;
-        animator.SetBool("isAlive", false);
-        animator.SetTrigger("isDie");
+        SetBoolRPC("isAlive", false); //animator.SetBool("isAlive", false);
+        SetTriggerRPC("isDie"); //animator.SetTrigger("isDie");
         if (playerCtrl != null)
         {
             playerCtrl.enabled = false;
@@ -221,7 +267,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         PlayerCtrl playerCtrl = this.GetComponent<PlayerCtrl>();
         PlayerCtrl[] scripts = FindObjectsOfType<PlayerCtrl>();
-        animator.SetBool("isAlive", true);
+        SetBoolRPC("isAlive", true); //animator.SetBool("isAlive", true);
 
         controller.enabled = false;
         this.transform.position = SpawnPos.transform.position;
@@ -252,7 +298,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (open == false)
             {
-                animator.SetFloat("Blend", 0);
+                SetFloatRPC("Blend", 0); //animator.SetFloat("Blend", 0);
 				open = true;
 				yield return new WaitForSeconds(0.2f);
             }
@@ -297,7 +343,7 @@ public class PlayerCtrl : MonoBehaviour
             //    transform.rotation = rotation;
             //}
             crossHair.SetActive(true);
-            animator.SetBool("isShotReady", true);
+            SetBoolRPC("isShotReady", true); //animator.SetBool("isShotReady", true);
             shotReady = true;
             if (target.myEnemyTarget == null)
             {
@@ -311,7 +357,7 @@ public class PlayerCtrl : MonoBehaviour
         else if (Input.GetMouseButtonUp(1))
         {
             crossHair.SetActive(false);
-            animator.SetBool("isShotReady", false);
+            SetBoolRPC("isShotReady", false); //animator.SetBool("isShotReady", false);
             shotReady = false;
         }
     }
@@ -331,7 +377,7 @@ public class PlayerCtrl : MonoBehaviour
         if (Input.GetMouseButton(0) && shotReady && fireStart && !shotD)
         {
             equipWeapon.Use();
-            animator.SetBool("isShot", true);
+            SetBoolRPC("isShot", true); //animator.SetBool("isShot", true);
             fireDelay = 0;
             shotD = true;
             if (target.myEnemyTarget == null)
@@ -350,7 +396,7 @@ public class PlayerCtrl : MonoBehaviour
     IEnumerator ShotDelay()
     {
         yield return new WaitForSeconds(equipWeapon.attackRate);
-        animator.SetBool("isShot", false);
+        SetBoolRPC("isShot", false); //animator.SetBool("isShot", false);
         shotD = false;
     }
 
@@ -367,15 +413,21 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, 0.1f))
         {
+            if (groundCheck == false)
+            {
+                SetBoolRPC("isGround", true); //animator.SetBool("isGround", true);
+                SetBoolRPC("isFall", false); //animator.SetBool("isFall", false);
+            }
             groundCheck = true;
-            animator.SetBool("isGround", true);
-            animator.SetBool("isFall", false);
         }
         else
         {
+            if (groundCheck == true)
+            {
+                SetBoolRPC("isGround", false); //animator.SetBool("isGround", false);
+                SetBoolRPC("isFall", true); //animator.SetBool("isFall", true);
+            }
             groundCheck = false;
-            animator.SetBool("isGround", false);
-            animator.SetBool("isFall", true);
         }
     }
 
@@ -402,7 +454,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             SoundManager.Instance.PlaySound2D("30_Jump_03_out", 0f, false, SoundType.EFFECT);
             diveDirection = moveDirection;
-            animator.SetBool("isDiveRoll", true);
+            SetBoolRPC("isDiveRoll", true); //animator.SetBool("isDiveRoll", true);
             diveRoll = true;
             StartCoroutine(DiveCheck());
             StartCoroutine(DiveRemovePlayerTag());
@@ -411,7 +463,7 @@ public class PlayerCtrl : MonoBehaviour
     IEnumerator DiveCheck()
     {
         yield return new WaitForSeconds(1f);
-        animator.SetBool("isDiveRoll", false);
+        SetBoolRPC("isDiveRoll", false); //animator.SetBool("isDiveRoll", false);
         diveRoll = false;
     }
 
@@ -458,7 +510,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
                 float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
-                animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+                SetFloatRPC("Blend", percent, true); //animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
             }
 
             else if (!isMove)
@@ -468,8 +520,25 @@ public class PlayerCtrl : MonoBehaviour
                     controller.Move(charaterBody.forward * (runSpeed * 3f) * Time.deltaTime);
                     moveDirection = diveDirection;
                 }
-                animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
+                SetFloatRPC("Blend", 0, true); //animator.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
             }
+        }
+    }
+
+
+    /// 
+    /// Photon Multi
+    /// 
+    protected override void PhotonSerializeViewData(bool bSend, object[] pvData)
+    {
+        base.PhotonSerializeViewData(bSend, pvData);
+        if (bSend)
+        {
+            pvData[2] = charaterBody.rotation;
+        }
+        else
+        {
+            charaterBody.rotation = (Quaternion)pvData[2];
         }
     }
 }

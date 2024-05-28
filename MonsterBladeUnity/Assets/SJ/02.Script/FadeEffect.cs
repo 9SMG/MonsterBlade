@@ -11,21 +11,34 @@ public class FadeEffect : MonoBehaviour
     {
         image = GetComponent<Image>();
     }
-    // Start is called before the first frame update
-    void Start()
+
+    // 프레임 드랍 시, 이펙트가 제대로 보이지 않음
+    //void Update()
+    //{
+    //    Color color = image.color;
+
+    //    if( color.a > 0)
+    //    {
+    //        color.a -= Time.deltaTime;
+    //    }
+    //    image.color = color;
+    //}
+
+    public void StartEffect()
     {
-        
+        StartCoroutine(PlayEffect());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator PlayEffect()
     {
+        yield return null;
         Color color = image.color;
 
-        if( color.a > 0)
+        for (int i = 0; i <= 50; i++)
         {
-            color.a -= Time.deltaTime;
+            color.a = 1f - (0.02f * i);
+            image.color = color;
+            yield return new WaitForSeconds(0.02f);
         }
-        image.color = color;
     }
 }

@@ -18999,6 +18999,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347322676498524511, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 347322676498524511, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890520084506933308, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890520084506933308, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+      propertyPath: instantiationId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6267504580852890216, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
       propertyPath: m_RootOrder
       value: 14
