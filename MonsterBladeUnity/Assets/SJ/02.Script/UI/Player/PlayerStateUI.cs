@@ -188,7 +188,13 @@ public class PlayerStateUI : MonoBehaviour
         UpdateExpUI();
 
     }
-
+    // 스태미너 감소
+    public void TakeStamina(float StaminaCost)
+    {
+        curSpUI -= StaminaCost;
+        curSpUI = Mathf.Clamp(curSpUI, 0, maxSpUI);
+        UpdateSpUI();
+    }
     private void PlayerLevelUp()
     {
         // 플레이어 레벨 증가

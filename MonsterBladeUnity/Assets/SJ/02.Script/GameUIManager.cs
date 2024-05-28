@@ -59,6 +59,10 @@ public class GameUIManager : MonoBehaviour
         {
             playStateUI.GainExperience(10f);
         }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            playStateUI.TakeStamina(20f);
+        }
         //if (Input.GetKeyDown(KeyCode.F1))
         //{
         //    partyStateUI.PartyTakeDamage(20f); // 예시로 마나 20을 소모하는 스킬
