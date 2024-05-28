@@ -839,7 +839,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &777589613
 RectTransform:
@@ -1095,6 +1095,10 @@ PrefabInstance:
     - target: {fileID: 1602608807653629111, guid: af11446209df2db4fa9ce408714d1bfe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756957332365934961, guid: af11446209df2db4fa9ce408714d1bfe, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1756957333178774364, guid: af11446209df2db4fa9ce408714d1bfe, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3126,9 +3130,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 777589613}
     m_Modifications:
+    - target: {fileID: 773079161, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 773079162, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -996
+      objectReference: {fileID: 0}
     - target: {fileID: 773079162, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 393.3
+      value: 1085
       objectReference: {fileID: 0}
     - target: {fileID: 1663416804, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: curHpUI
@@ -3161,6 +3173,10 @@ PrefabInstance:
     - target: {fileID: 1663416804, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: maxExpUI
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120292045, guid: 5216220649d606c44afa7de811090a11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2120292046, guid: 5216220649d606c44afa7de811090a11, type: 3}
       propertyPath: m_AnchorMax.y

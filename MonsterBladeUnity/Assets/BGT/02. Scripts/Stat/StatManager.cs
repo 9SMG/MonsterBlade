@@ -37,7 +37,7 @@ public class StatManager : MonoBehaviour
 
     void Update()
     {
-        GameUIManager.instance.playStateUI.SetHp(statInfo._curHP, statInfo.hpMax);
+        GameUIManager.instance.playStateUI.SetHp(statInfo._curHP, statInfo.hpMax + statInfo._eqHP);
         GameUIManager.instance.playStateUI.SetMp(statInfo._curMP, statInfo.mpMax);
         GameUIManager.instance.playStateUI.SetSp(statInfo._curStamina, statInfo.staminaMax);
         GameUIManager.instance.playStateUI.SetExp(statInfo._curEXP, statInfo._curMaxEXP);
