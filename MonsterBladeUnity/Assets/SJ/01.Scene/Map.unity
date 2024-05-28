@@ -19129,10 +19129,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 307718228}
     - target: {fileID: 6267504581992511914, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
-      propertyPath: statInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
-    - target: {fileID: 6267504581992511914, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
       propertyPath: mHpMaxLabel
       value: 
       objectReference: {fileID: 322121653}
@@ -19184,10 +19180,6 @@ PrefabInstance:
       propertyPath: mStatButtons.Array.data[5]
       value: 
       objectReference: {fileID: 1570789333}
-    - target: {fileID: 6267504581992511915, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
-      propertyPath: mExpBar
-      value: 
-      objectReference: {fileID: 553336913}
     - target: {fileID: 6267504581992511922, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
       propertyPath: imgCool
       value: 
@@ -19200,12 +19192,7 @@ PrefabInstance:
       propertyPath: SpawnPos
       value: 
       objectReference: {fileID: 1808156677}
-    - target: {fileID: 6267504581992511926, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
-      propertyPath: statInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: fc3bd035ef7a2d54a8c79d9c6c3e4fff, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5264828239084249975, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72fb47dbfb9f7ae41807165c69b38bf6, type: 3}
 --- !u!1001 &7946049590832121547
 PrefabInstance:
