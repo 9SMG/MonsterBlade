@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 1
   itemSpr: {fileID: 21300000, guid: 97725fc923c9f9b4b983a286f67f86df, type: 3}
   itemName: "\uAC80"
-  description: "\uAC80\uC784"
+  description: "\uAC80\uC784\n\uACF5\uACA9\uB825 +5"
   isStackable: 0
   equipmentType: 0
   isWearable: 1

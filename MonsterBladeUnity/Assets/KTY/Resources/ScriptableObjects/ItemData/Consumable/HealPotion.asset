@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 2
   itemSpr: {fileID: 21300000, guid: 589e81fbb7d8f024eb5a8c88b25ab515, type: 3}
   itemName: "\uD790\uB9C1\uD3EC\uC158"
-  description: "\uCCB4\uB825\uD68C\uBCF5+500"
+  description: "\uCCB4\uB825\uD68C\uBCF5 +20\n: \uCFE8\uD0C0\uC784 3\uCD08"
   isStackable: 1
   consumableType: 1
   isEatable: 1

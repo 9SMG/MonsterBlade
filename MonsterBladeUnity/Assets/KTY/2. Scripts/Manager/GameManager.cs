@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
 			{
 				yield return new WaitForSeconds(1.0f);
 
-				statManager.statInfo._curHP -= 1;
+				statManager.statInfo._curHP -= 2;
 				if (statManager.statInfo._curHP < 0)
 				{
 					statManager.statInfo._curHP = 0;

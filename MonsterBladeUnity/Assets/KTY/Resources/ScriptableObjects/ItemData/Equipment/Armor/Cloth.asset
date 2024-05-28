@@ -16,7 +16,8 @@ MonoBehaviour:
   itemType: 1
   itemSpr: {fileID: 21300000, guid: a80028572c88600469a5121e458abe63, type: 3}
   itemName: "\uCC9C \uC637"
-  description: "\uAC00\uBCBC\uC6B4 \uCC9C\uC637"
+  description: "\uAC00\uBCBC\uC6B4 \uCC9C\uC637 \n\uCD5C\uB300\uCCB4\uB825 +20\n\uBC29\uC5B4\uB825
+    +2"
   isStackable: 0
   equipmentType: 1
   isWearable: 1
