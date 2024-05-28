@@ -37,4 +37,7 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  DisableAutoOpenWizard: 1
+  - SetBoolRPC
+  - SetFloatRPC
+  - SetTriggerRPC
+  DisableAutoOpenWizard: 0

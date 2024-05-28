@@ -13,7 +13,7 @@ public class TargetManager : MonoBehaviour
     public List<GameObject> enemyTargets = new List<GameObject>();
     public GameObject myEnemyTarget;
     public GameObject enemyTargetImage;
-    public GameObject player;
+    //public GameObject player;
     LayerMask enemyLayer;
 
     public List<GameObject> pickUpTargets = new List<GameObject>();
@@ -24,7 +24,7 @@ public class TargetManager : MonoBehaviour
     void Awake()
     {
         targetSet = false;
-        player = GameObject.Find("Player");
+        //player = GameObject.Find("Player");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         pickUpLayer = LayerMask.NameToLayer("PickUp");
     }
