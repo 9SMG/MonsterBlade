@@ -16,10 +16,10 @@ MonoBehaviour:
   hpMax: 20
   mpMax: 100
   staminaMax: 100
-  Attack: 30
-  MovementSpeed: 10
-  Defense: 10
-  _curHP: 10
+  Attack: 5
+  MovementSpeed: 2
+  Defense: 0
+  _curHP: 20
   _curMP: 100
   _curStamina: 100
   _curEXP: 0
