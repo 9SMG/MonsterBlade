@@ -2363,7 +2363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5264828239682043379
 Transform:
   m_ObjectHideFlags: 0
@@ -2513,7 +2513,8 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -7667,6 +7668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6267504580852890216}
+  - component: {fileID: 724714554289085561}
   m_Layer: 0
   m_Name: Player_Blader
   m_TagString: Untagged
@@ -7690,6 +7692,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724714554289085561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6267504580852890217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05733fe68ab352b4793b89030c265aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  VRplayer: {fileID: 0}
 --- !u!1001 &7292772067948127183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7697,6 +7713,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6267504580852890216}
     m_Modifications:
+    - target: {fileID: 2804545841954724851, guid: e460863b1ca40994e99fad7811abc7e4, type: 3}
+      propertyPath: viewIdField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2804545841954724851, guid: e460863b1ca40994e99fad7811abc7e4, type: 3}
+      propertyPath: instantiationId
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3733351855292127866, guid: e460863b1ca40994e99fad7811abc7e4, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7745,7 +7769,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player(Archer)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3181033293604683960, guid: e460863b1ca40994e99fad7811abc7e4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e460863b1ca40994e99fad7811abc7e4, type: 3}
 --- !u!4 &6267504581992511925 stripped
 Transform:

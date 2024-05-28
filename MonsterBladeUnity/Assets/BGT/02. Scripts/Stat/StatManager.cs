@@ -41,6 +41,7 @@ public class StatManager : MonoBehaviour
         GameUIManager.instance.playStateUI.SetMp(statInfo._curMP, statInfo.mpMax);
         GameUIManager.instance.playStateUI.SetSp(statInfo._curStamina, statInfo.staminaMax);
         GameUIManager.instance.playStateUI.SetExp(statInfo._curEXP, statInfo._curMaxEXP);
+        GameUIManager.instance.playStateUI.playerLevel = statInfo.level;
         StartCoroutine(OpenStat());
         if (Input.GetKey(KeyCode.F2))
         {

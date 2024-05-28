@@ -100,12 +100,13 @@ public class Enemy : MonoBehaviour
     {
         SoundManager.Instance.PlaySound2D("61_Hit_03", 0f, false, SoundType.EFFECT);
         anime.SetTrigger("isHit");
-        yield return new WaitForSeconds(0.2f);
 
         if (_curHp <= 0)
         {
             StartCoroutine(Die());
         }
+
+        yield return new WaitForSeconds(0.2f);
     }
 
     IEnumerator Die()
