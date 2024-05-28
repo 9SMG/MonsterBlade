@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class VRPlayerCtrl : PlayerCtrl
 {
+    protected override void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +21,16 @@ public class VRPlayerCtrl : PlayerCtrl
     }
 
     protected virtual void Update()
+    {
+        
+    }
+
+    private void LateUpdate()
+    {
+        
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         
     }
