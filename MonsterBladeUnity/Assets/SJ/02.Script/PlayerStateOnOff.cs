@@ -33,5 +33,16 @@ public class PlayerStateOnOff : MonoBehaviour
     {
         VRplayer.SetActive(isPlay);
         Player.SetActive(!isPlay);
+
+        MonoBehaviour[] objs = GameObject.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
+        // Call ResetTarget
+        foreach (MonoBehaviour obj in objs)
+        {
+            IResetTarget resetTarget = obj.GetComponent<IResetTarget>();
+            if (resetTarget != null)
+            {
+                resetTarget.ResetTarget();
+            }
+        }
     }
 }

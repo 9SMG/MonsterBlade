@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Boss : MonoBehaviour
+public class Boss : MonoBehaviour, IResetTarget
 {
     public RuntimeAnimatorController anim1;
     public RuntimeAnimatorController anim2;
@@ -259,5 +259,10 @@ public class Boss : MonoBehaviour
         anime.SetBool("isDie", true);
         yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
+    }
+
+    public void ResetTarget()
+    {
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
     }
 }

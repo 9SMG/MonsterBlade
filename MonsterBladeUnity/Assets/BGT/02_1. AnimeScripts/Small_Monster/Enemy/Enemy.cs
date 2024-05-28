@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IResetTarget
 {
     public ActiveSkillManager skill;
     public MeshRenderer lifeBar;
@@ -118,5 +118,12 @@ public class Enemy : MonoBehaviour
         expManager.AddExp(100);
         yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
+    }
+
+    public void ResetTarget()
+    {
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerCtrl>();
+        expManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ExpManager>();
+        statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
     }
 }

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class BossUI_OnOff : MonoBehaviour
+public class BossUI_OnOff : MonoBehaviour, IResetTarget
 {
     public GameObject Boss_UI;
     public GameObject player;
     public GameObject Point;
     public float activationDistance = 200.0f;
+
 
     private void Awake()
     {
@@ -36,10 +37,9 @@ public class BossUI_OnOff : MonoBehaviour
                 Boss_UI.SetActive(false);
             }
         }
-        else if(player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
     }
-
+    public void ResetTarget()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 }

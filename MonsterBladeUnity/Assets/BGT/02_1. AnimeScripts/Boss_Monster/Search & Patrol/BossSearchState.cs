@@ -23,9 +23,9 @@ public class BossSearchState : BossState
         float distance = Vector3.Distance(_boss.transform.position, _boss._player.transform.position);
         RaycastHit rayInfo;
         Vector3 bossPosition = _boss.transform.position;
-        Vector3 bossRaycast = _boss.transform.position + new Vector3(0f, 1f, 0f);
+        Vector3 bossRaycast = _boss.transform.position + new Vector3(0f, 4f, 0f);
         Vector3 playerPosition = _boss._player.transform.position;
-        Vector3 playerRaycast = _boss._player.transform.position + new Vector3(0f, 0.2f, 0f);
+        Vector3 playerRaycast = _boss._player.transform.position + new Vector3(0f, 0.5f, 0f);
 
         if (originDistance > _boss._maxMoveRange)
         {
@@ -36,7 +36,8 @@ public class BossSearchState : BossState
 
         if (distance < _boss._searchRange)
         {
-            if (Physics.Raycast(bossRaycast, (playerRaycast - bossRaycast).normalized, out rayInfo, distance))
+            int layerMask = (1 << LayerMask.NameToLayer("Wall")) | (1 << LayerMask.NameToLayer("Player"));
+            if (Physics.Raycast(bossRaycast, (playerRaycast - bossRaycast).normalized, out rayInfo, distance, layerMask))
             {
                 if (rayInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
