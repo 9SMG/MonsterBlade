@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateFireBall : MonoBehaviour
+public class CreateFireBall : MonoBehaviour, IResetTarget
 {
     public GameObject boss;
     public GameObject player;
@@ -40,5 +40,10 @@ public class CreateFireBall : MonoBehaviour
             }
             yield return new WaitForSeconds(spawnTime);
         }
+    }
+
+    public void ResetTarget()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 }
